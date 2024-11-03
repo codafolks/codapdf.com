@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "NEXT_MANUAL_SIG_HANDLE=true next start",
-    "start:prod": "NEXT_MANUAL_SIG_HANDLE=true bun migration:run && next start",
+    "start": "NEXT_MANUAL_SIG_HANDLE=true node .next/standalone/server.js",
+    "start:prod": "NEXT_MANUAL_SIG_HANDLE=true bun migration:run && node .next/standalone/server.js",
     "lint": "tsc --noemit && next lint",
     "migration:generate": "drizzle-kit generate",
     "migration:run": " drizzle-kit migrate",
