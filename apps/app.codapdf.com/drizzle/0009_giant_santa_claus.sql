@@ -1,0 +1,2 @@
+CREATE TYPE "public"."subscriptions_frequency" AS ENUM('MONTHLY', 'YEARLY');--> statement-breakpoint
+ALTER TABLE "subscriptions" ADD COLUMN "frequency" "subscriptions_frequency" DEFAULT 'MONTHLY' NOT NULL;

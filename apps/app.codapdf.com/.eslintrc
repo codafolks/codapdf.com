@@ -1,0 +1,13 @@
+{
+  "extends": "next/core-web-vitals",
+  "overrides": [
+    {
+      "files": ["*.ts", "*.js", "*.tsx", "*.jsx"],
+      "extends": ["biome"]
+    }
+  ],
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "react/no-unescaped-entities": "off"
+  }
+}

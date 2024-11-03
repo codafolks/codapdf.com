@@ -1,0 +1,1 @@
+ALTER TABLE "templates" ADD COLUMN "filesName" jsonb DEFAULT '["index.html"]'::jsonb NOT NULL;
