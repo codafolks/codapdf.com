@@ -1,0 +1,62 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "files": {
+    "ignore": [
+      "**/public",
+      "**/.next",
+      ".yarn/**",
+      ".vscode",
+      "!.storybook",
+      "build",
+      "test-results",
+      "coverage",
+      "postcss.config.js",
+      "public"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 120,
+    "ignore": []
+  },
+  "organizeImports": { "enabled": true },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": false,
+      "a11y": { "noSvgWithoutTitle": "warn", "useKeyWithClickEvents": "warn" },
+      "complexity": {
+        "noExcessiveCognitiveComplexity": "warn",
+        "noForEach": "warn",
+        "noUselessCatch": "error"
+      },
+      "correctness": {
+        "noUnusedImports": "error",
+        "useHookAtTopLevel": "error"
+      },
+      "performance": { "noBarrelFile": "warn" },
+      "style": {
+        "noNonNullAssertion": "warn",
+        "noParameterAssign": "warn",
+        "useCollapsedElseIf": "error",
+        "useConsistentArrayType": {
+          "level": "warn",
+          "options": { "syntax": "generic" }
+        }
+      },
+      "suspicious": {
+        "noArrayIndexKey": "warn",
+        "noConsoleLog": "warn",
+        "noEmptyBlockStatements": "warn",
+        "noExplicitAny": "warn",
+        "useAwait": "warn"
+      }
+    }
+  },
+  "javascript": { "formatter": { "jsxQuoteStyle": "double" } },
+  "overrides": [{ "include": ["*.ts", "*.js", "*.tsx", "*.jsx"] }]
+}

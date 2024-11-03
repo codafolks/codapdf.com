@@ -1,0 +1,106 @@
+"use client";
+
+import { TemplateItemCard } from "@/app/(main)/templates/_components/TemplateItemCard";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/client/lib/utils";
+
+import { ROUTES } from "@/app/routes";
+import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useTemplateDelete, useTemplateList } from "@/client/queries/templates";
+import { DeleteDialog } from "@/components/app/DeleteDialog";
+import { useRef, useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { getQueryKey } from "@trpc/react-query";
+import { trpcClient } from "@/server/trpc/trpcClient";
+import { useQueryClient } from "@tanstack/react-query";
+import { templateExamples } from "@/app/(main)/templates/_data/templates";
+
+export const TemplateList = () => {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const templateId = useRef<number | null>(null);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const { data, isLoading } = useTemplateList();
+  const templates = data?.data ?? [];
+
+  const [isTemplateIdDeleting, setIsTemplateIdDeleting] = useState<number | null>(null);
+  const { mutateAsync: onDelete } = useTemplateDelete({
+    onSuccess: () => {
+      const templateListKey = getQueryKey(trpcClient.templates.list, undefined, "query");
+      queryClient.invalidateQueries({
+        queryKey: templateListKey,
+      });
+      toast({
+        title: "Template deleted",
+        description: "The template was successfully deleted",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error deleting template",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+  return (
+    <div className="p-4 grid gap-4">
+      <Tabs defaultValue="templates">
+        <TabsList className="mb-4">
+          <TabsTrigger value="templates">Your Templates</TabsTrigger>
+          <TabsTrigger value="sample">Examples</TabsTrigger>
+        </TabsList>
+        <TabsContent
+          value="templates"
+          className={cn("grid gap-4", {
+            "grid-cols-[repeat(auto-fill,minmax(250px,1fr))]": templates.length > 0,
+          })}
+        >
+          {templates.map((template) => (
+            <TemplateItemCard
+              key={template.id}
+              template={template}
+              onDelete={() => {
+                templateId.current = template.id;
+                setOpenDeleteDialog(true);
+              }}
+              isDeleting={isTemplateIdDeleting === template.id}
+            />
+          ))}
+          {isLoading && <div className="col-span-full text-center text-gray-400">Loading templates...</div>}
+          {!templates?.length && !isLoading && <div className="text-center text-gray-400">No templates found</div>}
+        </TabsContent>
+        <TabsContent
+          value="sample"
+          className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(250px,1fr))] transition-all"
+        >
+          {templateExamples.map((template) => (
+            <Link key={template.id} href={ROUTES.PRIVATE.TEMPLATES_SAMPLE.path(template.id)}>
+              <Card className="hover:bg-secondary h-full text-foreground bg-background">
+                <CardHeader>
+                  <CardTitle>{template.name}</CardTitle>
+                </CardHeader>
+                <div className="bg-gray-300 overflow-hidden relative bg-cover bg-no-repeat bg-center aspect-video my-2" />
+                <CardContent>
+                  <p>{template.description}</p>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </TabsContent>
+      </Tabs>
+      <DeleteDialog
+        open={openDeleteDialog}
+        onClose={() => setOpenDeleteDialog(false)}
+        onDelete={() => {
+          if (templateId.current) {
+            setIsTemplateIdDeleting(templateId.current);
+            onDelete({ id: templateId.current });
+          }
+          setOpenDeleteDialog(false);
+        }}
+      />
+    </div>
+  );
+};

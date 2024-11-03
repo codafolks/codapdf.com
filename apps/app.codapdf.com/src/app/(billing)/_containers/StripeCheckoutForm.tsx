@@ -1,0 +1,191 @@
+import { env } from "@/constants/env.client";
+import {
+  StripePaymentMethod,
+  useStripePaymentMethods,
+  useStripeSubscriptionCreate,
+  useStripeSubscriptionPlans,
+} from "@/client/queries/stripe";
+
+import { useUser, useUserLicenseUpdate, useUserUpdate } from "@/client/queries/users";
+import { logger } from "@/server/utils/logger";
+import { PaymentElement, type PaymentElementProps, useElements, useStripe } from "@stripe/react-stripe-js";
+import { useState } from "react";
+import { PlanTabs } from "@/app/(billing)/_components/PlanTabs";
+import { PlanSubscription } from "@/server/static/plansSubscription";
+import { Button } from "@/client/components/ui/button";
+import { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
+import { SavedCards } from "@/app/(billing)/_components/SavedCards";
+
+type StripeCheckoutFormProps = {
+  defaultPlan: PlanSubscription;
+  frequency: SubscriptionsFrequency;
+};
+export const StripeCheckoutForm = ({ defaultPlan, frequency: defaultFrequency }: StripeCheckoutFormProps) => {
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const { data: user } = useUser();
+  const { data: plans } = useStripeSubscriptionPlans();
+  const { data: savedCards } = useStripePaymentMethods();
+  const updateLicense = useUserLicenseUpdate();
+
+  const [selectedPlan, setSelectedPlan] = useState<PlanSubscription>(defaultPlan);
+  const [frequency, setFrequency] = useState<SubscriptionsFrequency>(defaultFrequency);
+  const isYearly = frequency === "YEARLY";
+
+  const [paymentMethod, setPaymentMethod] = useState<StripePaymentMethod | null>(null);
+  const updateUser = useUserUpdate();
+
+  const subscriptionCreate = useStripeSubscriptionCreate();
+  const [message, setMessage] = useState<string>();
+  const [isLoadingElements, setIsLoadingElements] = useState(true);
+
+  const productId = selectedPlan.productId;
+  const priceId = isYearly ? selectedPlan?.priceId?.yearly : selectedPlan?.priceId?.monthly;
+  const license = selectedPlan.license;
+
+  const isSubmitting = subscriptionCreate.isPending || updateUser.isPending || updateLicense.isPending;
+
+  const handlePaymentForPaymentMethodSelected = async () => {
+    try {
+      setMessage(undefined);
+      if (!productId || !priceId || !paymentMethod) {
+        throw new Error("Missing productId, priceId or paymentMethod");
+      }
+      if (!stripe) {
+        throw new Error("Stripe not loaded");
+      }
+      const { clientSecret } = await subscriptionCreate.mutateAsync({
+        priceId,
+        productId,
+        paymentMethodId: paymentMethod?.id,
+        frequency,
+      });
+
+      if (!clientSecret) {
+        throw new Error("Client secret not found");
+      }
+      // Update the user license to the new license
+      await updateLicense.mutateAsync({ license });
+
+      // Confirm the payment with PaymentElement and clientSecret
+      const { error } = await stripe.confirmPayment({
+        clientSecret,
+        confirmParams: {
+          receipt_email: user?.email,
+          return_url: `${env.APP_DOMAIN}/settings/billing?stripe_success=true`,
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "An error occurred";
+      setMessage(message);
+      logger.child({ module: "[handlePaymentForPaymentMethodSelected]" }).error(error);
+    }
+  };
+
+  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: For now, we need to keep this function as is to handle the payment process
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      if (paymentMethod) {
+        await handlePaymentForPaymentMethodSelected();
+        return;
+      }
+
+      setMessage(undefined);
+      if (!productId || !priceId) {
+        throw new Error("Missing productId or priceId");
+      }
+
+      if (!stripe || !elements?.submit) {
+        throw new Error("Stripe not loaded");
+      }
+      // First call elements.submit() to ensure all asynchronous submission/validation is handled
+      const { error: submitError } = await elements.submit();
+      if (submitError) {
+        throw new Error(submitError.message);
+      }
+      const { clientSecret } = await subscriptionCreate.mutateAsync({
+        priceId,
+        productId,
+        frequency,
+      });
+
+      if (!clientSecret) {
+        throw new Error("Client secret not found");
+      }
+      // Update the user license to the new license
+      await updateLicense.mutateAsync({ license });
+
+      // Confirm the payment with PaymentElement and clientSecret
+      const { error } = await stripe.confirmPayment({
+        elements,
+        clientSecret,
+        confirmParams: {
+          save_payment_method: true,
+          receipt_email: user?.email,
+          return_url: `${env.APP_DOMAIN}/settings/billing?stripe_success=true`,
+        },
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "An error occurred";
+      setMessage(message);
+      logger.child({ module: "StripeCheckoutForm" }).error(error);
+    }
+  };
+
+  const paymentElementOptions: PaymentElementProps["options"] = {
+    layout: "tabs",
+  };
+
+  const handleCardSelection = (selectedPaymentMethod: StripePaymentMethod | null) => {
+    setPaymentMethod(selectedPaymentMethod);
+  };
+
+  const handlePlanSelection = (plan: PlanSubscription, newFrequency: SubscriptionsFrequency) => {
+    setSelectedPlan(plan);
+    setFrequency(newFrequency);
+  };
+  return (
+    <div className="bg-background">
+      <h1 className="text-3xl font-bold">Choose your plan</h1>
+      <p className="text-gray-600 pb-4">
+        Select the plan that works best for you. You can change your plan at any time.
+      </p>
+      {plans && defaultPlan && (
+        <PlanTabs plans={plans} value={selectedPlan} frequency={frequency} onChange={handlePlanSelection} />
+      )}
+      <div className="grid pt-4">
+        <h1 className="text-3xl font-bold">Payment Details</h1>
+        <p className="text-gray-600 pb-4">Enter your card information to complete your subscription.</p>
+        {savedCards && savedCards.length > 0 && (
+          <SavedCards methods={savedCards} paymentMethod={paymentMethod} onSelectPaymentMethod={handleCardSelection} />
+        )}
+        <form id="payment-form" onSubmit={handleSubmit} className="flex flex-col py-4 gap-6 text-foreground">
+          <input type="hidden" name="email" value={user?.email} />
+          {!paymentMethod && (
+            <PaymentElement
+              id="payment-element"
+              options={paymentElementOptions}
+              className="grid gap-6"
+              onReady={() => setIsLoadingElements(false)}
+            />
+          )}
+          <Button type="submit" disabled={isLoadingElements} submitting={isSubmitting}>
+            Pay Now
+          </Button>
+          {message && <span className="text-red-500">{message}</span>}
+          {isLoadingElements && <span>Loading...</span>}
+        </form>
+      </div>
+    </div>
+  );
+};
