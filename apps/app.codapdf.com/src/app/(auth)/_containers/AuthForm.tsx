@@ -190,7 +190,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
             className="w-full"
             variant="secondary"
             loading={isGoogleSuccess}
-            onClick={() => (window.location.href = ROUTES.PUBLIC.GITHUB.path)}
+            onClick={() => (window.location.href = ROUTES.PUBLIC.GOOGLE.path)}
           >
             <GoogleIcon className="w-6 h-6" />
             Continue with Google
