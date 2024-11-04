@@ -16,8 +16,8 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN bun migration:run
-RUN bun build
+RUN bun run  build
+RUN bun run migration:run
 
 # Production image, copy all the files and run next
 FROM base AS runner
