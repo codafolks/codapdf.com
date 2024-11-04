@@ -5,7 +5,12 @@ import { AuthSignUpForm } from "@/app/(auth)/_components/AuthSignUpForm";
 import { ROUTES } from "@/app/routes";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useForgotPassword, useLogin, useResetPassword, useSignup } from "@/client/queries/authentication";
+import {
+  useForgotPassword,
+  useLogin,
+  useResetPassword,
+  useSignup,
+} from "@/client/queries/authentication";
 import {
   type AuthForgotPasswordInput,
   type AuthInput,
@@ -84,7 +89,11 @@ const AuthForm = ({ type }: AuthFormProps) => {
     schema: authSchemas[type],
   });
   const [apiError, setApiError] = useState<string | null>(null);
-  const isSubmitting = login.isPending || signup.isPending || forgotPassword.isPending || resetPassword.isPending;
+  const isSubmitting =
+    login.isPending ||
+    signup.isPending ||
+    forgotPassword.isPending ||
+    resetPassword.isPending;
 
   if (type === "reset-password") {
     form.setValue("token", token as string);
@@ -104,11 +113,15 @@ const AuthForm = ({ type }: AuthFormProps) => {
         await forgotPassword.mutateAsync(data as AuthForgotPasswordInput);
         toast({
           title: "Email sent",
-          description: "An email has been sent with instructions to reset your password",
+          description:
+            "An email has been sent with instructions to reset your password",
         });
       },
       "reset-password": async (data: AuthInput) => {
-        await resetPassword.mutateAsync({ ...data, token } as AuthResetPasswordInput);
+        await resetPassword.mutateAsync({
+          ...data,
+          token,
+        } as AuthResetPasswordInput);
         toast({
           title: "Password reset",
           description: "Your password has been successfully reset",
@@ -116,7 +129,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
         router.push(ROUTES.AUTH.LOGIN.path);
       },
     }),
-    [forgotPassword, login, resetPassword, router, signup, toast, token],
+    [forgotPassword, login, resetPassword, router, signup, toast, token]
   );
 
   const onSubmit = form.handleSubmit(async (data: AuthInput) => {
@@ -124,7 +137,8 @@ const AuthForm = ({ type }: AuthFormProps) => {
       setApiError(null);
       await submitForm[type](data);
     } catch (error) {
-      const message = error instanceof Error ? error.message : "An error occurred";
+      const message =
+        error instanceof Error ? error.message : "An error occurred";
       setApiError(message);
     }
   });
@@ -135,7 +149,11 @@ const AuthForm = ({ type }: AuthFormProps) => {
       className="grid w-full gap-4 bg-background text-foreground p-8 shadow-sm border rounded-md"
     >
       <h2 className="text-2xl font-bold">{titleMap[type]}</h2>
-      {apiError && <div className="rounded-md bg-red-100 p-2 text-center text-red-500">{apiError}</div>}
+      {apiError && (
+        <div className="rounded-md bg-red-100 p-2 text-center text-red-500">
+          {apiError}
+        </div>
+      )}
       <div className="grid gap-4">{formMap[type](form)}</div>
       {(type === "login" || type === "signup") && (
         <div className="flex justify-between">
@@ -161,17 +179,21 @@ const AuthForm = ({ type }: AuthFormProps) => {
             className="w-full"
             variant="secondary"
             onClick={() => {
-              router.replace(ROUTES.PUBLIC.GITHUB.path);
+              window.location.href = ROUTES.PUBLIC.GITHUB.path;
             }}
           >
             <GitHubLogoIcon className="w-6 h-6" />
             Continue with GitHub
           </Button>
-          <Button type="button" className="w-full" variant="secondary" loading={isGoogleSuccess} asChild>
-            <Link href={ROUTES.PUBLIC.GOOGLE.path}>
-              <GoogleIcon className="w-6 h-6" />
-              Continue with Google
-            </Link>
+          <Button
+            type="button"
+            className="w-full"
+            variant="secondary"
+            loading={isGoogleSuccess}
+            onClick={() => (window.location.href = ROUTES.PUBLIC.GITHUB.path)}
+          >
+            <GoogleIcon className="w-6 h-6" />
+            Continue with Google
           </Button>
         </div>
       ) : null}
