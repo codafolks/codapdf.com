@@ -1,7 +1,8 @@
 import pino, { type Logger } from "pino";
 
+const isProd = process.env.APP_DOMAIN?.includes("https://")
 export const logger: Logger =
-  process.env["NODE_ENV"] === "production"
+    isProd
     ? // JSON in production
       pino({ level: "warn" })
     : // Pretty print in development
