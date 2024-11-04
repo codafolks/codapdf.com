@@ -1,10 +1,10 @@
 import { env } from "@/constants/env.server";
 import { saveSession } from "@/server/actions/auth/authSession";
-import { sendWelcomeEmail } from "@/server/actions/emails/sendWelcomeEmail";
+import { signupFromSocialAuth } from "@/server/actions/auth/signupFromSocialAuth";
 import { getUserById } from "@/server/actions/users/getUserById";
 import { db } from "@/server/database";
 import { authentications } from "@/server/database/schemas/authentications";
-import { profiles, users } from "@/server/database/schemas/users";
+import { users } from "@/server/database/schemas/users";
 import { GitHubUser } from "@/server/types/GitHubUser";
 import { GitHubUserEmail } from "@/server/types/GitHubUserEmail";
 import { logger } from "@/server/utils/logger";
@@ -61,6 +61,7 @@ export const authByGithub = async (code: string | null) => {
   const providerId = userData.id.toString();
   const provider = "github";
   const email = primaryEmail;
+  const picture = userData.avatar_url;
 
   const auth = await db.query.authentications.findFirst({
     where: and(eq(authentications.providerId, providerId), eq(authentications.provider, provider)),
@@ -69,38 +70,11 @@ export const authByGithub = async (code: string | null) => {
   const user = await db.query.users.findFirst({
     where: eq(users.email, primaryEmail),
   });
-  
-  if (!user) {
-    const newUser = await db.transaction(async (trx) => {
-      // create a new user
-      const [user] = await trx
-        .insert(users)
-        .values({
-          email,
-          name: userName,
-          image: userData.avatar_url,
-        })
-        .returning({
-          id: users.id,
-        })
-        .execute();
-        
-      // create a new profile
-      await trx.insert(profiles).values({
-        userId: user.id,
-      }).execute();
-      // create a new authentication
-      await trx.insert(authentications).values({
-        provider,
-        providerId,
-        userId: user.id,
-      }).execute();
-      return user;
-    });
 
+  if (!user) {
+    const newUser = await signupFromSocialAuth({ email, name: userName, provider, providerId, picture });
     const userDTO = await getUserById(newUser.id);
     await saveSession(userDTO);
-    sendWelcomeEmail({ email, name: userName });
     return "Successfully authenticated";
   }
   // create a new authentication if it doesn't exist

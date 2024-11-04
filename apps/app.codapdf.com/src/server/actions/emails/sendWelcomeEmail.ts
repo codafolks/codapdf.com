@@ -1,6 +1,6 @@
 import { env } from "@/constants/env.server";
 import WelcomeEmail from "@/emails/auth/Welcome";
-import { logger } from "@/server/utils/logger";
+import { captureException } from "@sentry/nextjs";
 import { Resend } from "resend";
 
 type SendWelcomeEmail = {
@@ -17,6 +17,6 @@ export const sendWelcomeEmail = async ({ email, name }: SendWelcomeEmail) => {
       react: WelcomeEmail({ name }),
     });
   } catch (error) {
-    logger.child({ module: "sendWelcomeEmail" }).error(error);
+    captureException(error);
   }
 };

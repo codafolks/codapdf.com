@@ -4,7 +4,7 @@ import { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions"
 import { PlanSubscription } from "@/server/static/plansSubscription";
 
 import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe, StripeElementsOptions } from "@stripe/stripe-js";
+import { StripeElementsOptions, loadStripe } from "@stripe/stripe-js";
 
 const elementOptions: StripeElementsOptions = {
   amount: 0,

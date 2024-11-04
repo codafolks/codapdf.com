@@ -1,7 +1,7 @@
-import { useToast } from "@/components/ui/use-toast";
 import { useUser, useUserUpdate } from "@/client/queries/users";
-import { userZodSchema } from "@/server/database/schemas/users";
 import { useZodForm } from "@/client/utils/useZodForm";
+import { useToast } from "@/components/ui/use-toast";
+import { userZodSchema } from "@/server/database/schemas/users";
 import { useEffect } from "react";
 
 type UseUserProfileController = {

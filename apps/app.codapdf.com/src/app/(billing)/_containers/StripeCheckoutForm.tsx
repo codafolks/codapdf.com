@@ -1,20 +1,20 @@
-import { env } from "@/constants/env.client";
 import {
   StripePaymentMethod,
   useStripePaymentMethods,
   useStripeSubscriptionCreate,
   useStripeSubscriptionPlans,
 } from "@/client/queries/stripe";
+import { env } from "@/constants/env.client";
 
+import { PlanTabs } from "@/app/(billing)/_components/PlanTabs";
+import { SavedCards } from "@/app/(billing)/_components/SavedCards";
+import { Button } from "@/client/components/ui/button";
 import { useUser, useUserLicenseUpdate, useUserUpdate } from "@/client/queries/users";
+import { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
+import { PlanSubscription } from "@/server/static/plansSubscription";
 import { logger } from "@/server/utils/logger";
 import { PaymentElement, type PaymentElementProps, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useState } from "react";
-import { PlanTabs } from "@/app/(billing)/_components/PlanTabs";
-import { PlanSubscription } from "@/server/static/plansSubscription";
-import { Button } from "@/client/components/ui/button";
-import { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
-import { SavedCards } from "@/app/(billing)/_components/SavedCards";
 
 type StripeCheckoutFormProps = {
   defaultPlan: PlanSubscription;

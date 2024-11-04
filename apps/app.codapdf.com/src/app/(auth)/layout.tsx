@@ -1,8 +1,8 @@
-import { ParticleBackground } from "@/components/app/ParticleBackground";
+import { AppLogo } from "@/client/components/app/AppLogo";
 import { TRCProvider } from "@/client/providers/TRCProvider";
+import { ParticleBackground } from "@/components/app/ParticleBackground";
 import { getSessionToken } from "@/server/actions/auth/authSession";
 import { Suspense, use } from "react";
-import { AppLogo } from "@/client/components/app/AppLogo";
 
 type AuthLayoutProps = {
   children: React.ReactNode;

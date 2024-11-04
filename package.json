@@ -1,5 +1,5 @@
 {
   "name": "codapdf",
   "private": true,
-  "workspaces": ["apps/app.codapdf.com/*", "apps/services.codapdf.com/*"]
+  "workspaces": ["apps/*"]
 }

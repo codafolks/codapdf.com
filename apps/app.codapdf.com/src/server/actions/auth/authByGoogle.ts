@@ -1,10 +1,11 @@
 import { env } from "@/constants/env.server";
 import { saveSession } from "@/server/actions/auth/authSession";
+import { signupFromSocialAuth } from "@/server/actions/auth/signupFromSocialAuth";
 import { sendWelcomeEmail } from "@/server/actions/emails/sendWelcomeEmail";
 import { getUserById } from "@/server/actions/users/getUserById";
 import { db } from "@/server/database";
 import { authentications } from "@/server/database/schemas/authentications";
-import { profiles, users } from "@/server/database/schemas/users";
+import { users } from "@/server/database/schemas/users";
 import { GoogleResponseToken } from "@/server/types/GoogleResponseToken";
 import { GoogleUserInfoResponseSuccess } from "@/server/types/GoogleUserInfoResponseSuccess";
 import { and, eq } from "drizzle-orm";
@@ -69,6 +70,7 @@ export const authByGoogle = async (code: string | null, state: string | null) =>
   const providerId = userData.id;
   const provider = "google";
   const email = primaryEmail;
+  const picture = userData.picture;
 
   const auth = await db.query.authentications.findFirst({
     where: and(eq(authentications.providerId, providerId), eq(authentications.provider, provider)),
@@ -79,30 +81,7 @@ export const authByGoogle = async (code: string | null, state: string | null) =>
   });
 
   if (!user) {
-    const newUser = await db.transaction(async (trx) => {
-      // create a new user
-      const [user] = await trx
-        .insert(users)
-        .values({
-          email,
-          name: userName,
-          image: userData.picture,
-        })
-        .returning({
-          id: users.id,
-        }).execute();
-      // create a new profile
-      await trx.insert(profiles).values({
-        userId: newUser.id,
-      }).execute();
-      // create a new authentication
-      await trx.insert(authentications).values({
-        provider,
-        providerId,
-        userId: newUser.id,
-      }).execute();
-      return user;
-    });
+    const newUser = await signupFromSocialAuth({ email, name: userName, provider, providerId, picture });
     const userDTO = await getUserById(newUser.id);
     await saveSession(userDTO);
     await sendWelcomeEmail({ email, name: userName });

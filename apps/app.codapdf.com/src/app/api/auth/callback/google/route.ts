@@ -31,5 +31,3 @@ export const GET = async (req: NextRequest) => {
     return Response.redirect(`${env.APP_DOMAIN}/${ROUTES.AUTH.LOGIN.path}`);
   }
 };
-
-

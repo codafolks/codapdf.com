@@ -1,9 +1,9 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BillingToggle } from "@/app/(billing)/_components/BillingToggle";
 import { PlanFeatures } from "@/app/(billing)/_components/PlanFeatures";
-import { PlanSubscription } from "@/server/static/plansSubscription";
 import { toMoney } from "@/client/utils/toMoney";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
+import { PlanSubscription } from "@/server/static/plansSubscription";
 
 interface PlanPrice {
   monthly: string;

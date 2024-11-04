@@ -1,9 +1,9 @@
 "use client";
-import Lottie from "lottie-react";
-import animatedWhiteLogo from "@/app/(marketing)/_data/animatedWhiteLogo.json";
 import animatedBlackLogo from "@/app/(marketing)/_data/animatedBlackLogo.json";
-import { useEffect, useState } from "react";
+import animatedWhiteLogo from "@/app/(marketing)/_data/animatedWhiteLogo.json";
 import { cn } from "@/client/lib/utils";
+import Lottie from "lottie-react";
+import { useEffect, useState } from "react";
 
 const isAnimated = typeof window !== "undefined" && window.localStorage.getItem("animated") === "true";
 const theme = typeof window !== "undefined" && window.localStorage.getItem("coda-theme");

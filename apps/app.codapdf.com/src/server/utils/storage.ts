@@ -1,6 +1,7 @@
 import "server-only";
 import type { Readable } from "node:stream";
 import { env } from "@/constants/env.server";
+import { logger } from "@/server/utils/logger";
 import {
   DeleteObjectsCommand,
   GetObjectCommand,
@@ -9,13 +10,12 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 import type {
-  GetObjectCommandInput,
-  PutObjectCommandInput,
-  NotFound,
-  S3ServiceException,
   DeleteObjectCommandInput,
+  GetObjectCommandInput,
+  NotFound,
+  PutObjectCommandInput,
+  S3ServiceException,
 } from "@aws-sdk/client-s3";
-import { logger } from "@/server/utils/logger";
 
 const s3Client = new S3Client({
   region: env.STORAGE_REGION,

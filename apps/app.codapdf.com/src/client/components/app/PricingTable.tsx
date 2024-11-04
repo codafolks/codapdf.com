@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { PlanSubscription } from "@/server/static/plansSubscription";
-import { cn } from "@/client/lib/utils";
-import { Switch } from "@/client/components/ui/switch";
 import { PricingTableCard } from "@/client/components/app/PricingTableCard";
+import { Switch } from "@/client/components/ui/switch";
+import { cn } from "@/client/lib/utils";
 import { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
+import { PlanSubscription } from "@/server/static/plansSubscription";
+import { useState } from "react";
 
 interface PricingTableProps {
   currentPlan?: PlanSubscription["nickname"];

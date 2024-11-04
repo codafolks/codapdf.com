@@ -3,7 +3,7 @@ import { relations, sql } from "drizzle-orm";
 import { jsonb, pgTable, serial, text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
 import { z } from "zod";
 
-import { createSelectSchema, createInsertSchema } from "drizzle-zod";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 export const templates = pgTable(
   "templates",

@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 
+import { FileNameForm } from "@/app/(main)/templates/_components/FileNameForm";
 import { cn } from "@/client/lib/utils";
-import { FilePlus, File, X, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { FileNameForm } from "@/app/(main)/templates/_components/FileNameForm";
+import { File, FilePlus, Pencil, X } from "lucide-react";
 
 export interface EditorFileData {
   filename: string;

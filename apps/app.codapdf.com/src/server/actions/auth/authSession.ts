@@ -3,11 +3,11 @@ import { generateJwt } from "@/server/actions/auth/generateJwt";
 import { verifyJwt } from "@/server/actions/auth/verifyJwt";
 import { License } from "@/server/database/schemas/licenses";
 
+import { convertUser2UserSession } from "@/server/actions/auth/convertUser2UserSession";
+import { UserDTO } from "@/server/actions/users/getUserById";
 import { logger } from "@/server/utils/logger";
 import type { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import { cookies } from "next/headers";
-import { convertUser2UserSession } from "@/server/actions/auth/convertUser2UserSession";
-import { UserDTO } from "@/server/actions/users/getUserById";
 
 export const authSessionConfig = {
   cookieName: "session",

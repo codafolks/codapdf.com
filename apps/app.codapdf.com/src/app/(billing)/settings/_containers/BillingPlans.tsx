@@ -2,14 +2,14 @@
 
 import { StripeCheckoutDialog } from "@/app/(billing)/_components/StripeCheckoutDialog";
 
-import { useState } from "react";
-import { PricingTable } from "@/client/components/app/PricingTable";
-import { PlanSubscription } from "@/server/static/plansSubscription";
-import { StripePlan, useStripeSubscriptionCancel } from "@/client/queries/stripe";
 import { CancelSubscriptionDialog } from "@/app/(billing)/_components/CancelSubscriptionDialog";
+import { PricingTable } from "@/client/components/app/PricingTable";
 import { useToast } from "@/client/components/ui/use-toast";
+import { StripePlan, useStripeSubscriptionCancel } from "@/client/queries/stripe";
 import { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
+import { PlanSubscription } from "@/server/static/plansSubscription";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 type BillingPlansProps = {
   activePlan?: StripePlan;

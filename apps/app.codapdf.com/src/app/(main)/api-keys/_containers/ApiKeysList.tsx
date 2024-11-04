@@ -1,7 +1,7 @@
+import { useApiKeys } from "@/client/queries/apiKeys";
 import { DataTable } from "@/components/app/DataTable";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { useApiKeys } from "@/client/queries/apiKeys";
 import type { ApiKey } from "@/server/database/schemas/apiKeys";
 import type { ColumnDef } from "@tanstack/react-table";
 import { formatDate } from "date-fns";

@@ -5,8 +5,8 @@ import { InputController, TextareaController } from "@/components/app/forms";
 
 import { Form } from "@/components/ui/form";
 
-import { type Template, templateOnSelectZodSchema } from "@/server/database/schemas/templates";
 import { useZodForm } from "@/client/utils/useZodForm";
+import { type Template, templateOnSelectZodSchema } from "@/server/database/schemas/templates";
 
 type TemplateDialogFormProps = {
   template?: Pick<Template, "name" | "description">;

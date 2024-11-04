@@ -1,18 +1,18 @@
 "use client";
 
-import { html } from "@codemirror/lang-html";
-import { css } from "@codemirror/lang-css";
-import { json } from "@codemirror/lang-json";
-import { javascript } from "@codemirror/lang-javascript";
 import { history } from "@codemirror/commands";
+import { css } from "@codemirror/lang-css";
+import { html } from "@codemirror/lang-html";
+import { javascript } from "@codemirror/lang-javascript";
+import { json } from "@codemirror/lang-json";
 import { vscodeDark, vscodeLight } from "@uiw/codemirror-theme-vscode";
 
 import CodeMirror from "@uiw/react-codemirror";
 
-import { useMemo } from "react";
 import type { EditorFileData, EditorFiles } from "@/app/(main)/templates/_components/FileSidebar";
 import { cn } from "@/client/lib/utils";
 import { useTheme } from "next-themes";
+import { useMemo } from "react";
 
 interface CodeEditorProps {
   onChange: (value: string) => void;

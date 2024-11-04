@@ -1,16 +1,16 @@
-import { protectedProcedure } from "@/server/trpc/procedures/protectedProcedure";
+import { templateExamples } from "@/app/(main)/templates/_data/templates";
 import { convertHtmlToPDF } from "@/server/actions/templates/convertHtmlToPDF";
+import { deleteTemplate } from "@/server/actions/templates/deleteTemplate";
+import { getTemplateById } from "@/server/actions/templates/getTemplateById";
+import { listTemplates } from "@/server/actions/templates/listTemplates";
+import { saveTemplate } from "@/server/actions/templates/saveTemplate";
 import {
   templateOnFetchZodSchema,
   templateOnSaveZodSchema,
   templateOnSelectZodSchema,
 } from "@/server/database/schemas/templates";
+import { protectedProcedure } from "@/server/trpc/procedures/protectedProcedure";
 import { z } from "zod";
-import { saveTemplate } from "@/server/actions/templates/saveTemplate";
-import { deleteTemplate } from "@/server/actions/templates/deleteTemplate";
-import { listTemplates } from "@/server/actions/templates/listTemplates";
-import { getTemplateById } from "@/server/actions/templates/getTemplateById";
-import { templateExamples } from "@/app/(main)/templates/_data/templates";
 
 export const templateRouter = {
   getSampleById: protectedProcedure

@@ -1,5 +1,5 @@
-import { Menu } from "@/components/app/Menu";
 import type { HeaderAction } from "@/client/stores/useHeaderActionsStore";
+import { Menu } from "@/components/app/Menu";
 
 type HeaderActionsActionsProps = {
   actions: Array<HeaderAction>;

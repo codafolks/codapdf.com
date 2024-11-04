@@ -1,28 +1,28 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import { EditorFileData, EditorFiles, FileSidebar } from "@/app/(main)/templates/_components/FileSidebar";
+import { CheckTemplatePlanSupport } from "@/app/(main)/templates/_components/CheckTemplatePlanSupport";
 import { CodeEditor } from "@/app/(main)/templates/_components/CodeEditor";
 import { EditorTabs } from "@/app/(main)/templates/_components/EditorTabs";
-import { TemplatePreview } from "@/app/(main)/templates/_components/TemplatePreview";
-import { Button } from "@/components/ui/button";
-import { PanelLeft } from "lucide-react";
-import type { TemplateSourceId } from "@/app/(main)/templates/_utils/getTemplateSourceId";
-import { useTemplateById, useTemplateConvertHtml2PDF, useTemplateSave } from "@/client/queries/templates";
-import { useHeaderActions } from "@/client/hooks/useHeaderActions";
+import { EditorFileData, EditorFiles, FileSidebar } from "@/app/(main)/templates/_components/FileSidebar";
 import { TemplateDialogForm } from "@/app/(main)/templates/_components/TemplateDialogForm";
-import { ROUTES } from "@/app/routes";
-import { HTML_PLACEHOLDER } from "@/app/(main)/templates/_data/HTML_PLACEHOLDER";
-import { useToast } from "@/components/ui/use-toast";
-import { renderTemplateData } from "@/app/(main)/templates/_utils/renderTemplateData";
-import { isJsonString } from "@/app/(main)/templates/_utils/isJsonString";
-import { generateTemplateThumbnail } from "@/app/(main)/templates/_utils/generateTemplateThumbnail";
-import { STYLES_PLACEHOLDER } from "@/app/(main)/templates/_data/STYLES_PLACEHOLDER";
+import { TemplatePreview } from "@/app/(main)/templates/_components/TemplatePreview";
 import { DATA_JSON_PLACEHOLDER } from "@/app/(main)/templates/_data/DATA_JSON_PLACEHOLDER";
+import { HTML_PLACEHOLDER } from "@/app/(main)/templates/_data/HTML_PLACEHOLDER";
+import { STYLES_PLACEHOLDER } from "@/app/(main)/templates/_data/STYLES_PLACEHOLDER";
+import { generateTemplateThumbnail } from "@/app/(main)/templates/_utils/generateTemplateThumbnail";
+import type { TemplateSourceId } from "@/app/(main)/templates/_utils/getTemplateSourceId";
+import { isJsonString } from "@/app/(main)/templates/_utils/isJsonString";
+import { renderTemplateData } from "@/app/(main)/templates/_utils/renderTemplateData";
+import { ROUTES } from "@/app/routes";
+import { useHeaderActions } from "@/client/hooks/useHeaderActions";
+import { useTemplateById, useTemplateConvertHtml2PDF, useTemplateSave } from "@/client/queries/templates";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import { TemplateOnSavePayload } from "@/server/database/schemas/templates";
+import { PanelLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { CheckTemplatePlanSupport } from "@/app/(main)/templates/_components/CheckTemplatePlanSupport";
+import { useEffect, useRef, useState } from "react";
+import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 
 type TemplateBuilderProps = {
   sourceId?: TemplateSourceId;

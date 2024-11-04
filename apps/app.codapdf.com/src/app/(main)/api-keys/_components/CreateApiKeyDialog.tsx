@@ -1,10 +1,10 @@
+import { useApiKeys, useApiKeysCreate } from "@/client/queries/apiKeys";
+import { useZodForm } from "@/client/utils/useZodForm";
 import { InputController } from "@/components/app/forms";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
-import { useApiKeys, useApiKeysCreate } from "@/client/queries/apiKeys";
 import { apiKeyZodCreateSchema } from "@/server/database/schemas/apiKeys";
-import { useZodForm } from "@/client/utils/useZodForm";
 
 type CreateApiKeyDialogProps = {
   open: boolean;

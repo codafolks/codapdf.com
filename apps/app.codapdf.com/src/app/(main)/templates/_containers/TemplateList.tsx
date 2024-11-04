@@ -1,20 +1,20 @@
 "use client";
 
 import { TemplateItemCard } from "@/app/(main)/templates/_components/TemplateItemCard";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/client/lib/utils";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import { templateExamples } from "@/app/(main)/templates/_data/templates";
 import { ROUTES } from "@/app/routes";
-import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTemplateDelete, useTemplateList } from "@/client/queries/templates";
 import { DeleteDialog } from "@/components/app/DeleteDialog";
-import { useRef, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
-import { getQueryKey } from "@trpc/react-query";
 import { trpcClient } from "@/server/trpc/trpcClient";
 import { useQueryClient } from "@tanstack/react-query";
-import { templateExamples } from "@/app/(main)/templates/_data/templates";
+import { getQueryKey } from "@trpc/react-query";
+import Link from "next/link";
+import { useRef, useState } from "react";
 
 export const TemplateList = () => {
   const queryClient = useQueryClient();

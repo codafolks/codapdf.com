@@ -1,7 +1,7 @@
+import { useZodForm } from "@/client/utils/useZodForm";
 import { useToast } from "@/components/ui/use-toast";
 import { updateAccountPassword } from "@/server/actions/auth/updateAccountPassword";
 import { accountUpdatePasswordZodSchema } from "@/server/schemas/accountUpdatePasswordZodSchema";
-import { useZodForm } from "@/client/utils/useZodForm";
 
 export const useAccountUpdatePasswordFormController = () => {
   const { toast } = useToast();

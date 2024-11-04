@@ -1,8 +1,8 @@
 import { EditorFiles } from "@/app/(main)/templates/_components/FileSidebar";
+import { cn } from "@/client/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cn } from "@/client/lib/utils";
 import { X } from "lucide-react";
 
 type EditorTabsProps = {

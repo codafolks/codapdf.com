@@ -1,8 +1,8 @@
 "use client";
 import { ROUTES } from "@/app/routes";
+import { cn } from "@/client/lib/utils";
 import { Menu } from "@/components/app/Menu";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/client/lib/utils";
 import type { Template } from "@/server/database/schemas/templates";
 import Image from "next/image";
 import Link from "next/link";
