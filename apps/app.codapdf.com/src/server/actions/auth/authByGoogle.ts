@@ -1,7 +1,6 @@
 import { env } from "@/constants/env.server";
 import { saveSession } from "@/server/actions/auth/authSession";
 import { signupFromSocialAuth } from "@/server/actions/auth/signupFromSocialAuth";
-import { sendWelcomeEmail } from "@/server/actions/emails/sendWelcomeEmail";
 import { getUserById } from "@/server/actions/users/getUserById";
 import { db } from "@/server/database";
 import { authentications } from "@/server/database/schemas/authentications";
@@ -10,6 +9,7 @@ import { GoogleResponseToken } from "@/server/types/GoogleResponseToken";
 import { GoogleUserInfoResponseSuccess } from "@/server/types/GoogleUserInfoResponseSuccess";
 import { and, eq } from "drizzle-orm";
 import { cookies } from "next/headers";
+import { z } from "zod";
 
 const GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
 const GOOGLE_USERINFO_URL = "https://www.googleapis.com/oauth2/v2/userinfo";
@@ -24,6 +24,7 @@ export const authByGoogle = async (code: string | null, state: string | null) =>
   if (state !== oauthState) {
     throw new Error("Invalid state");
   }
+
   cookie.delete("oauth_state");
 
   const tokenResponse = await fetch(GOOGLE_TOKEN_URL, {
@@ -47,6 +48,10 @@ export const authByGoogle = async (code: string | null, state: string | null) =>
 
   const { access_token } = tokenResponseData;
 
+  if(typeof access_token !== "string") {
+    throw new Error("Failed to get access token");
+  }
+
   const response = await fetch(GOOGLE_USERINFO_URL, {
     headers: { Authorization: `Bearer ${access_token}` },
   });
@@ -56,27 +61,24 @@ export const authByGoogle = async (code: string | null, state: string | null) =>
   }
 
   const userData = (await response.json()) as GoogleUserInfoResponseSuccess;
-
-  // Find the primary email (or any verified email)
-  const primaryEmail = userData.email;
   const userName = userData.name;
+  const provider = "google";
+  const email = userData.email;
+  const picture = userData?.picture;
+  const providerId = userData.id;
 
-  if (typeof primaryEmail !== "string" || typeof userName !== "string") {
+  const isEmail = await z.string().email().parseAsync(email);
+  if (!email || !isEmail || !userName) {
     throw new Error("Failed to get primary email or name");
   }
-
-  const providerId = userData.id;
-  const provider = "google";
-  const email = primaryEmail;
-  const picture = userData.picture;
-
+  
   const auth = await db.query.authentications.findFirst({
     where: and(eq(authentications.providerId, providerId), eq(authentications.provider, provider)),
-  });
+  }).execute();
   // check if user already exists in the database
   const user = await db.query.users.findFirst({
-    where: eq(users.email, primaryEmail),
-  });
+    where: eq(users.email, email),
+  }).execute();
 
   if (!user?.id) {
     const userDTO = await signupFromSocialAuth({ email, name: userName, provider, providerId, picture });
