@@ -7,9 +7,9 @@ export const GET = (async (req: NextRequest) => {
     const url = new URL(req.url);
     const code = url.searchParams.get("code");
     await authByGithub(code);
-    return Response.redirect(new URL(ROUTES.PRIVATE.DASHBOARD.path, req.url));
+    return Response.redirect(new URL(ROUTES.PRIVATE.DASHBOARD.path, req.nextUrl.origin));
   } catch (error) {
     captureException(error);
-    return Response.redirect(new URL(ROUTES.AUTH.LOGIN.path, req.url));
+    return Response.redirect(new URL(ROUTES.AUTH.LOGIN.path, req.nextUrl.origin));
   }
 });
