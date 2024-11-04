@@ -78,19 +78,18 @@ export const authByGoogle = async (code: string | null, state: string | null) =>
     where: eq(users.email, primaryEmail),
   });
 
-  if (!user) {
+  if (!user?.id) {
     const userDTO = await signupFromSocialAuth({ email, name: userName, provider, providerId, picture });
     await saveSession(userDTO);
-    await sendWelcomeEmail({ email, name: userName });
     return "Successfully authenticated";
   }
   // create a new authentication if it doesn't exist
-  if (!auth) {
+  if (!auth?.id) {
     await db.insert(authentications).values({
       provider,
       providerId,
       userId: user.id,
-    });
+    }).execute();
   }
   const userDTO = await getUserById(user.id);
   await saveSession(userDTO);
