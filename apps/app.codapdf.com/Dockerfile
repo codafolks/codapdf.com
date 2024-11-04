@@ -26,8 +26,8 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Fetch secrets from Doppler
+RUN bun run env:${RAILWAY_ENVIRONMENT}
 
-RUN doppler run -p codapdf -c ${RAILWAY_ENVIRONMENT} -- doppler secrets substitute .env.template.yaml --output .env
 # Build the source code and run migrations
 RUN bun run build && bun run migration:run
 
