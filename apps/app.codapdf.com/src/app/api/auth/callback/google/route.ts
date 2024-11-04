@@ -1,4 +1,5 @@
 import { ROUTES } from "@/app/routes";
+import { env } from "@/constants/env.server";
 import { authByGoogle } from "@/server/actions/auth/authByGoogle";
 import { logger } from "@/server/utils/logger";
 import { NextRequest, NextResponse } from "next/server";
@@ -27,6 +28,8 @@ export const GET = async (req: NextRequest) => {
     });
   } catch (error) {
     logger.child({ module: "authByGithub" }).error(error);
-    return Response.redirect(new URL(ROUTES.AUTH.LOGIN.path, req.url));
+    return Response.redirect(`${env.APP_DOMAIN}/${ROUTES.AUTH.LOGIN.path}`);
   }
 };
+
+
