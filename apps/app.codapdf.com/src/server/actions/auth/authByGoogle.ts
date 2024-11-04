@@ -18,14 +18,12 @@ export const authByGoogle = async (code: string | null, state: string | null) =>
   if (!code || !state) {
     throw new Error("No code or state provided");
   }
-
   const cookie = await cookies();
   const oauthState = cookie.get("oauth_state")?.value;
 
   if (state !== oauthState) {
     throw new Error("Invalid state");
   }
-
   cookie.delete("oauth_state");
 
   const tokenResponse = await fetch(GOOGLE_TOKEN_URL, {
@@ -42,7 +40,7 @@ export const authByGoogle = async (code: string | null, state: string | null) =>
     }),
   });
 
-  const tokenResponseData = (await tokenResponse.json()) as GoogleResponseToken;
+  const tokenResponseData = await tokenResponse.json() as GoogleResponseToken;
   if (!tokenResponseData || "error" in tokenResponseData) {
     throw new Error("Failed to get token");
   }
@@ -81,8 +79,7 @@ export const authByGoogle = async (code: string | null, state: string | null) =>
   });
 
   if (!user) {
-    const newUser = await signupFromSocialAuth({ email, name: userName, provider, providerId, picture });
-    const userDTO = await getUserById(newUser.id);
+    const userDTO = await signupFromSocialAuth({ email, name: userName, provider, providerId, picture });
     await saveSession(userDTO);
     await sendWelcomeEmail({ email, name: userName });
     return "Successfully authenticated";

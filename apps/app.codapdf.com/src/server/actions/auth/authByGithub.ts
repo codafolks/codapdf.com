@@ -72,8 +72,7 @@ export const authByGithub = async (code: string | null) => {
   });
 
   if (!user) {
-    const newUser = await signupFromSocialAuth({ email, name: userName, provider, providerId, picture });
-    const userDTO = await getUserById(newUser.id);
+    const userDTO = await signupFromSocialAuth({ email, name: userName, provider, providerId, picture });
     await saveSession(userDTO);
     return "Successfully authenticated";
   }

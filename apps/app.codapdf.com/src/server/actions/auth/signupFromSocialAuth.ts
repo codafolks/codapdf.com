@@ -1,4 +1,5 @@
 import { sendWelcomeEmail } from "@/server/actions/emails/sendWelcomeEmail";
+import { getUserById } from "@/server/actions/users/getUserById";
 import { db } from "@/server/database";
 import { AuthProvider, authentications } from "@/server/database/schemas/authentications";
 import { profiles, users } from "@/server/database/schemas/users";
@@ -43,5 +44,6 @@ export const signupFromSocialAuth = async ({ email, name, picture, provider, pro
     return user;
   });
   await sendWelcomeEmail({ email, name });
-  return newUser;
+  const userDTO  = await getUserById(newUser.id);
+  return  userDTO
 };

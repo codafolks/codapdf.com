@@ -3,11 +3,15 @@ import animatedBlackLogo from "@/app/(marketing)/_data/animatedBlackLogo.json";
 import animatedWhiteLogo from "@/app/(marketing)/_data/animatedWhiteLogo.json";
 import { cn } from "@/client/lib/utils";
 import Lottie from "lottie-react";
+import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
-const isAnimated = typeof window !== "undefined" && window.localStorage.getItem("animated") === "true";
-const theme = typeof window !== "undefined" && window.localStorage.getItem("coda-theme");
+const isAnimated =
+  typeof window !== "undefined" &&
+  window.localStorage.getItem("animated") === "true";
+
 export const AnimatedIntro = () => {
+  const { theme } = useTheme();
   const [hidden, setHidden] = useState(isAnimated);
   const [animation, setAnimation] = useState<string>();
 
@@ -27,7 +31,7 @@ export const AnimatedIntro = () => {
     <div
       className={cn(
         "h-screen w-screen fixed top-0 left-0 bg-background z-50 flex items-center justify-center  transition-opacity duration-500 ease-out",
-        animation,
+        animation
       )}
     >
       <Lottie animationData={animatedLogo} loop={false} />

@@ -20,12 +20,12 @@ export const GET = async (req: NextRequest) => {
     const code = url.searchParams.get("code");
     const state = url.searchParams.get("state");
     await authByGoogle(code, state);
-    return new NextResponse(reload, {
+    return new Response(reload, {
       status: 200,
       headers: {
         "Content-Type": "text/html",
       },
-    });
+    })
   } catch (error) {
     captureException(error);
     return Response.redirect(`${env.APP_DOMAIN}/${ROUTES.AUTH.LOGIN.path}`);

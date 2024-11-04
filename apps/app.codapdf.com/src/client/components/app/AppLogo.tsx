@@ -14,7 +14,6 @@ export const AppLogo = ({ className }: AppLogoProps) => {
   /* NOTE: This is a workaround to avoid the hydration mismatch error when using next-themes 
     with SSR. This error occurs because the theme is not available on the server and the client
   */
-
   useEffect(() => {
     setIsDarkMode(theme === "dark");
   }, [theme]);
