@@ -50,6 +50,9 @@ WORKDIR /app
 # Set variables
 ARG RAILWAY_ENVIRONMENT
 ENV ENVIRONMENT=${RAILWAY_ENVIRONMENT}
+
+COPY .env.template.yaml  /app/.env.template.yaml
+
 RUN doppler run -p codapdf -c ${ENVIRONMENT}_services -- doppler secrets substitute .env.template.yaml --output .env
 
 # Upgrade pip
