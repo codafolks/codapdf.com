@@ -29,7 +29,7 @@ export const signupFromSocialAuth = async ({ email, name, picture, provider, pro
     await trx
       .insert(profiles)
       .values({
-        userId: newUser.id,
+        userId: user.id,
       })
       .execute();
     // create a new authentication
@@ -38,7 +38,7 @@ export const signupFromSocialAuth = async ({ email, name, picture, provider, pro
       .values({
         provider,
         providerId,
-        userId: newUser.id,
+        userId: user.id,
       })
       .execute();
     return user;
