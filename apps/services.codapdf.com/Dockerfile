@@ -47,13 +47,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Set working directory
 WORKDIR /app
 
-# Set variables
-ARG RAILWAY_ENVIRONMENT
-ENV ENVIRONMENT=${RAILWAY_ENVIRONMENT}
-
-COPY .env.template.yaml  /app/.env.template.yaml
-
-RUN doppler run -p codapdf -c ${ENVIRONMENT}_services -- doppler secrets substitute .env.template.yaml --output .env
 
 # Upgrade pip
 RUN pip install --no-cache-dir --upgrade pip
@@ -79,6 +72,12 @@ RUN playwright install chromium
 
 # Copy all application code
 COPY . /app
+
+# Set variables
+ARG RAILWAY_ENVIRONMENT
+ENV ENVIRONMENT=${RAILWAY_ENVIRONMENT}
+
+RUN doppler run -p codapdf -c ${ENVIRONMENT}_services -- doppler secrets substitute .env.template.yaml --output .env
 
 # Expose the port Flask is running on
 EXPOSE 3001
