@@ -51,7 +51,7 @@ export const authByGithub = async (code: string | null) => {
 
   const emails = (await emailResponse.json()) as Array<GitHubUserEmail>;
   // Find the primary email (or any verified email)
-  const primaryEmail = emails.find((email) => email.primary && email.verified)?.email || (emails[0]?.email as string);
+  const primaryEmail = emails.find((email) => email.primary && email.verified)?.email ?? emails[0]?.email;
   const userName = userData.name;
   if (typeof primaryEmail !== "string" || typeof userName !== "string") {
     logger.child({ module: "authByGithub" }).warn("Failed to get primary email or name");
@@ -73,7 +73,7 @@ export const authByGithub = async (code: string | null) => {
   if (!user) {
     const newUser = await db.transaction(async (trx) => {
       // create a new user
-      const [newUser] = await trx
+      const [user] = await trx
         .insert(users)
         .values({
           email,
@@ -82,20 +82,24 @@ export const authByGithub = async (code: string | null) => {
         })
         .returning({
           id: users.id,
-        });
+        })
+        .execute();
+        
       // create a new profile
       await trx.insert(profiles).values({
-        userId: newUser.id,
-      });
+        userId: user.id,
+      }).execute();
       // create a new authentication
       await trx.insert(authentications).values({
         provider,
         providerId,
-        userId: newUser.id,
-      });
-      return await getUserById(newUser.id);
+        userId: user.id,
+      }).execute();
+      return user;
     });
-    await saveSession(newUser);
+
+    const userDTO = await getUserById(newUser.id);
+    await saveSession(userDTO);
     sendWelcomeEmail({ email, name: userName });
     return "Successfully authenticated";
   }

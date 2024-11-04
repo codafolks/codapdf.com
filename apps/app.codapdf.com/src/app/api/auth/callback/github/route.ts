@@ -1,6 +1,5 @@
 import { ROUTES } from "@/app/routes";
 import { authByGithub } from "@/server/actions/auth/authByGithub";
-import { logger } from "@/server/utils/logger";
 import { NextRequest } from "next/server";
 import { captureException } from "@sentry/nextjs";
 export const GET = (async (req: NextRequest) => {
@@ -11,7 +10,6 @@ export const GET = (async (req: NextRequest) => {
     return Response.redirect(new URL(ROUTES.PRIVATE.DASHBOARD.path, req.url));
   } catch (error) {
     captureException(error);
-    logger.child({ module: "authByGithub" }).error(error);
     return Response.redirect(new URL(ROUTES.AUTH.LOGIN.path, req.url));
   }
 });
