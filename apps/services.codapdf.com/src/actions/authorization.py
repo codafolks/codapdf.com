@@ -12,6 +12,7 @@ def validate_authorization():
   token = auth_header.replace('Bearer ', '')
   if not token:
     return make_response('Unauthorized: No token provided', 401)
+  
   # check with the API if the user is allowed to use the service
   # the api should return the correct license type 
   # if the user is not allowed to use the service, return 401

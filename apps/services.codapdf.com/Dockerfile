@@ -73,19 +73,14 @@ RUN playwright install chromium
 # Copy all application code
 COPY . /app
 
+# Expose the port Flask is running on
+EXPOSE 3001
+
 # Set variables
 ARG RAILWAY_ENVIRONMENT
 ENV ENVIRONMENT=${RAILWAY_ENVIRONMENT}
 
 RUN doppler run -p codapdf -c ${ENVIRONMENT}_services -- doppler secrets substitute .env.template.yaml --output .env
-
-# Expose the port Flask is running on
-EXPOSE 3001
-
-# Set environment variables
-ENV PYTHONPATH=./src
-ENV FLASK_APP=src.app
-ENV FLASK_ENV=production
 
 # Command to run the Flask app
 CMD ["gunicorn", "--bind", "0.0.0.0:3001", "app:app"]
