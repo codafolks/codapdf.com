@@ -6,7 +6,8 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 
 let connection: postgres.Sql;
-if (process.env.NODE_ENV === "production") {
+const isProd = process.env.APP_DOMAIN?.includes("https://")
+if (isProd) {
   connection = postgres(env.DATABASE_URL, { prepare: false });
 } else {
   const globalConnection = global as typeof globalThis & {

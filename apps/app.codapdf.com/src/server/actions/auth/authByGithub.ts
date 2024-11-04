@@ -69,6 +69,7 @@ export const authByGithub = async (code: string | null) => {
   const user = await db.query.users.findFirst({
     where: eq(users.email, primaryEmail),
   });
+  
   if (!user) {
     const newUser = await db.transaction(async (trx) => {
       // create a new user
