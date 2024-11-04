@@ -5,6 +5,16 @@ FROM python:3.9-slim
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
+ARG DOPPLER_TOKEN
+
+
+# Install Doppler CLI
+RUN apt-get update && apt-get install -y apt-transport-https ca-certificates curl gnupg && \
+  curl -sLf --retry 3 --tlsv1.2 --proto "=https" 'https://packages.doppler.com/public/cli/gpg.DE2A7741A397C129.key' | gpg --dearmor -o /usr/share/keyrings/doppler-archive-keyring.gpg && \
+  echo "deb [signed-by=/usr/share/keyrings/doppler-archive-keyring.gpg] https://packages.doppler.com/public/cli/deb/debian any-version main" | tee /etc/apt/sources.list.d/doppler-cli.list && \
+  apt-get update && \
+  apt-get -y install doppler
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
   wget \
@@ -36,6 +46,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Set working directory
 WORKDIR /app
+
+# Set variables
+ARG RAILWAY_ENVIRONMENT
+ENV ENVIRONMENT=${RAILWAY_ENVIRONMENT}
+RUN doppler run -p codapdf -c ${ENVIRONMENT}_services -- doppler secrets substitute .env.template.yaml --output .env
 
 # Upgrade pip
 RUN pip install --no-cache-dir --upgrade pip
