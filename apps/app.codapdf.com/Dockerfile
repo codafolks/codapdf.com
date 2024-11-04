@@ -2,6 +2,14 @@
 FROM oven/bun:alpine AS base
 RUN apk add --no-cache libstdc++ ncurses-libs openssl
 
+# Install Doppler CLI
+RUN wget -q -t3 'https://packages.doppler.com/public/cli/rsa.8004D9FF50437357.key' -O /etc/apk/keys/cli@doppler-8004D9FF50437357.rsa.pub && \
+  echo 'https://packages.doppler.com/public/cli/alpine/any-version/main' | tee -a /etc/apk/repositories && \
+  apk add doppler
+
+ARG RAILWAY_ENVIRONMENT
+RUN doppler run -p codapdf -c ${RAILWAY_ENVIRONMENT} -- doppler secrets substitute .env.template.yaml --output .env
+
 # Install dependencies only when needed
 FROM base AS deps
 WORKDIR /app
@@ -16,8 +24,8 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN bun run  build
-RUN bun run migration:run
+# Build the source code and run migrations
+RUN bun run build && bun run migration:run
 
 # Production image, copy all the files and run next
 FROM base AS runner
@@ -27,14 +35,12 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NEXT_MANUAL_SIG_HANDLE=true 
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
 
 # Set the correct permission for prerender cache
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
+RUN mkdir .next && chown nextjs:nodejs .next
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
