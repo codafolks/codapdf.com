@@ -1,7 +1,7 @@
 import { ROUTES } from "@/app/routes";
 import { env } from "@/constants/env.server";
 import { authByGoogle } from "@/server/actions/auth/authByGoogle";
-import { logger } from "@/server/utils/logger";
+import { captureException } from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
 // NOTE: This is a workaround to redirect the user to the dashboard after google login. For some reason, the Response.redirect() function is not working.
@@ -27,7 +27,7 @@ export const GET = async (req: NextRequest) => {
       },
     });
   } catch (error) {
-    logger.child({ module: "authByGithub" }).error(error);
+    captureException(error);
     return Response.redirect(`${env.APP_DOMAIN}/${ROUTES.AUTH.LOGIN.path}`);
   }
 };

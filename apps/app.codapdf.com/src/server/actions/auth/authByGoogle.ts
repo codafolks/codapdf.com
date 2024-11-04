@@ -81,7 +81,7 @@ export const authByGoogle = async (code: string | null, state: string | null) =>
   if (!user) {
     const newUser = await db.transaction(async (trx) => {
       // create a new user
-      const [newUser] = await trx
+      const [user] = await trx
         .insert(users)
         .values({
           email,
@@ -90,21 +90,22 @@ export const authByGoogle = async (code: string | null, state: string | null) =>
         })
         .returning({
           id: users.id,
-        });
+        }).execute();
       // create a new profile
       await trx.insert(profiles).values({
         userId: newUser.id,
-      });
+      }).execute();
       // create a new authentication
       await trx.insert(authentications).values({
         provider,
         providerId,
         userId: newUser.id,
-      });
-      return await getUserById(newUser.id);
+      }).execute();
+      return user;
     });
+    const userDTO = await getUserById(newUser.id);
+    await saveSession(userDTO);
     await sendWelcomeEmail({ email, name: userName });
-    await saveSession(newUser);
     return "Successfully authenticated";
   }
   // create a new authentication if it doesn't exist
