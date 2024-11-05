@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y apt-transport-https ca-certificates cur
 
 ENV ENVIRONMENT=${RAILWAY_ENVIRONMENT}
 RUN doppler -p codapdf -c ${ENVIRONMENT}_services secrets download --format env --no-file
-RUN "echo $ENDPOINT_VALIDATE_TOKEN"
+RUN echo $ENDPOINT_VALIDATE_TOKEN
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -79,7 +79,7 @@ RUN playwright install chromium
 # Copy all application code
 COPY . /app
 
-RUN "echo $ENDPOINT_VALIDATE_TOKEN"
+RUN echo $ENDPOINT_VALIDATE_TOKEN
 # Expose the port Flask is running on
 EXPOSE 3001
 
