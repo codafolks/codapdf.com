@@ -29,6 +29,7 @@ export const POST = async (req: NextRequest) => {
     }
 
     const signupDate = user.createdAt;
+
     if(!signupDate) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
@@ -36,7 +37,7 @@ export const POST = async (req: NextRequest) => {
     // if license is null, that means the user is not a customer and the sign up is less than 14 days
     // the user is still in the trial period with full access
     // otherwise, return unauthorized
-    const isSignupWithin14Days = isBefore(toDate(signupDate), subDays(new Date(), 14));
+    const isSignupWithin14Days = isBefore(toDate(signupDate), new Date());
     if (typeof license!=="string" && isSignupWithin14Days) {
       return NextResponse.json({
         license: "PRO",
