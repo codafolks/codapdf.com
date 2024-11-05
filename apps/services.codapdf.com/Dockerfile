@@ -74,10 +74,6 @@ ENV PATH="/venv/bin:$PATH"
 # Install Playwright browsers
 RUN playwright install chromium
 
-
-# Remove the .env file
-RUN rm .env
-
 # Copy all application code
 COPY . /app
 
