@@ -1,7 +1,5 @@
 import { Mail } from "lucide-react";
 export const fetchCache = "force-cache";
-export const dynamic = "force-static";
-
 export default function TermsOfService() {
   return (
     <div className="min-h-screen bg-background text-foreground">

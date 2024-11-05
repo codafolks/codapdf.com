@@ -4,8 +4,7 @@ import { ParticleBackground } from "@/components/app/ParticleBackground";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-export const fetchCache = "force-cache";
-export const dynamic = "force-static";
+
 export const Home = () => (
   <section
     className="w-full py-6 md:py-8 lg:py-10 xl:py-48 bg-background text-foreground relative"

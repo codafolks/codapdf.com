@@ -2,8 +2,6 @@ import { ROUTES } from "@/app/routes";
 import { PricingTable } from "@/client/components/app/PricingTable";
 import type { PlanSubscription } from "@/server/static/plansSubscription";
 import { useRouter } from "next/navigation";
-export const fetchCache = "force-cache";
-export const dynamic = "force-static";
 
 type PricingProps = {
   plans: Array<PlanSubscription>;
