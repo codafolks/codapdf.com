@@ -1,8 +1,15 @@
 "use client";
 import { useContactForm } from "@/client/queries/contact";
-import { ComboBoxController, InputController, TextareaController } from "@/components/app/forms";
+import {
+  ComboBoxController,
+  InputController,
+  TextareaController,
+} from "@/components/app/forms";
 import { Button } from "@/components/ui/button";
-import { type ContactForm, contactFormZodSchema } from "@/server/schemas/contactFormZodSchema";
+import {
+  type ContactForm,
+  contactFormZodSchema,
+} from "@/server/schemas/contactFormZodSchema";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -24,12 +31,23 @@ export function Contact() {
   });
 
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 text-foreground bg-secondary" id="contact">
+    <section
+      className="w-full py-12 md:py-24 lg:py-32 text-foreground bg-secondary"
+      id="contact"
+    >
       <div className="marketing-section px-4 md:px-6">
         <div className="p-4 md:p-8 border rounded-md bg-background">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12 ">Contact Us</h2>
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12 ">
+            Contact Us
+          </h2>
           <form className="space-y-4" onSubmit={onSubmit}>
-            <InputController id="name" label="Name" name="name" control={form.control} placeholder="John Doe" />
+            <InputController
+              id="name"
+              label="Name"
+              name="name"
+              control={form.control}
+              placeholder="John Doe"
+            />
             <InputController
               id="email"
               label="Email"

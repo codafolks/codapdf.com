@@ -13,7 +13,11 @@ export const Footer = () => (
       >
         Terms of Service
       </Link>
-      <Link className="text-xs hover:underline underline-offset-4  hover:text-gray-300" href="/privacy-policy" prefetch>
+      <Link
+        className="text-xs hover:underline underline-offset-4  hover:text-gray-300"
+        href="/privacy-policy"
+        prefetch
+      >
         Privacy
       </Link>
     </nav>

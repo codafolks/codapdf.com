@@ -1,18 +1,19 @@
 import "server-only";
 import { generateJwt } from "@/server/actions/auth/generateJwt";
 import { verifyJwt } from "@/server/actions/auth/verifyJwt";
-import { License } from "@/server/database/schemas/licenses";
+import type { License } from "@/server/database/schemas/licenses";
 
 import { convertUser2UserSession } from "@/server/actions/auth/convertUser2UserSession";
-import { UserDTO } from "@/server/actions/users/getUserById";
-import { logger } from "@/server/utils/logger";
+import type { UserDTO } from "@/server/actions/users/getUserById";
 import type { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import { cookies } from "next/headers";
+import { isProductionEnvironment } from "@/utils/isProductionEnvironment";
+import { captureException } from "@/utils/captureException";
 
 export const authSessionConfig = {
   cookieName: "session",
   cookieOptions: {
-    secure: process.env.APP_DOMAIN?.includes("https://"),
+    secure: isProductionEnvironment,
     sameSite: "strict",
     maxAge: 60 * 60 * 24 * 7, // 1 week
     httpOnly: true,
@@ -54,34 +55,29 @@ export const destroySession = async () => {
     const cookie = await cookies();
     cookie.delete(authSessionConfig.cookieName);
   } catch (error) {
-    logger.child({ action: "destroySession" }).warn(error);
+    captureException(error);
   }
 };
 
 export const getSession = async () => {
   const tokenSession = await getSessionToken();
-  try {
-    if (!tokenSession) {
-      throw new Error("No token found");
-    }
-    const response = await fetch(`${process.env.APP_DOMAIN}/api/edge/users`, {
-      method: "POST",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application",
-        Authorization: `Bearer ${tokenSession}`,
-      },
-    });
-    const data = await response.json();
-    if (data.user) {
-      const value = await verifyJwt(tokenSession);
-      return { user: value };
-    }
-    return { user: undefined };
-  } catch (error) {
-    logger.child({ action: "getSession" }).warn(error);
+  if (!tokenSession) {
     return { user: undefined };
   }
+  const response = await fetch(`${process.env.APP_DOMAIN}/api/edge/users`, {
+    method: "POST",
+    cache: "no-cache",
+    headers: {
+      "Content-Type": "application",
+      Authorization: `Bearer ${tokenSession}`,
+    },
+  });
+  const data = await response.json();
+  if (data.user) {
+    const value = await verifyJwt(tokenSession);
+    return { user: value };
+  }
+  return { user: undefined };
 };
 
 export const getUserSession = async () => {
