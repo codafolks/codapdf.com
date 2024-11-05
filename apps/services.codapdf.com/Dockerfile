@@ -51,12 +51,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Set working directory
 WORKDIR /app
 
-# Authenticate Doppler and export secrets
-RUN doppler run -p $DOPPLER_PROJECT -c $DOPPLER_CONFIG -- doppler secrets substitute .env.template.yaml --output .env
-
-# Export Doppler secrets to environment variables
-RUN export $(cat .env | xargs)
-
 # Upgrade pip
 RUN pip install --no-cache-dir --upgrade pip
 
@@ -82,6 +76,8 @@ RUN playwright install chromium
 # Copy all application code
 COPY . /app
 
+# Authenticate Doppler and export secrets
+RUN doppler run -p $DOPPLER_PROJECT -c $DOPPLER_CONFIG -- doppler secrets substitute .env.template.yaml --output .env
 
 # Expose the port Flask is running on
 EXPOSE 3001
