@@ -38,12 +38,13 @@ export const POST = async (req: NextRequest) => {
     // if license is null, that means the user is not a customer and the sign up is less than 14 days
     // the user is still in the trial period with full access
     // otherwise, return unauthorized
-    if (!license && isBefore(signupDate, subDays(new Date(), 14))) {
+    const isSignupWithin14Days = isBefore(signupDate, subDays(new Date(), 14));
+    if (!license && isSignupWithin14Days) {
       return NextResponse.json({
         license: "PRO",
       });
     }
-
+    
     return NextResponse.json({
       license,
     });

@@ -3,7 +3,9 @@ import os
 import requests
 from flask import request, make_response
 from constants.constants import LICENSE
-
+from dotenv import load_dotenv
+# Load .env file if it exists
+load_dotenv()
 
 def validate_authorization():
   auth_header = request.headers.get('Authorization')
