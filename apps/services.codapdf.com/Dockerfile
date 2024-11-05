@@ -17,11 +17,6 @@ RUN apt-get update && apt-get install -y curl
 # Install Doppler CLI
 RUN curl -Ls https://cli.doppler.com/install.sh | sh
 
-# Authenticate Doppler and export secrets
-RUN doppler run -p $DOPPLER_PROJECT -c $DOPPLER_CONFIG -- doppler secrets substitute .env.template.yaml --output .env
-
-# Export Doppler secrets to environment variables
-RUN export $(cat .env | xargs)
 
 
 # Install system dependencies
@@ -56,6 +51,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Set working directory
 WORKDIR /app
 
+# Authenticate Doppler and export secrets
+RUN doppler run -p $DOPPLER_PROJECT -c $DOPPLER_CONFIG -- doppler secrets substitute .env.template.yaml --output .env
+
+# Export Doppler secrets to environment variables
+RUN export $(cat .env | xargs)
 
 # Upgrade pip
 RUN pip install --no-cache-dir --upgrade pip
