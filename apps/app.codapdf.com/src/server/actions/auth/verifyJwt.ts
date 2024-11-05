@@ -1,5 +1,6 @@
 import type { UserSession } from "@/server/actions/auth/authSession";
 import { logger } from "@/server/utils/logger";
+import { captureException } from "@sentry/nextjs";
 import { jwtVerify } from "jose";
 
 export async function verifyJwt(token: string): Promise<UserSession> {
@@ -21,6 +22,7 @@ export async function verifyJwt(token: string): Promise<UserSession> {
     return decoded.payload;
   } catch (error) {
     logger.child({ action: "verifyJwt" }).error(error);
+    captureException(error);
     throw new Error("Invalid token");
   }
 }

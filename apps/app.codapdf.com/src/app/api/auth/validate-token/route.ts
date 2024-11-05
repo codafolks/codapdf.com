@@ -3,6 +3,7 @@ import { verifyJwt } from "@/server/actions/auth/verifyJwt";
 import { db } from "@/server/database";
 import { users } from "@/server/database/schemas/users";
 import { logger } from "@/server/utils/logger";
+import { captureException } from "@sentry/nextjs";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -30,6 +31,7 @@ export const POST = async (req: NextRequest) => {
       license,
     });
   } catch (error) {
+    captureException(error);
     logger.child({ action: "api/auth/validate-token/#POST" }).info(error);
     return new NextResponse("Server error", { status: 500 });
   }
