@@ -74,6 +74,9 @@ ENV PATH="/venv/bin:$PATH"
 # Install Playwright browsers
 RUN playwright install chromium
 
+# Authenticate Doppler and export secrets
+RUN doppler -p $DOPPLER_PROJECT -c $DOPPLER_CONFIG secrets download --format env --no-file > .env
+
 # Copy all application code
 COPY . /app
 
@@ -81,9 +84,8 @@ COPY . /app
 # Expose the port Flask is running on
 EXPOSE 3001
 
-# Authenticate Doppler and export secrets
-RUN doppler -p $DOPPLER_PROJECT -c $DOPPLER_CONFIG secrets download --format env --no-file > ./.env
-COPY ./.env /app/.env
+
+
 
 # Set environment variables
 ENV PYTHONPATH=./src
