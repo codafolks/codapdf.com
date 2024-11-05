@@ -17,6 +17,11 @@ RUN apt-get update && apt-get install -y curl
 # Install Doppler CLI
 RUN curl -Ls https://cli.doppler.com/install.sh | sh
 
+# Authenticate Doppler and export secrets
+RUN doppler run -p $DOPPLER_PROJECT -c $DOPPLER_CONFIG -- doppler secrets substitute .env.template.yaml --output .env
+
+# Export Doppler secrets to environment variables
+RUN export $(cat .env | xargs)
 
 
 # Install system dependencies
@@ -86,13 +91,6 @@ EXPOSE 3001
 ENV PYTHONPATH=./src
 ENV FLASK_APP=src.app
 ENV FLASK_ENV=production
-ENV ENDPOINT_VALIDATE_TOKEN="$(doppler -p ${DOPPLER_PROJECT} -c $DOPPLER_CONFIG secrets get ENDPOINT_VALIDATE_TOKEN --plain)"
-
-# Export Doppler secrets to environment variables
-RUN export $(cat .env | xargs)
-
-# log the value ENDPOINT_VALIDATE_TOKEN
-RUN echo $ENDPOINT_VALIDATE_TOKEN
 
 # Command to run the Flask app
 CMD ["gunicorn", "--bind", "0.0.0.0:3001", "app:app"]
