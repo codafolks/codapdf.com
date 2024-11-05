@@ -29,11 +29,17 @@ COPY . .
 RUN bun run env:${RAILWAY_ENVIRONMENT}
 
 # Run migrations
-RUN bash -c 'for i in 1 2 3; do \
-  bun run migration:run && break || echo "Attempt $i failed, retrying..."; \
+RUN sh -c 'i=1; \
+  while [ $i -le 3 ]; do \
+  if bun run migration:run; then \
+  break; \
+  else \
+  echo "Attempt $i failed, retrying..."; \
+  i=$((i+1)); \
   sleep 5; \
+  fi; \
   done; \
-  if [ $i -eq 3 ]; then \
+  if [ $i -gt 3 ]; then \
   echo "Command failed after 3 attempts."; \
   exit 1; \
   fi'
