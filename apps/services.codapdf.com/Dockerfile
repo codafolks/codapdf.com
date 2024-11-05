@@ -86,9 +86,7 @@ EXPOSE 3001
 ENV PYTHONPATH=./src
 ENV FLASK_APP=src.app
 ENV FLASK_ENV=production
-
-# Authenticate Doppler and export secrets
-RUN doppler run -p $DOPPLER_PROJECT -c $DOPPLER_CONFIG -- doppler secrets substitute .env.template.yaml --output .env
+ENV ENDPOINT_VALIDATE_TOKEN="$(doppler -p ${DOPPLER_PROJECT} -c $DOPPLER_CONFIG secrets get ENDPOINT_VALIDATE_TOKEN --plain)"
 
 # Export Doppler secrets to environment variables
 RUN export $(cat .env | xargs)
