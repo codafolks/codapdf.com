@@ -52,10 +52,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 # Authenticate Doppler and export secrets
-RUN doppler run --project $DOPPLER_PROJECT --config $DOPPLER_CONFIG secrets download --format env --no-file > /doppler.env
+RUN doppler -p $DOPPLER_PROJECT -c $DOPPLER_CONFIG secrets download --format env --no-file > doppler.env
 
 # Source doppler.env to load environment variables
-RUN set -o allexport && source /doppler.env && set +o allexport
+RUN set -o allexport && source doppler.env && set +o allexport
 # Upgrade pip
 RUN pip install --no-cache-dir --upgrade pip
 
