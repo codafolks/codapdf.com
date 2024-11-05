@@ -77,6 +77,12 @@ RUN playwright install chromium
 # Authenticate Doppler and export secrets
 RUN doppler -p $DOPPLER_PROJECT -c $DOPPLER_CONFIG secrets download --format env --no-file > .env
 
+# Export Doppler secrets to environment variables
+RUN export $(cat .env | xargs)
+
+# Remove the .env file
+RUN rm .env
+
 # Copy all application code
 COPY . /app
 
