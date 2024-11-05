@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 export const scrollSmoothTo = (id: string) => {
+  if (typeof window === "undefined" || typeof document === "undefined") return;
   const element = document.getElementById(id);
   const container = document.getElementById("marketing-layout");
   if (element && container) {
