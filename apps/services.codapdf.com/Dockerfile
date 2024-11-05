@@ -74,11 +74,6 @@ ENV PATH="/venv/bin:$PATH"
 # Install Playwright browsers
 RUN playwright install chromium
 
-# Authenticate Doppler and export secrets
-RUN doppler -p $DOPPLER_PROJECT -c $DOPPLER_CONFIG secrets download --format env --no-file > .env
-
-# Export Doppler secrets to environment variables
-RUN export $(cat .env | xargs)
 
 # Remove the .env file
 RUN rm .env
@@ -96,6 +91,14 @@ ENV PYTHONPATH=./src
 ENV FLASK_APP=src.app
 ENV FLASK_ENV=production
 
+# Authenticate Doppler and export secrets
+RUN doppler -p $DOPPLER_PROJECT -c $DOPPLER_CONFIG secrets download --format env --no-file > .env
+
+# Export Doppler secrets to environment variables
+RUN export $(cat .env | xargs)
+
+# log the value ENDPOINT_VALIDATE_TOKEN
+RUN echo $ENDPOINT_VALIDATE_TOKEN
 
 # Command to run the Flask app
 CMD ["gunicorn", "--bind", "0.0.0.0:3001", "app:app"]
