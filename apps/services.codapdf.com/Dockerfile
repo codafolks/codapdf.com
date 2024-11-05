@@ -88,7 +88,7 @@ ENV FLASK_APP=src.app
 ENV FLASK_ENV=production
 
 # Authenticate Doppler and export secrets
-RUN doppler -p $DOPPLER_PROJECT -c $DOPPLER_CONFIG -- doppler secrets substitute .env.template.yaml --output .env
+RUN doppler run -p $DOPPLER_PROJECT -c $DOPPLER_CONFIG -- doppler secrets substitute .env.template.yaml --output .env
 
 # Export Doppler secrets to environment variables
 RUN export $(cat .env | xargs)
