@@ -6,7 +6,8 @@ ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
 ARG DOPPLER_TOKEN
-
+ARG RAILWAY_ENVIRONMENT
+ENV ENVIRONMENT=${RAILWAY_ENVIRONMENT}
 
 # Install Doppler CLI
 RUN apt-get update && apt-get install -y apt-transport-https ca-certificates curl gnupg && \
@@ -73,14 +74,11 @@ RUN playwright install chromium
 # Copy all application code
 COPY . /app
 
+# Set environment variables
+RUN eval "$(doppler -p codapdf -c ${ENVIRONMENT}_services secrets download --format env --no-file)"
+
 # Expose the port Flask is running on
 EXPOSE 3001
-
-# Set variables
-ARG RAILWAY_ENVIRONMENT
-ENV ENVIRONMENT=${RAILWAY_ENVIRONMENT}
-
-RUN doppler run -p codapdf -c ${ENVIRONMENT}_services -- doppler secrets substitute .env.template.yaml --output .env
 
 # Command to run the Flask app
 CMD ["gunicorn", "--bind", "0.0.0.0:3001", "app:app"]

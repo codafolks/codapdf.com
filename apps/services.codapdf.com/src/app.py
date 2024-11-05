@@ -1,12 +1,9 @@
 import sys
 import os
-import uuid
-import io
-from bs4 import BeautifulSoup
 src_path = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(src_path)
 
-from flask import Flask, make_response, jsonify, request, render_template_string
+from flask import Flask, request
 
 from flask_caching import Cache
 
