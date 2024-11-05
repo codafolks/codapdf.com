@@ -8,18 +8,16 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ARG RAILWAY_ENVIRONMENT
 ARG DOPPLER_TOKEN
 
+ARG DOPPLER_PROJECT="codapdf"
+ARG DOPPLER_CONFIG=${RAILWAY_ENVIRONMENT}_services
+
+# Install necessary tools
+RUN apt-get update && apt-get install -y curl
 
 # Install Doppler CLI
-RUN apt-get update && apt-get install -y apt-transport-https ca-certificates curl gnupg && \
-  curl -sLf --retry 3 --tlsv1.2 --proto "=https" 'https://packages.doppler.com/public/cli/gpg.DE2A7741A397C129.key' | gpg --dearmor -o /usr/share/keyrings/doppler-archive-keyring.gpg && \
-  echo "deb [signed-by=/usr/share/keyrings/doppler-archive-keyring.gpg] https://packages.doppler.com/public/cli/deb/debian any-version main" | tee /etc/apt/sources.list.d/doppler-cli.list && \
-  apt-get update && \
-  apt-get -y install doppler
+RUN curl -Ls https://cli.doppler.com/install.sh | sh
 
 
-ENV ENVIRONMENT=${RAILWAY_ENVIRONMENT}
-RUN doppler -p codapdf -c ${ENVIRONMENT}_services secrets download --format env --no-file
-RUN echo $ENDPOINT_VALIDATE_TOKEN
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -53,7 +51,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Set working directory
 WORKDIR /app
 
+# Authenticate Doppler and export secrets
+RUN doppler run --project $DOPPLER_PROJECT --config $DOPPLER_CONFIG secrets download --format env --no-file > /doppler.env
 
+# Source doppler.env to load environment variables
+RUN set -o allexport && source /doppler.env && set +o allexport
 # Upgrade pip
 RUN pip install --no-cache-dir --upgrade pip
 
