@@ -85,13 +85,11 @@ COPY . /app
 EXPOSE 3001
 
 
-
-
 # Set environment variables
 ENV PYTHONPATH=./src
 ENV FLASK_APP=src.app
 ENV FLASK_ENV=production
-ENV ENDPOINT_VALIDATE_TOKEN=https://dev.codapdf.com/api/auth/validate-token
+
 
 # Command to run the Flask app
 CMD ["gunicorn", "--bind", "0.0.0.0:3001", "app:app"]
