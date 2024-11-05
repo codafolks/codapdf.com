@@ -82,15 +82,14 @@ COPY . /app
 EXPOSE 3001
 
 # Authenticate Doppler and export secrets
-RUN doppler -p $DOPPLER_PROJECT -c $DOPPLER_CONFIG secrets download --format env --no-file > ./doppler.env
-
-# Source doppler.env to load environment variables
-RUN export $(cat ./doppler.env | xargs)
+RUN doppler -p $DOPPLER_PROJECT -c $DOPPLER_CONFIG secrets download --format env --no-file > ./.env
+COPY ./.env /app/.env
 
 # Set environment variables
 ENV PYTHONPATH=./src
 ENV FLASK_APP=src.app
 ENV FLASK_ENV=production
+
 
 # Command to run the Flask app
 CMD ["gunicorn", "--bind", "0.0.0.0:3001", "app:app"]
