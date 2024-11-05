@@ -15,7 +15,7 @@ export const authByGithub = async (code: string | null) => {
   if (!code) {
     throw new Error("No code provided");
   }
-  
+
   const tokenResponse = await fetch("https://github.com/login/oauth/access_token", {
     method: "POST",
     headers: {
@@ -36,7 +36,7 @@ export const authByGithub = async (code: string | null) => {
   const tokenResponseData = await tokenResponse.json();
   const { access_token } = tokenResponseData;
 
-  if(typeof access_token !== "string") {
+  if (typeof access_token !== "string") {
     throw new Error("Failed to get access token");
   }
 

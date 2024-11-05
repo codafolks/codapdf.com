@@ -44,6 +44,6 @@ export const signupFromSocialAuth = async ({ email, name, picture, provider, pro
     return user;
   });
   await sendWelcomeEmail({ email, name });
-  const userDTO  = await getUserById(newUser.id);
-  return  userDTO
+  const userDTO = await getUserById(newUser.id);
+  return userDTO;
 };

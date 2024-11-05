@@ -6,7 +6,7 @@ import { Home } from "@/app/(marketing)/_containers/Home";
 import { Pricing } from "@/app/(marketing)/_containers/Pricing";
 
 import { TRCProvider } from "@/client/providers/TRCProvider";
-import { PlanSubscription } from "@/server/static/plansSubscription";
+import type { PlanSubscription } from "@/server/static/plansSubscription";
 
 export const HomePage = ({ plans }: { plans: Array<PlanSubscription> }) => (
   <>

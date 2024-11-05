@@ -3,12 +3,10 @@ import { getAuthorizationTokenFromHeader } from "@/server/actions/auth/getAuthor
 import { verifyJwt } from "@/server/actions/auth/verifyJwt";
 import { db } from "@/server/database";
 import { users } from "@/server/database/schemas/users";
-import { logger } from "@/server/utils/logger";
+import { captureException } from "@/utils/captureException";
 import { eq } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 
-// POST /api/edge/users
-// @desc: check if user is  authenticated and valid
 export const POST = async (req: NextRequest) => {
   try {
     const token = getAuthorizationTokenFromHeader(req);
@@ -25,14 +23,11 @@ export const POST = async (req: NextRequest) => {
       throw new Error("User not found");
     }
     await saveSession(user);
-    const response = NextResponse.json({
+    return NextResponse.json({
       user: true,
     });
-    // set cache for 1 hour for this route
-    response.headers.set("Cache-Control", "public, max-age=3600");
-    return response;
   } catch (error) {
-    logger.child({ action: "api/users/#GET" }).info(error);
+    captureException(error);
     return NextResponse.json({
       user: false,
     });

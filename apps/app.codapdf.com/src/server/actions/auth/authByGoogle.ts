@@ -41,14 +41,14 @@ export const authByGoogle = async (code: string | null, state: string | null) =>
     }),
   });
 
-  const tokenResponseData = await tokenResponse.json() as GoogleResponseToken;
+  const tokenResponseData = (await tokenResponse.json()) as GoogleResponseToken;
   if (!tokenResponseData || "error" in tokenResponseData) {
     throw new Error("Failed to get token");
   }
 
   const { access_token } = tokenResponseData;
 
-  if(typeof access_token !== "string") {
+  if (typeof access_token !== "string") {
     throw new Error("Failed to get access token");
   }
 
@@ -60,29 +60,31 @@ export const authByGoogle = async (code: string | null, state: string | null) =>
     throw new Error("Failed to get user data");
   }
 
-
   const userData = (await response.json()) as GoogleUserInfoResponseSuccess;
   const userName = userData.name;
   const provider = "google";
   const email = userData.email;
   const picture = userData?.picture;
   const providerId = userData.id;
-  
+
   const isEmail = await z.string().email().parseAsync(email);
   if (!email || !isEmail || !userName) {
     throw new Error("Failed to get primary email or name");
   }
-  console.info({isEmail}); 
-  const auth = await db.query.authentications.findFirst({
-    where: and(eq(authentications.providerId, providerId), eq(authentications.provider, provider)),
-  }).execute();
+  console.info({ isEmail });
+  const auth = await db.query.authentications
+    .findFirst({
+      where: and(eq(authentications.providerId, providerId), eq(authentications.provider, provider)),
+    })
+    .execute();
 
-  
   // check if user already exists in the database
-  const user = await db.query.users.findFirst({
-    where: eq(users.email, email),
-  }).execute();
-  
+  const user = await db.query.users
+    .findFirst({
+      where: eq(users.email, email),
+    })
+    .execute();
+
   if (!user?.id) {
     const userDTO = await signupFromSocialAuth({ email, name: userName, provider, providerId, picture });
     await saveSession(userDTO);
@@ -90,11 +92,14 @@ export const authByGoogle = async (code: string | null, state: string | null) =>
   }
   // create a new authentication if it doesn't exist
   if (!auth?.id) {
-    await db.insert(authentications).values({
-      provider,
-      providerId,
-      userId: user.id,
-    }).execute();
+    await db
+      .insert(authentications)
+      .values({
+        provider,
+        providerId,
+        userId: user.id,
+      })
+      .execute();
   }
   const userDTO = await getUserById(user.id);
   await saveSession(userDTO);

@@ -3,6 +3,7 @@ import { ROUTES } from "@/app/routes";
 import { AppLogo } from "@/client/components/app/AppLogo";
 import { ButtonUpdateTheme } from "@/client/components/app/ButtonUpdateTheme";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 export const scrollSmoothTo = (id: string) => {
   const element = document.getElementById(id);
@@ -16,17 +17,21 @@ export const scrollSmoothTo = (id: string) => {
   }
 };
 export const Header = () => {
+  const router = useRouter();
+  const pathname = usePathname();
   return (
-    <header
-      className="p-4 lg:px-6 flex items-center border-b sticky top-0 left-0 w-full z-10 text-foreground bg-background"
-      suppressHydrationWarning
-    >
+    <header className="p-4 lg:px-6 flex items-center border-b sticky top-0 left-0 w-full z-10 text-foreground bg-background">
       <Link
         className="flex items-center justify-center"
         href="#home"
         onClick={(e) => {
           e.preventDefault();
-          scrollSmoothTo("home");
+          // if not on home page, redirect to home page
+          if (pathname !== "/") {
+            router.push("/#home");
+          } else {
+            scrollSmoothTo("home");
+          }
         }}
       >
         <AppLogo className="h-6" />

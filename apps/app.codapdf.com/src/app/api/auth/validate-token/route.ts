@@ -3,10 +3,11 @@ import { verifyJwt } from "@/server/actions/auth/verifyJwt";
 import { db } from "@/server/database";
 import { users } from "@/server/database/schemas/users";
 import { logger } from "@/server/utils/logger";
-import { captureException } from "@sentry/nextjs";
-import { format, formatDate, isBefore, subDays, toDate } from "date-fns";
+import { captureException } from "@/utils/captureException";
+
+import { isBefore, toDate } from "date-fns";
 import { eq } from "drizzle-orm";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -30,7 +31,7 @@ export const POST = async (req: NextRequest) => {
 
     const signupDate = user.createdAt;
 
-    if(!signupDate) {
+    if (!signupDate) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
     const license = user.profile?.license;
@@ -38,12 +39,12 @@ export const POST = async (req: NextRequest) => {
     // the user is still in the trial period with full access
     // otherwise, return unauthorized
     const isSignupWithin14Days = isBefore(toDate(signupDate), new Date());
-    if (typeof license!=="string" && isSignupWithin14Days) {
+    if (typeof license !== "string" && isSignupWithin14Days) {
       return NextResponse.json({
         license: "PRO",
       });
     }
-    
+
     return NextResponse.json({
       license,
     });

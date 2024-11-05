@@ -4,6 +4,7 @@ import { Header } from "@/app/(marketing)/_components/Header";
 type MarketingLayoutProps = {
   children: React.ReactNode;
 };
+export const fetchCache = "force-cache";
 const MarketingLayout = ({ children }: MarketingLayoutProps) => (
   <div className="flex flex-col bg-primary relative h-screen overflow-y-auto" id="marketing-layout">
     <Header />

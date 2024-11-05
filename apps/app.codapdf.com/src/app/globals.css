@@ -35,9 +35,6 @@ body {
   color: var(--gray-900);
 }
 
-
-
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -97,7 +94,7 @@ body {
 
 @layer base {
   * {
-    @apply border-brand-border
+    @apply border-brand-border;
   }
   body {
     @apply bg-background text-foreground;

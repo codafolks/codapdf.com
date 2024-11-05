@@ -5,8 +5,7 @@ export interface IconProps extends React.SVGAttributes<SVGElement> {
   color?: string;
 }
 
-// biome-ignore lint/complexity/noBannedTypes: doch!
-export type IconComponent<ExtraProps extends {} = {}> = React.ForwardRefExoticComponent<
+export type IconComponent<ExtraProps extends Record<string, unknown>> = React.ForwardRefExoticComponent<
   React.PropsWithoutRef<IconProps> & ExtraProps & React.RefAttributes<SVGSVGElement>
 > & {
   alias?: Array<string>;

@@ -1,8 +1,8 @@
 import { ROUTES } from "@/app/routes";
+import { env } from "@/constants/env.server";
 import { authByGithub } from "@/server/actions/auth/authByGithub";
-import { captureException } from "@sentry/nextjs";
-import { NextRequest } from "next/server";
-import { env } from "process";
+import { captureException } from "@/utils/captureException";
+import type { NextRequest } from "next/server";
 
 // NOTE: This is a workaround to redirect the user to the dashboard after google login. For some reason, the Response.redirect() function is not working.
 const reload = `

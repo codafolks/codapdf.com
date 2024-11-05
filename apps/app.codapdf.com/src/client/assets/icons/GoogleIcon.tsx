@@ -1,8 +1,9 @@
-import { IconProps } from "@/client/types";
+import type { IconProps } from "@/client/types";
 import React from "react";
 export const GoogleIcon = React.forwardRef<SVGSVGElement, IconProps>(({ color = "currentColor", ...props }, ref) => {
   return (
     <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" ref={ref} {...props}>
+      <title>Google Icon</title>
       <path
         fillRule="evenodd"
         clipRule="evenodd"

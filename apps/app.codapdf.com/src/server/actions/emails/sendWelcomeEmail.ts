@@ -1,6 +1,6 @@
 import { env } from "@/constants/env.server";
 import WelcomeEmail from "@/emails/auth/Welcome";
-import { captureException } from "@sentry/nextjs";
+import { captureException } from "@/utils/captureException";
 import { Resend } from "resend";
 
 type SendWelcomeEmail = {
