@@ -28,8 +28,18 @@ COPY . .
 # Fetch secrets from Doppler
 RUN bun run env:${RAILWAY_ENVIRONMENT}
 
+# Run migrations
+RUN bash -c 'for i in 1 2 3; do \
+  bun run migration:run && break || echo "Attempt $i failed, retrying..."; \
+  sleep 5; \
+  done; \
+  if [ $i -eq 3 ]; then \
+  echo "Command failed after 3 attempts."; \
+  exit 1; \
+  fi'
+
 # Build the source code and run migrations
-RUN bun run build && bun run migration:run
+RUN bun run build
 
 # Production image, copy all the files and run next
 FROM base AS runner
