@@ -57,6 +57,9 @@ async def html2pdf(request: Request, authorization: str = Header(None)):
   except ValueError as ve:
     ERROR_COUNTER.inc()
     return HTTPException(detail=f'Bad Request: {str(ve)}', status_code=400)
+  except Exception as e:
+    ERROR_COUNTER.inc()
+    return HTTPException(detail=f'Internal Server Error: {str(e)}', status_code=500)
   
 @app.get('/metrics')
 def metrics():
