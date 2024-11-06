@@ -5,14 +5,9 @@ FROM python:3.9-slim
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
-# Install necessary tools
-RUN apt-get update && apt-get install -y curl
-
-# Install Doppler CLI
-RUN curl -Ls https://cli.doppler.com/install.sh | sh
-
-# Install system dependencies
+# Install necessary system dependencies and tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
+  curl \
   wget \
   gnupg \
   build-essential \
@@ -40,41 +35,31 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   libfontconfig1 \
   && rm -rf /var/lib/apt/lists/*
 
+# Install Doppler CLI
+RUN curl -Ls https://cli.doppler.com/install.sh | sh
+
 # Set working directory
 WORKDIR /app
 
-# Upgrade pip
-RUN pip install --no-cache-dir --upgrade pip
+# Copy only requirements.txt first to leverage Docker cache
+COPY requirements.txt .
 
-# Copy requirements.txt first to leverage Docker cache
-COPY requirements.txt /app/requirements.txt
-
-# Install virtualenv
-RUN pip install virtualenv
-
-# Create a virtual environment in the /venv directory
-RUN virtualenv /venv
-
-# Activate the virtual environment and install dependencies
-RUN /venv/bin/pip install --upgrade pip \
-  && /venv/bin/pip install -r requirements.txt
-
-# Add the virtual environment to the PATH
-ENV PATH="/venv/bin:$PATH"
+# Upgrade pip and install dependencies
+RUN pip install --no-cache-dir --upgrade pip \
+  && pip install --no-cache-dir -r requirements.txt
 
 # Install Playwright browsers
 RUN playwright install chromium
 
-# Copy all application code
-COPY . /app
+# Copy the rest of the application code
+COPY . .
 
-# Expose the port Flask is running on
-EXPOSE 3001
+# Expose the port your app runs on (adjust if necessary)
+EXPOSE 80
 
-# Set environment variables
+# Set environment variables (adjust as needed)
 ENV PYTHONPATH=./src
-ENV FLASK_APP=src.app
-ENV FLASK_ENV=production
+ENV APP_ENV=production
 
-# Command to run the Flask app
-CMD ["sh", "-c", "doppler run -p codapdf -c ${RAILWAY_ENVIRONMENT}_services -- gunicorn --bind 0.0.0.0:3001 app:app"]
+# Command to run the app (adjust based on your app and whether you're using Flask or FastAPI)
+CMD ["sh", "-c", "doppler run -p codapdf -c ${RAILWAY_ENVIRONMENT}_services -- uvicorn src.app:app --host 0.0.0.0 --port 80"]

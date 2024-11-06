@@ -1,4 +1,4 @@
-from flask import make_response
+from fastapi import HTTPException
 from actions.check_for_javascript import check_for_javascript
 from actions.check_for_images import check_for_images
 
@@ -18,10 +18,10 @@ def validate_license(html, user_license):
 
   if has_javascript and has_images:
     if user_license not in ALLOWED_IMAGES_AND_JAVASCRIPT:
-      return make_response('Forbidden: Your license does not support converting HTML with images and JavaScript', 403)
+      raise HTTPException(status_code=403, detail='Forbidden: Your license does not support converting HTML with images and JavaScript')
   elif has_javascript:
     if user_license not in ALLOWED_JAVASCRIPT:
-      return make_response('Forbidden: Your license does not support converting HTML with JavaScript', 403)
+      raise HTTPException(status_code=403, detail='Forbidden: Your license does not support converting HTML with JavaScript')
   elif has_images and user_license not in ALLOWED_IMAGES:
-    return make_response('Forbidden: Your license does not support converting HTML with images', 403)
+    raise HTTPException(status_code=403, detail='Forbidden: Your license does not support converting HTML with images')
   return None
