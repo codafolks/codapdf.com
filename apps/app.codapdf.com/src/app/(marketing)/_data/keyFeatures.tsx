@@ -1,35 +1,22 @@
-import {
-  Brush,
-  Cloud,
-  Code,
-  CodeXml,
-  Database,
-  Eye,
-  File,
-  FileText,
-  Globe,
-} from "lucide-react";
+import { Brush, Cloud, Code, CodeXml, Database, Eye, File, FileText, Globe } from "lucide-react";
 
 export const keyFeatures = [
   {
     id: "customizable-html-templates",
     title: "Customizable HTML Templates",
-    description:
-      "Users can upload or design their own HTML templates, allowing complete flexibility in the design and content of the PDFs generated.",
+    description: "Users can upload or design their own HTML templates, allowing complete flexibility in the design and content of the PDFs generated.",
     icon: FileText,
   },
   {
     id: "real-time-preview",
     title: "Real-Time Preview",
-    description:
-      "A live preview feature lets users see exactly how their HTML template will look as a PDF, ensuring they can adjust styling before finalizing the conversion.",
+    description: "A live preview feature lets users see exactly how their HTML template will look as a PDF, ensuring they can adjust styling before finalizing the conversion.",
     icon: Eye,
   },
   {
     id: "dynamic-data-integration",
     title: "Dynamic Data Integration",
-    description:
-      "Supports merging dynamic data into templates, such as names, dates, and other variables, to create personalized PDF documents in bulk.",
+    description: "Supports merging dynamic data into templates, such as names, dates, and other variables, to create personalized PDF documents in bulk.",
     icon: Database,
   },
   // {
@@ -42,15 +29,13 @@ export const keyFeatures = [
   {
     id: "support-for-css-and-javascript",
     title: "Support for CSS and JavaScript",
-    description:
-      "Handles advanced CSS and JavaScript functionalities within templates, allowing for complex designs, animations, and interactions that render correctly in PDFs.",
+    description: "Handles advanced CSS and JavaScript functionalities within templates, allowing for complex designs, animations, and interactions that render correctly in PDFs.",
     icon: Code,
   },
   {
     id: "multiple-output-formats",
     title: "Multiple Output Formats",
-    description:
-      "Users can select various PDF output options such as page size, orientation (portrait or landscape), and margin settings to meet their specific needs.",
+    description: "Users can select various PDF output options such as page size, orientation (portrait or landscape), and margin settings to meet their specific needs.",
     icon: File,
   },
   // {
@@ -63,8 +48,7 @@ export const keyFeatures = [
   {
     id: "restful-api-for-integration",
     title: "RESTful API for Integration",
-    description:
-      "Provides a REST API for developers to integrate HTML-to-PDF conversion functionality into other platforms or workflows programmatically.",
+    description: "Provides a REST API for developers to integrate HTML-to-PDF conversion functionality into other platforms or workflows programmatically.",
     icon: CodeXml,
   },
   // {
@@ -84,15 +68,13 @@ export const keyFeatures = [
   {
     id: "cloud-storage-integration",
     title: "Cloud Storage Integration",
-    description:
-      "Supports saving PDFs directly to cloud storage platforms (e.g., AWS S3, Google Drive), enabling seamless integration with users' existing workflows.",
+    description: "Supports saving PDFs directly to cloud storage platforms (e.g., AWS S3, Google Drive), enabling seamless integration with users' existing workflows.",
     icon: Cloud,
   },
   {
     id: "white-labeling-and-branding",
     title: "White-Labeling and Branding",
-    description:
-      "Allows businesses to apply custom branding (logos, colors) to PDFs, making them suitable for reports, invoices, and official documents.",
+    description: "Allows businesses to apply custom branding (logos, colors) to PDFs, making them suitable for reports, invoices, and official documents.",
     icon: Brush,
   },
   // {
@@ -112,8 +94,7 @@ export const keyFeatures = [
   {
     id: "cross-browser-compatibility",
     title: "Cross-Browser Compatibility",
-    description:
-      "The service works on all major web browsers, ensuring users can access and use the tool regardless of their preferred platform.",
+    description: "The service works on all major web browsers, ensuring users can access and use the tool regardless of their preferred platform.",
     icon: Globe,
   },
 ];

@@ -3,14 +3,7 @@ import { ButtonUpdateTheme } from "@/client/components/app/ButtonUpdateTheme";
 import { useRouteInfo } from "@/client/hooks/useRouteInfo";
 import { HeaderActions } from "@/client/layouts/AppLayout/HeaderActions";
 import { useHeaderActionsStore } from "@/client/stores/useHeaderActionsStore";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 

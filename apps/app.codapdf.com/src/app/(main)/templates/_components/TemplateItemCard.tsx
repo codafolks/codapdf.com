@@ -37,14 +37,7 @@ export const TemplateItemCard = ({ template, isDeleting, onDelete }: TemplateIte
         </CardHeader>
         {template?.thumbnail && (
           <div className="bg-gray-300 overflow-hidden relative bg-cover bg-no-repeat bg-center aspect-video my-2">
-            <Image
-              src={template.thumbnail}
-              alt={template.name}
-              fetchPriority="auto"
-              width={300}
-              height={300}
-              quality={100}
-            />
+            <Image src={template.thumbnail} alt={template.name} fetchPriority="auto" width={300} height={300} quality={100} />
           </div>
         )}
         <CardContent>

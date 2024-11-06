@@ -15,9 +15,7 @@ const ComboBoxController = <T extends FieldValues>({ name, control, ...rest }: C
     <Controller
       control={control}
       name={name}
-      render={({ field }) => (
-        <ComboboxBox {...rest} value={field.value} onChange={(value) => field.onChange(value)} error={error?.message} />
-      )}
+      render={({ field }) => <ComboboxBox {...rest} value={field.value} onChange={(value) => field.onChange(value)} error={error?.message} />}
     />
   );
 };

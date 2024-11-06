@@ -64,21 +64,8 @@ export const BillingPlans = ({ plans, activePlan, subscriptionId }: BillingPlans
           <br />
           You can change your plan at any time.
         </h1>
-        <PricingTable
-          currentPlan={currentPlan}
-          isBillingPage
-          plans={plans}
-          onSelectPlan={onSelectPlan}
-          onCancelPlan={onCancelPlan}
-        />
-        {selectedPlan && isDialog && (
-          <StripeCheckoutDialog
-            open={isDialog}
-            onClose={() => setIsDialog(false)}
-            defaultPlan={selectedPlan}
-            frequency={frequency}
-          />
-        )}
+        <PricingTable currentPlan={currentPlan} isBillingPage plans={plans} onSelectPlan={onSelectPlan} onCancelPlan={onCancelPlan} />
+        {selectedPlan && isDialog && <StripeCheckoutDialog open={isDialog} onClose={() => setIsDialog(false)} defaultPlan={selectedPlan} frequency={frequency} />}
         {subscriptionId && (
           <CancelSubscriptionDialog
             open={isCancelDialog}

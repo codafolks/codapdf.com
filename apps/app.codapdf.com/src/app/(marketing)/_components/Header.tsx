@@ -60,11 +60,7 @@ export const Header = () => {
         >
           Pricing
         </Link>
-        <Link
-          className="text-sm font-medium hover:text-gray-300 hover:underline underline-offset-4"
-          href={ROUTES.PUBLIC.DOCS.path}
-          scroll={false}
-        >
+        <Link className="text-sm font-medium hover:text-gray-300 hover:underline underline-offset-4" href={ROUTES.PUBLIC.DOCS.path} scroll={false}>
           Docs
         </Link>
         <Link

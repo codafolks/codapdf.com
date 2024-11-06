@@ -22,8 +22,7 @@ type StripeCheckoutProps = {
 };
 const stripePromise = loadStripe(env.STRIPE_PUBLISHABLE_KEY);
 const StripeCheckoutElements = (props: StripeCheckoutProps) => {
-  const amount =
-    props.frequency === "YEARLY" ? props.defaultPlan.price?.yearly : (props.defaultPlan.price?.monthly ?? 0);
+  const amount = props.frequency === "YEARLY" ? props.defaultPlan.price?.yearly : (props.defaultPlan.price?.monthly ?? 0);
   return (
     <Elements
       stripe={stripePromise}

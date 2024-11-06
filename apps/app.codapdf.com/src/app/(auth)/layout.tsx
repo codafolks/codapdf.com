@@ -17,9 +17,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
             <h1 className="text-4xl font-black  ">
               Welcome to <AppLogo className="h-6 inline" />
             </h1>
-            <p className="text-2xl  pt-1 pb-4 te">
-              Easily turn HTML templates into PDFs with a simple API and an intuitive dashboard
-            </p>
+            <p className="text-2xl  pt-1 pb-4 te">Easily turn HTML templates into PDFs with a simple API and an intuitive dashboard</p>
           </div>
           <ParticleBackground />
         </div>

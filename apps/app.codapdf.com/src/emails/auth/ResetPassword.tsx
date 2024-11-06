@@ -12,17 +12,11 @@ export const ResetPassword = ({ name, resetPasswordLink }: ResetPasswordProps) =
     <Body style={main}>
       <Container style={container}>
         <Text style={paragraph}>Hi {name}</Text>
-        <Text style={paragraph}>
-          Someone recently requested a password change for your {"<CodaPDF  />"} account. If this was you, you can set a
-          new password here:
-        </Text>
+        <Text style={paragraph}>Someone recently requested a password change for your {"<CodaPDF  />"} account. If this was you, you can set a new password here:</Text>
         <Button style={button} href={resetPasswordLink}>
           Reset password
         </Button>
-        <Text style={paragraph}>
-          If you don&apos;t want to change your password or didn&apos;t request this, just ignore and delete this
-          message.
-        </Text>
+        <Text style={paragraph}>If you don&apos;t want to change your password or didn&apos;t request this, just ignore and delete this message.</Text>
         <Text style={paragraph}>
           Best,
           <br />
@@ -49,8 +43,7 @@ export default ResetPassword;
 const main = {
   color: "#ffffff",
   backgroundColor: "#0d0d0d",
-  fontFamily:
-    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
+  fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
 };
 
 const container = {

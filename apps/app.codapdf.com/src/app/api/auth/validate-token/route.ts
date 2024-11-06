@@ -1,12 +1,8 @@
 import { getAuthorizationTokenFromHeader } from "@/server/actions/auth/getAuthorizationTokenFromHeader";
 import { verifyJwt } from "@/server/actions/auth/verifyJwt";
-import { db } from "@/server/database";
-import { users } from "@/server/database/schemas/users";
-import { logger } from "@/server/utils/logger";
-import { captureException } from "@/utils/captureException";
 
-import { isBefore, toDate } from "date-fns";
-import { eq } from "drizzle-orm";
+import { captureException } from "@/utils/captureException";
+import { checkUserLicense } from "@/utils/checkUserLicense";
 import { type NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
@@ -19,38 +15,13 @@ export const POST = async (req: NextRequest) => {
     if (!isValid) {
       return new Response("Unauthorized", { status: 401 });
     }
-    const user = await db.query.users.findFirst({
-      where: eq(users.id, isValid.sub),
-      with: {
-        profile: true,
-      },
-    });
-    if (!user) {
-      return new NextResponse("Unauthorized", { status: 401 });
+    const license = await checkUserLicense(isValid.sub);
+    if (!license) {
+      return new Response("Unauthorized", { status: 401 });
     }
-
-    const signupDate = user.createdAt;
-
-    if (!signupDate) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-    const license = user.profile?.license;
-    // if license is null, that means the user is not a customer and the sign up is less than 14 days
-    // the user is still in the trial period with full access
-    // otherwise, return unauthorized
-    const isSignupWithin14Days = isBefore(toDate(signupDate), new Date());
-    if (typeof license !== "string" && isSignupWithin14Days) {
-      return NextResponse.json({
-        license: "PRO",
-      });
-    }
-
-    return NextResponse.json({
-      license,
-    });
+    return NextResponse.json(license);
   } catch (error) {
     captureException(error);
-    logger.child({ action: "api/auth/validate-token/#POST" }).info(error);
     return new NextResponse("Server error", { status: 500 });
   }
 };

@@ -13,13 +13,7 @@ interface PricingTableProps {
   plans: Array<PlanSubscription>;
 }
 
-export function PricingTable({
-  plans,
-  isBillingPage,
-  currentPlan,
-  onSelectPlan,
-  onCancelPlan,
-}: Readonly<PricingTableProps>) {
+export function PricingTable({ plans, isBillingPage, currentPlan, onSelectPlan, onCancelPlan }: Readonly<PricingTableProps>) {
   const [frequency, setFrequency] = useState<SubscriptionsFrequency>("YEARLY");
   const isYearly = frequency === "YEARLY";
   return (

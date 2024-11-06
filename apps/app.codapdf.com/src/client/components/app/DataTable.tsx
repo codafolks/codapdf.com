@@ -70,9 +70,7 @@ function DataTable<TData, TValue>({
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
-              {isRowIdLoading === row.id && (
-                <div className="absolute w-full h-full animate-pulse rounded z-10 left-0 top-0" />
-              )}
+              {isRowIdLoading === row.id && <div className="absolute w-full h-full animate-pulse rounded z-10 left-0 top-0" />}
             </TableRow>
           ))}
         </TableBody>

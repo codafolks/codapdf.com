@@ -4,11 +4,7 @@ import { deleteTemplate } from "@/server/actions/templates/deleteTemplate";
 import { getTemplateById } from "@/server/actions/templates/getTemplateById";
 import { listTemplates } from "@/server/actions/templates/listTemplates";
 import { saveTemplate } from "@/server/actions/templates/saveTemplate";
-import {
-  templateOnFetchZodSchema,
-  templateOnSaveZodSchema,
-  templateOnSelectZodSchema,
-} from "@/server/database/schemas/templates";
+import { templateOnFetchZodSchema, templateOnSaveZodSchema, templateOnSelectZodSchema } from "@/server/database/schemas/templates";
 import { protectedProcedure } from "@/server/trpc/procedures/protectedProcedure";
 import { z } from "zod";
 

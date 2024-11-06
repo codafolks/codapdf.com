@@ -6,12 +6,7 @@ import { resetPassword } from "@/server/actions/auth/resetPassword";
 import { signIn } from "@/server/actions/auth/signIn";
 import { signUp } from "@/server/actions/auth/signUp";
 import { sendWelcomeEmail } from "@/server/actions/emails/sendWelcomeEmail";
-import {
-  authForgotPasswordZodSchema,
-  authLoginZodSchema,
-  authResetPasswordZodSchema,
-  authSignupZodSchema,
-} from "@/server/schemas/authZodSchema";
+import { authForgotPasswordZodSchema, authLoginZodSchema, authResetPasswordZodSchema, authSignupZodSchema } from "@/server/schemas/authZodSchema";
 import { protectedProcedure } from "@/server/trpc/procedures/protectedProcedure";
 import { publicProcedure } from "@/server/trpc/procedures/publicProcedure";
 

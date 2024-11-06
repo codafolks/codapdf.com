@@ -11,21 +11,8 @@ export const AccountProfileForm = () => {
     <ContentBox title="Basic">
       <p>Manage your personal account details.</p>
       <form className="grid gap-4 pt-2 grid-cols-2" onSubmit={onSubmit}>
-        <InputController
-          label="Name"
-          control={form.control}
-          name="name"
-          placeholder="123-456-7890"
-          className="col-span-2"
-        />
-        <InputController
-          label="Email"
-          control={form.control}
-          name="email"
-          placeholder="123-456-7890"
-          className="col-span-2"
-          disabled
-        />
+        <InputController label="Name" control={form.control} name="name" placeholder="123-456-7890" className="col-span-2" />
+        <InputController label="Email" control={form.control} name="email" placeholder="123-456-7890" className="col-span-2" disabled />
         <div className="col-span-2 items-end justify-end flex">
           <Button type="submit" submitting={isSubmitting} variant="secondary">
             Save

@@ -8,10 +8,7 @@ export const PaymentStatus = () => {
   const stripePromise = loadStripe(env.STRIPE_PUBLISHABLE_KEY);
   const [message, setMessage] = useState<{ message: string; status: StatusBarVariant } | null>(null);
 
-  const clientSecret =
-    typeof window !== "undefined"
-      ? new URLSearchParams(window?.location?.search).get("payment_intent_client_secret")
-      : null;
+  const clientSecret = typeof window !== "undefined" ? new URLSearchParams(window?.location?.search).get("payment_intent_client_secret") : null;
   const checkStatus = async (clientSecret: string | null) => {
     if (!clientSecret) return;
     const stripe = await stripePromise;

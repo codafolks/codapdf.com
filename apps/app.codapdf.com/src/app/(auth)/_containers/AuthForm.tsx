@@ -36,13 +36,7 @@ const authSchemas = {
   signup: authSignupZodSchema,
   "forgot-password": authForgotPasswordZodSchema,
   "reset-password": authResetPasswordZodSchema,
-} as Record<
-  string,
-  | typeof authLoginZodSchema
-  | typeof authSignupZodSchema
-  | typeof authForgotPasswordZodSchema
-  | typeof authResetPasswordZodSchema
->;
+} as Record<string, typeof authLoginZodSchema | typeof authSignupZodSchema | typeof authForgotPasswordZodSchema | typeof authResetPasswordZodSchema>;
 
 const titleMap = {
   login: "Login",
@@ -132,10 +126,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
   });
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className="grid w-full gap-4 bg-background text-foreground p-8 shadow-sm border rounded-md"
-    >
+    <form onSubmit={onSubmit} className="grid w-full gap-4 bg-background text-foreground p-8 shadow-sm border rounded-md">
       <h2 className="text-2xl font-bold">{titleMap[type]}</h2>
       {apiError && <div className="rounded-md bg-red-100 p-2 text-center text-red-500">{apiError}</div>}
       <div className="grid gap-4">{formMap[type](form)}</div>
@@ -143,10 +134,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
         <div className="flex justify-between">
           <div className="flex items-center gap-2">
             <Checkbox id="remember" />
-            <label
-              htmlFor="remember"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
+            <label htmlFor="remember" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               Remember me
             </label>
           </div>
@@ -169,13 +157,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
             <GitHubLogoIcon className="w-6 h-6" />
             Continue with GitHub
           </Button>
-          <Button
-            type="button"
-            className="w-full"
-            variant="secondary"
-            loading={isGoogleSuccess}
-            onClick={() => (window.location.href = ROUTES.PUBLIC.GOOGLE.path)}
-          >
+          <Button type="button" className="w-full" variant="secondary" loading={isGoogleSuccess} onClick={() => (window.location.href = ROUTES.PUBLIC.GOOGLE.path)}>
             <GoogleIcon className="w-6 h-6" />
             Continue with Google
           </Button>

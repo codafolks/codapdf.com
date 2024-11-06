@@ -5,10 +5,10 @@ import type { License } from "@/server/database/schemas/licenses";
 
 import { convertUser2UserSession } from "@/server/actions/auth/convertUser2UserSession";
 import type { UserDTO } from "@/server/actions/users/getUserById";
+import { captureException } from "@/utils/captureException";
+import { isProductionEnvironment } from "@/utils/isProductionEnvironment";
 import type { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import { cookies } from "next/headers";
-import { isProductionEnvironment } from "@/utils/isProductionEnvironment";
-import { captureException } from "@/utils/captureException";
 
 export const authSessionConfig = {
   cookieName: "session",

@@ -4,6 +4,7 @@ import { licensesZodSchema } from "@/server/database/schemas/licenses";
 
 import { profiles, userZodSchema, users } from "@/server/database/schemas/users";
 import { protectedProcedure } from "@/server/trpc/procedures/protectedProcedure";
+import { checkUserLicense } from "@/utils/checkUserLicense";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
@@ -33,15 +34,7 @@ export const userRouter = {
     return db.update(profiles).set(payload).where(eq(profiles.userId, userId)).execute();
   }),
   getUserLicense: protectedProcedure.query(async ({ ctx }) => {
-    const userId = ctx.user.id;
-    const profile = await db.query.profiles
-      .findFirst({
-        where: eq(profiles.userId, userId),
-      })
-      .execute();
-    if (!profile) {
-      throw new Error("Profile not found");
-    }
-    return profile.license;
+    const license = await checkUserLicense(ctx.user.id);
+    return license;
   }),
 };

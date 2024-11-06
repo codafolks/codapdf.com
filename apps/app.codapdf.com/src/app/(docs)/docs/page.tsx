@@ -60,25 +60,18 @@ export default function ApiDocs() {
             <div className="max-w-3xl mx-auto space-y-8">
               <section id="introduction">
                 <h2 className="text-2xl font-bold mb-4">Introduction</h2>
-                <p className="text-muted-foreground">
-                  Welcome to our API documentation. This guide will help you get started with integrating our API into
-                  your applications.
-                </p>
+                <p className="text-muted-foreground">Welcome to our API documentation. This guide will help you get started with integrating our API into your applications.</p>
               </section>
               <section id="authentication">
                 <h2 className="text-2xl font-bold mb-4">Authentication</h2>
-                <p className="text-muted-foreground mb-4">
-                  To use our API, you'll need to authenticate your requests. We use API keys for authentication.
-                </p>
+                <p className="text-muted-foreground mb-4">To use our API, you'll need to authenticate your requests. We use API keys for authentication.</p>
                 <pre className="bg-muted p-4 rounded-md overflow-x-auto">
                   <code>curl -H "Authorization: Bearer YOUR_API_KEY" https://api.example.com/v1/users</code>
                 </pre>
               </section>
               <section id="users">
                 <h2 className="text-2xl font-bold mb-4">Users Endpoint</h2>
-                <p className="text-muted-foreground mb-4">
-                  The users endpoint allows you to retrieve, create, update, and delete user information.
-                </p>
+                <p className="text-muted-foreground mb-4">The users endpoint allows you to retrieve, create, update, and delete user information.</p>
                 <h3 className="text-xl font-semibold mb-2">Get User</h3>
                 <pre className="bg-muted p-4 rounded-md overflow-x-auto">
                   <code>GET /v1/users/:id</code>
@@ -86,9 +79,7 @@ export default function ApiDocs() {
               </section>
               <section id="posts">
                 <h2 className="text-2xl font-bold mb-4">Posts Endpoint</h2>
-                <p className="text-muted-foreground mb-4">
-                  The posts endpoint allows you to manage blog posts or articles.
-                </p>
+                <p className="text-muted-foreground mb-4">The posts endpoint allows you to manage blog posts or articles.</p>
                 <h3 className="text-xl font-semibold mb-2">Create Post</h3>
                 <pre className="bg-muted p-4 rounded-md overflow-x-auto">
                   <code>POST /v1/posts</code>
@@ -96,9 +87,7 @@ export default function ApiDocs() {
               </section>
               <section id="comments">
                 <h2 className="text-2xl font-bold mb-4">Comments Endpoint</h2>
-                <p className="text-muted-foreground mb-4">
-                  The comments endpoint allows you to manage comments on posts.
-                </p>
+                <p className="text-muted-foreground mb-4">The comments endpoint allows you to manage comments on posts.</p>
                 <h3 className="text-xl font-semibold mb-2">Get Comments for Post</h3>
                 <pre className="bg-muted p-4 rounded-md overflow-x-auto">
                   <code>GET /v1/posts/:postId/comments</code>

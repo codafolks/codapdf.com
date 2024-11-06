@@ -8,9 +8,7 @@ const all = cache(() => {
 });
 export default function BillingPage() {
   const [plans, subscription] = use(all());
-  const activePlan = subscription?.subscriptionId
-    ? plans?.find((plan) => plan.nickname === subscription?.nickname)
-    : undefined;
+  const activePlan = subscription?.subscriptionId ? plans?.find((plan) => plan.nickname === subscription?.nickname) : undefined;
 
   return (
     <>

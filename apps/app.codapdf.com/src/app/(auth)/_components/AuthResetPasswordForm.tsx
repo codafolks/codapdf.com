@@ -7,21 +7,7 @@ type AuthResetPasswordFormProps<T extends FieldValues = AuthInput> = {
 };
 export const AuthResetPasswordForm = ({ control }: AuthResetPasswordFormProps) => (
   <>
-    <InputController
-      label="Password"
-      name="password"
-      type="password"
-      control={control}
-      placeholder="Password"
-      autoComplete="off"
-    />
-    <InputController
-      label="Confirm Password"
-      name="confirmPassword"
-      type="password"
-      control={control}
-      placeholder="Confirm Password"
-      autoComplete="off"
-    />
+    <InputController label="Password" name="password" type="password" control={control} placeholder="Password" autoComplete="off" />
+    <InputController label="Confirm Password" name="confirmPassword" type="password" control={control} placeholder="Confirm Password" autoComplete="off" />
   </>
 );

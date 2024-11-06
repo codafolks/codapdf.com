@@ -1,17 +1,13 @@
-import {
-  StripePaymentMethod,
-  useStripePaymentMethods,
-  useStripeSubscriptionCreate,
-  useStripeSubscriptionPlans,
-} from "@/client/queries/stripe";
+import { useStripePaymentMethods, useStripeSubscriptionCreate, useStripeSubscriptionPlans } from "@/client/queries/stripe";
+import type { StripePaymentMethod } from "@/client/queries/stripe";
 import { env } from "@/constants/env.client";
 
 import { PlanTabs } from "@/app/(billing)/_components/PlanTabs";
 import { SavedCards } from "@/app/(billing)/_components/SavedCards";
 import { Button } from "@/client/components/ui/button";
 import { useUser, useUserLicenseUpdate, useUserUpdate } from "@/client/queries/users";
-import { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
-import { PlanSubscription } from "@/server/static/plansSubscription";
+import type { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
+import type { PlanSubscription } from "@/server/static/plansSubscription";
 import { logger } from "@/server/utils/logger";
 import { PaymentElement, type PaymentElementProps, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useState } from "react";
@@ -157,28 +153,15 @@ export const StripeCheckoutForm = ({ defaultPlan, frequency: defaultFrequency }:
   return (
     <div className="bg-background">
       <h1 className="text-3xl font-bold">Choose your plan</h1>
-      <p className="text-gray-600 pb-4">
-        Select the plan that works best for you. You can change your plan at any time.
-      </p>
-      {plans && defaultPlan && (
-        <PlanTabs plans={plans} value={selectedPlan} frequency={frequency} onChange={handlePlanSelection} />
-      )}
+      <p className="text-gray-600 pb-4">Select the plan that works best for you. You can change your plan at any time.</p>
+      {plans && defaultPlan && <PlanTabs plans={plans} value={selectedPlan} frequency={frequency} onChange={handlePlanSelection} />}
       <div className="grid pt-4">
         <h1 className="text-3xl font-bold">Payment Details</h1>
         <p className="text-gray-600 pb-4">Enter your card information to complete your subscription.</p>
-        {savedCards && savedCards.length > 0 && (
-          <SavedCards methods={savedCards} paymentMethod={paymentMethod} onSelectPaymentMethod={handleCardSelection} />
-        )}
+        {savedCards && savedCards.length > 0 && <SavedCards methods={savedCards} paymentMethod={paymentMethod} onSelectPaymentMethod={handleCardSelection} />}
         <form id="payment-form" onSubmit={handleSubmit} className="flex flex-col py-4 gap-6 text-foreground">
           <input type="hidden" name="email" value={user?.email} />
-          {!paymentMethod && (
-            <PaymentElement
-              id="payment-element"
-              options={paymentElementOptions}
-              className="grid gap-6"
-              onReady={() => setIsLoadingElements(false)}
-            />
-          )}
+          {!paymentMethod && <PaymentElement id="payment-element" options={paymentElementOptions} className="grid gap-6" onReady={() => setIsLoadingElements(false)} />}
           <Button type="submit" disabled={isLoadingElements} submitting={isSubmitting}>
             Pay Now
           </Button>

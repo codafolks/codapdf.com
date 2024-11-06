@@ -6,18 +6,10 @@ export const Footer = () => (
       © {new Date().getFullYear()} {"<CodaPdf />"}. All rights reserved.
     </p>
     <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-      <Link
-        className="text-xs hover:underline underline-offset-4  hover:text-gray-300"
-        href="/terms-of-service"
-        prefetch
-      >
+      <Link className="text-xs hover:underline underline-offset-4  hover:text-gray-300" href="/terms-of-service" prefetch>
         Terms of Service
       </Link>
-      <Link
-        className="text-xs hover:underline underline-offset-4  hover:text-gray-300"
-        href="/privacy-policy"
-        prefetch
-      >
+      <Link className="text-xs hover:underline underline-offset-4  hover:text-gray-300" href="/privacy-policy" prefetch>
         Privacy
       </Link>
     </nav>

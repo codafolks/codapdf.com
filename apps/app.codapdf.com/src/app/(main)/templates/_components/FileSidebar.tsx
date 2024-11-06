@@ -24,14 +24,7 @@ interface FileSidebarProps {
   onFileRename: (fileId: string, newName: string) => void;
 }
 
-export function FileSidebar({
-  files,
-  activeFileId,
-  onFileSelect,
-  onFileCreate,
-  onFileDelete,
-  onFileRename,
-}: Readonly<FileSidebarProps>) {
+export function FileSidebar({ files, activeFileId, onFileSelect, onFileCreate, onFileDelete, onFileRename }: Readonly<FileSidebarProps>) {
   const [isCreatingFile, setIsCreatingFile] = useState(false);
   const [oldFilename, setOldFilename] = useState<string | null>(null);
 
@@ -59,24 +52,11 @@ export function FileSidebar({
       </div>
       <ScrollArea className="flex-1">
         <div>
-          {isCreatingFile && (
-            <FileNameForm onSubmit={handleCreateFile} onBlur={() => setIsCreatingFile(false)} files={fileNames} />
-          )}
+          {isCreatingFile && <FileNameForm onSubmit={handleCreateFile} onBlur={() => setIsCreatingFile(false)} files={fileNames} />}
           {values.map((file) => (
-            <div
-              key={file.filename}
-              className={cn(
-                "group grid grid-cols-[auto,max-content] items-center justify-between  text-sm hover:",
-                activeFileId === file.filename && "",
-              )}
-            >
+            <div key={file.filename} className={cn("group grid grid-cols-[auto,max-content] items-center justify-between  text-sm hover:", activeFileId === file.filename && "")}>
               {oldFilename === file.filename ? (
-                <FileNameForm
-                  filename={oldFilename}
-                  onSubmit={handleRenameFile}
-                  onBlur={() => setOldFilename(null)}
-                  files={fileNames}
-                />
+                <FileNameForm filename={oldFilename} onSubmit={handleRenameFile} onBlur={() => setOldFilename(null)} files={fileNames} />
               ) : (
                 <Button onClick={() => onFileSelect(file.filename)} variant="link" className="gap-1 ou">
                   <File className="h-4 w-4" />

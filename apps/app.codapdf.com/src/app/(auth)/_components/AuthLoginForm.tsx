@@ -9,13 +9,6 @@ type AuthLoginFormProps<T extends FieldValues = AuthInput> = {
 export const AuthLoginForm = ({ control }: AuthLoginFormProps) => (
   <>
     <InputController label="Email" name="email" type="email" control={control} placeholder="Email" />
-    <InputController
-      label="Password"
-      name="password"
-      type="password"
-      control={control}
-      placeholder="Password"
-      autoComplete="off"
-    />
+    <InputController label="Password" name="password" type="password" control={control} placeholder="Password" autoComplete="off" />
   </>
 );

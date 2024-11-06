@@ -35,19 +35,8 @@ const TemplateDialogForm = ({ template, open, isSaving, onSubmit, onCancel }: Te
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-4">
-              <InputController
-                type="text"
-                placeholder="Template Name"
-                name="name"
-                label="Template Name"
-                control={form.control}
-              />
-              <TextareaController
-                placeholder="Template Description"
-                name="description"
-                label="Description"
-                control={form.control}
-              />
+              <InputController type="text" placeholder="Template Name" name="name" label="Template Name" control={form.control} />
+              <TextareaController placeholder="Template Description" name="description" label="Description" control={form.control} />
             </div>
             <div className="mt-4 flex gap-2 justify-end flex-1">
               <Button variant="destructive" onClick={handleOnCancel} disabled={isSaving}>

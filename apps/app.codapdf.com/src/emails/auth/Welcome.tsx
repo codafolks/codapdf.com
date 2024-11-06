@@ -17,8 +17,8 @@ export const WelcomeEmail = ({ name }: WelcomeEmailProps) => (
           Welcome to <strong>{"<CodaPDF  />"}</strong>,
         </Text>
         <Text style={paragraph}>
-          I am excited to have you on board! You are now just one step away from turning your HTML templates into PDFs
-          with a simple API and an intuitive dashboard. Get started by logging in to your account.
+          I am excited to have you on board! You are now just one step away from turning your HTML templates into PDFs with a simple API and an intuitive dashboard. Get started by
+          logging in to your account.
         </Text>
         <Section style={btnContainer}>
           <Button style={button} href={`${baseUrl}/auth/login`}>
@@ -51,8 +51,7 @@ export default WelcomeEmail;
 const main = {
   color: "#ffffff",
   backgroundColor: "#0d0d0d",
-  fontFamily:
-    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
+  fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
 };
 
 const container = {

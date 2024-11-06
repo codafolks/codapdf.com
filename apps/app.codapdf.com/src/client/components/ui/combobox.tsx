@@ -72,20 +72,13 @@ export function ComboboxBox({ options, value, onChange, label, error, placeholde
             )}
             type="button"
           >
-            <span className="flex items-center gap-2 text-ellipsis flex-1 overflow-hidden ">
-              {getSelectedOption(value)}
-            </span>
+            <span className="flex items-center gap-2 text-ellipsis flex-1 overflow-hidden ">{getSelectedOption(value)}</span>
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="flex flex-col min-w-full p-0 rounded-none" align="start">
           <Command className="rounded-none" shouldFilter={false}>
-            <CommandInput
-              placeholder={placeholder ?? "Search..."}
-              value={search}
-              onValueChange={(e) => setSearch(e)}
-              autoFocus
-            />
+            <CommandInput placeholder={placeholder ?? "Search..."} value={search} onValueChange={(e) => setSearch(e)} autoFocus />
             {!listOptions?.length && <CommandEmpty>No found.</CommandEmpty>}
             <CommandList>
               {listOptions

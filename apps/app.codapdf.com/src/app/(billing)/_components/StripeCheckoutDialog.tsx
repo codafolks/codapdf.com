@@ -13,10 +13,7 @@ type StripeCheckoutDialogProps = {
 export const StripeCheckoutDialog = ({ open, onClose, ...rest }: StripeCheckoutDialogProps) => {
   return (
     <Dialog open={open}>
-      <DialogContent
-        className="md:max-w-[1000px] max-h-[90%] flex flex-col flex-1 overflow-hidden gap-0 text-foreground bg-background p-0"
-        onClose={onClose}
-      >
+      <DialogContent className="md:max-w-[1000px] max-h-[90%] flex flex-col flex-1 overflow-hidden gap-0 text-foreground bg-background p-0" onClose={onClose}>
         <DialogTitle className="font-medium text-xl p-4 inline">
           <span className="text-foreground">Subscription</span>
         </DialogTitle>

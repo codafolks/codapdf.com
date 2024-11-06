@@ -43,12 +43,5 @@ export const ApiKeysList = () => {
     ],
     [toast],
   );
-  return (
-    <DataTable
-      columns={columns}
-      data={data ?? []}
-      isLoading={isLoading}
-      EmptyState={<div className="p-4 text-center text-foreground">No API keys found</div>}
-    />
-  );
+  return <DataTable columns={columns} data={data ?? []} isLoading={isLoading} EmptyState={<div className="p-4 text-center text-foreground">No API keys found</div>} />;
 };

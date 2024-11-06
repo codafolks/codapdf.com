@@ -14,15 +14,7 @@ const TextareaController = <T extends FieldValues>({ name, control, ...rest }: T
     <Controller
       control={control}
       name={name}
-      render={({ field }) => (
-        <Textarea
-          {...rest}
-          value={field.value ?? ""}
-          onChange={field.onChange}
-          onBlur={field.onBlur}
-          error={error?.message}
-        />
-      )}
+      render={({ field }) => <Textarea {...rest} value={field.value ?? ""} onChange={field.onChange} onBlur={field.onBlur} error={error?.message} />}
     />
   );
 };

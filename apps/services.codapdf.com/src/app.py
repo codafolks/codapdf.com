@@ -1,10 +1,10 @@
 import sys
 import os
+
 src_path = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(src_path)
 
 from flask import Flask, request
-
 from flask_caching import Cache
 
 from controllers.html_converter_controller import html_converter_controller

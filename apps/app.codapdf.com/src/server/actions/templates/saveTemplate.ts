@@ -45,11 +45,7 @@ export const saveTemplate = async (input: TemplateOnSavePayload) => {
     await Promise.all(files.map(({ filename, content }) => uploadTemplateFile({ uuid, filename, content })));
     if (input.thumbnail) {
       await uploadTemplateThumbnail(uuid, input.thumbnail);
-      await trx
-        .update(templates)
-        .set({ thumbnail: "thumbnail.jpg" })
-        .where(eq(templates.uuid, uuid))
-        .returning(returning);
+      await trx.update(templates).set({ thumbnail: "thumbnail.jpg" }).where(eq(templates.uuid, uuid)).returning(returning);
     }
     return { ...transaction, files };
   });

@@ -40,11 +40,7 @@ export function PlanTabs({ plans: _plans, onChange, frequency, value }: Readonly
   return (
     <div className="grid gap-1">
       <BillingToggle frequency={frequency} onToggle={handleBillingToggle} economize={value.economize} />
-      <Tabs
-        defaultValue={value.nickname}
-        onValueChange={(v) => handleSelectPlan(v as PlanSubscription["nickname"])}
-        className="w-full grid gap-4"
-      >
+      <Tabs defaultValue={value.nickname} onValueChange={(v) => handleSelectPlan(v as PlanSubscription["nickname"])} className="w-full grid gap-4">
         <TabsList className="grid grid-cols-3 w-full">
           {plans.map((plan) => (
             <TabsTrigger key={plan.nickname} value={plan.nickname} className="text-sm uppercase font-bold">
@@ -58,9 +54,7 @@ export function PlanTabs({ plans: _plans, onChange, frequency, value }: Readonly
               <div className="flex  justify-between">
                 <h3 className="text-lg font-bold capitalize">{plan.title}</h3>
                 <div>
-                  <span className="text-2xl font-bold">
-                    {isYearly ? toMoney((plan.price?.yearly ?? 0) / 100) : toMoney((plan.price?.monthly ?? 0) / 100)}
-                  </span>
+                  <span className="text-2xl font-bold">{isYearly ? toMoney((plan.price?.yearly ?? 0) / 100) : toMoney((plan.price?.monthly ?? 0) / 100)}</span>
                   <span className="text-muted-foreground">/{isYearly ? "year" : "month"}</span>
                 </div>
               </div>

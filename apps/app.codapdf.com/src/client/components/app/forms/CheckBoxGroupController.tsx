@@ -10,12 +10,7 @@ type CheckBoxGroupControllerProps<T extends FieldValues> = Omit<CheckboxProps, "
   }>;
 };
 
-const CheckBoxGroupController = <T extends FieldValues>({
-  name,
-  control,
-  options,
-  ...rest
-}: CheckBoxGroupControllerProps<T>) => {
+const CheckBoxGroupController = <T extends FieldValues>({ name, control, options, ...rest }: CheckBoxGroupControllerProps<T>) => {
   const {
     fieldState: { error },
     field: { value, onChange },

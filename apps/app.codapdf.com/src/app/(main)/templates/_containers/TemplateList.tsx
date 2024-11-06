@@ -71,10 +71,7 @@ export const TemplateList = () => {
           {isLoading && <div className="col-span-full text-center text-gray-400">Loading templates...</div>}
           {!templates?.length && !isLoading && <div className="text-center text-gray-400">No templates found</div>}
         </TabsContent>
-        <TabsContent
-          value="sample"
-          className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(250px,1fr))] transition-all"
-        >
+        <TabsContent value="sample" className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(250px,1fr))] transition-all">
           {templateExamples.map((template) => (
             <Link key={template.id} href={ROUTES.PRIVATE.TEMPLATES_SAMPLE.path(template.id)}>
               <Card className="hover:bg-secondary h-full text-foreground bg-background">

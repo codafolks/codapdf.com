@@ -9,12 +9,7 @@ type SubscriptionUpdate = {
   lasSubscriptionId: string;
 };
 
-export const subscriptionUpdate = async ({
-  customerId,
-  priceId,
-  paymentMethodId,
-  lasSubscriptionId,
-}: SubscriptionUpdate) => {
+export const subscriptionUpdate = async ({ customerId, priceId, paymentMethodId, lasSubscriptionId }: SubscriptionUpdate) => {
   try {
     await subscriptionCancel({ subscriptionId: lasSubscriptionId });
     const api = stripe();

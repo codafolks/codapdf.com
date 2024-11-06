@@ -1,12 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 type DeleteDialogProps = {
   open: boolean;
@@ -19,9 +12,7 @@ const DeleteDialog = ({ open, onClose, onDelete }: DeleteDialogProps) => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Are you absolutely sure?</DialogTitle>
-          <DialogDescription>
-            This action cannot be undone. This will permanently delete the current item and all associated data.
-          </DialogDescription>
+          <DialogDescription>This action cannot be undone. This will permanently delete the current item and all associated data.</DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button onClick={onClose}>Cancel</Button>

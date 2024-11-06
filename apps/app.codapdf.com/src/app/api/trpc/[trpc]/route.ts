@@ -4,14 +4,7 @@ import { createTRPCContext, createTRPCPublicContext } from "@/server/trpc/contex
 import { appRouter } from "@/server/trpc/trpcServer";
 import type { NextRequest, NextResponse } from "next/server";
 
-const allowedUrls = [
-  "auth.login",
-  "auth.signup",
-  "auth.forgotPassword",
-  "auth.resetPassword",
-  "stripe.prices",
-  "contact.submit",
-];
+const allowedUrls = ["auth.login", "auth.signup", "auth.forgotPassword", "auth.resetPassword", "stripe.prices", "contact.submit"];
 
 const isStripePrices = (pathname: string) => {
   return pathname.includes("stripe.prices");
