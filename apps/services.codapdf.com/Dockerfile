@@ -55,11 +55,11 @@ RUN playwright install chromium
 COPY . .
 
 # Expose the port your app runs on (adjust if necessary)
-EXPOSE 80
+EXPOSE 3001
 
 # Set environment variables (adjust as needed)
 ENV PYTHONPATH=./src
 ENV APP_ENV=production
 
 # Command to run the app (adjust based on your app and whether you're using Flask or FastAPI)
-CMD ["sh", "-c", "doppler run -p codapdf -c ${RAILWAY_ENVIRONMENT}_services -- uvicorn src.app:app --host 0.0.0.0 --port 80"]
+CMD ["sh", "-c", "doppler run -p codapdf -c ${RAILWAY_ENVIRONMENT}_services -- uvicorn src.app:app --host 0.0.0.0 --port 3001"]
