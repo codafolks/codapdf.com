@@ -17,10 +17,12 @@ export type ComboBoxOption = {
 export type ComboboxBoxProps = {
   options: Array<ComboBoxOption>;
   placeholder?: string;
-  value: string;
+  value?: string;
   label?: string;
   error?: string;
-  onChange: (value: string | number) => void;
+  name?: string;
+  id?: string;
+  onChange?: (value: string | number) => void;
 };
 
 const Option = (option: ComboBoxOption) => (
@@ -30,11 +32,13 @@ const Option = (option: ComboBoxOption) => (
   </>
 );
 
-export function ComboboxBox({ options, value, onChange, label, error, placeholder }: Readonly<ComboboxBoxProps>) {
+export function ComboboxBox({ options, value, onChange, label, name, id, error, placeholder }: Readonly<ComboboxBoxProps>) {
   const [open, setOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
-  const getSelectedOption = (value: string) => {
-    const option = options?.find((option) => String(option.value) === String(value));
+  const [localValue, setLocalValue] = React.useState(value);
+
+  const getSelectedOption = () => {
+    const option = options?.find((option) => String(option.value) === String(value ?? localValue));
     if (option) {
       return <Option {...option} />;
     }
@@ -52,13 +56,26 @@ export function ComboboxBox({ options, value, onChange, label, error, placeholde
     return () => document.removeEventListener("keydown", down);
   }, []);
 
+  const handleOnChange = (newValue: string) => {
+    if (typeof onChange === "function") {
+      onChange(newValue);
+    } else {
+      setLocalValue(newValue);
+    }
+  };
+
   const listOptions = React.useMemo(() => {
     return options.filter((option) => option.label.toLowerCase().includes(search.toLowerCase()));
   }, [search, options]);
 
   return (
     <div className="relative w-full">
-      {label && <span className="text-foreground block text-sm font-medium pb-1">{label}</span>}
+      {label && (
+        <label className="text-foreground block text-sm font-medium pb-1" htmlFor={id}>
+          {label}
+        </label>
+      )}
+      <input type="hidden" value={value ?? localValue ?? ""} defaultValue={value} name={name} id={id} />
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -72,7 +89,7 @@ export function ComboboxBox({ options, value, onChange, label, error, placeholde
             )}
             type="button"
           >
-            <span className="flex items-center gap-2 text-ellipsis flex-1 overflow-hidden ">{getSelectedOption(value)}</span>
+            <span className="flex items-center gap-2 text-ellipsis flex-1 overflow-hidden ">{getSelectedOption()}</span>
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -88,7 +105,7 @@ export function ComboboxBox({ options, value, onChange, label, error, placeholde
                     key={option?.value}
                     value={String(option?.value)}
                     onSelect={(currentValue: string) => {
-                      onChange(currentValue === value ? "" : currentValue);
+                      handleOnChange(currentValue === (value ?? localValue) ? "" : currentValue);
                       setOpen(false);
                     }}
                     className="flex items-center w-full gap-2 rounded-none"

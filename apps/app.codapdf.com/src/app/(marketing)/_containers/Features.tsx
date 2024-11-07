@@ -1,5 +1,4 @@
 import { keyFeatures } from "@/app/(marketing)/_data/keyFeatures";
-
 export const Features = () => (
   <section className="w-full bg-secondary text-foreground" id="features">
     <div className="marketing-section px-4 md:px-6 grid gap-8 py-12 lg:py-16 md:py-24">

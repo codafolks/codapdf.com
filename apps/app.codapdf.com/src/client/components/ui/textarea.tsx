@@ -24,7 +24,14 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(({ classNa
         ref={ref}
         {...props}
       />
-      {error && <p className="text-sm font-medium text-red-500 pt-1">{error}</p>}
+      <p
+        className={cn("text-sm font-medium text-red-500 pt-1 hidden", {
+          block: Boolean(error),
+        })}
+        data-error={props.name}
+      >
+        {error}
+      </p>
     </div>
   );
 });

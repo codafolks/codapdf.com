@@ -25,8 +25,11 @@ const getMiddlewareSession = async () => {
   const token = await getSessionToken();
   try {
     if (token) {
+      const { signal } = new AbortController();
       const response = await fetch(`${process.env.APP_DOMAIN}/api/edge/users`, {
+        signal,
         method: "POST",
+        cache: "no-cache",
         headers: {
           "Content-Type": "application",
           Authorization: token,

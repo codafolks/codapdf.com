@@ -1,25 +1,32 @@
 "use client";
-import { useContactForm } from "@/client/queries/contact";
-import { ComboBoxController, InputController, TextareaController } from "@/components/app/forms";
+import { submitContactForm } from "@/app/(marketing)/actions";
+import { InputController, ComboBoxController, TextareaController } from "@/client/components/app/forms";
+import { useToast } from "@/client/components/ui/use-toast";
+import { useZodForm } from "@/client/utils/useZodForm";
 import { Button } from "@/components/ui/button";
-import { type ContactForm, contactFormZodSchema } from "@/server/schemas/contactFormZodSchema";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { contactFormZodSchema } from "@/server/schemas/contactFormZodSchema";
 
 export function Contact() {
-  const form = useForm<ContactForm>({
-    defaultValues: {
-      department: "sales",
-    },
-    resolver: zodResolver(contactFormZodSchema),
+  const { toast } = useToast();
+  const form = useZodForm({
+    schema: contactFormZodSchema,
   });
 
-  const contactApi = useContactForm();
   const onSubmit = form.handleSubmit(async (data) => {
-    await contactApi.mutateAsync(data);
-    for (const key of Object.keys(data) as Array<keyof ContactForm>) {
-      form.setValue(key, "");
+    try {
+      await submitContactForm(data);
+      form.reset();
+      toast({
+        title: "Message sent",
+        description: "We will get back to you soon",
+        variant: "default",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An error occurred while sending the message",
+        variant: "destructive",
+      });
     }
   });
 
@@ -28,14 +35,14 @@ export function Contact() {
       <div className="marketing-section px-4 md:px-6">
         <div className="p-4 md:p-8 border rounded-md bg-background">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12 ">Contact Us</h2>
-          <form className="space-y-4" onSubmit={onSubmit}>
-            <InputController id="name" label="Name" name="name" control={form.control} placeholder="John Doe" />
-            <InputController id="email" label="Email" name="email" control={form.control} placeholder="your.email@example.com" />
+          <form className="space-y-4" id="contact-form" onSubmit={onSubmit}>
+            <InputController control={form.control} id="name" label="Name" name="name" placeholder="John Doe" />
+            <InputController control={form.control} id="email" label="Email" name="email" placeholder="your.email@example.com" />
             <ComboBoxController
-              id="type"
-              label="Department"
-              name="department"
               control={form.control}
+              label="Department"
+              id="department"
+              name="department"
               options={[
                 { label: "Sales", value: "sales" },
                 { label: "Support", value: "support" },
@@ -43,10 +50,8 @@ export function Contact() {
                 { label: "Other", value: "other" },
               ]}
             />
-
-            <TextareaController id="message" label="Message" name="message" control={form.control} placeholder="Your message here..." />
-
-            <Button type="submit" loading={contactApi.isPending}>
+            <TextareaController control={form.control} id="message" label="Message" name="message" placeholder="Your message here..." />
+            <Button type="submit" id="submit-content" submitting={form.formState.isSubmitting}>
               Send Message
             </Button>
           </form>

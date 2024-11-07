@@ -1,4 +1,3 @@
-;
 import { isProductionEnvironment } from "./src/utils/isProductionEnvironment";
 import type { NextConfig } from "next";
 type MappedOmit<T, K extends keyof T> = { [P in keyof T as P extends K ? never : P]: T[P] };
@@ -10,10 +9,15 @@ const nextConfig: Config = {
   output: "standalone",
   serverExternalPackages: ["pino", "pino-pretty"],
   experimental: {
-    staleTimes:{
+    staleTimes: {
       static: 60 * 60 * 24 * 7, // 7 days
       dynamic: 60 * 60 * 24, // 1 day
-    }
+    },
+  },
+  compiler: {
+    removeConsole: {
+      exclude: ["error", "info", "warn"],
+    },
   },
   images: {
     remotePatterns: [
@@ -66,5 +70,4 @@ const nextConfig: Config = {
   },
 };
 
-export default nextConfig
-
+export default nextConfig;

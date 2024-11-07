@@ -1,21 +1,33 @@
+"use client";
+import { ROUTES } from "@/app/routes";
 import { PricingTableCard } from "@/client/components/app/PricingTableCard";
 import { Switch } from "@/client/components/ui/switch";
 import { cn } from "@/client/lib/utils";
-import { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
-import { PlanSubscription } from "@/server/static/plansSubscription";
+import type { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
+import type { PlanSubscription } from "@/server/static/plansSubscription";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface PricingTableProps {
   currentPlan?: PlanSubscription["nickname"];
-  onSelectPlan: (plan: PlanSubscription, frequency: SubscriptionsFrequency) => void;
+  onSelectPlan?: (plan: PlanSubscription, frequency: SubscriptionsFrequency) => void;
   onCancelPlan?: (plan: PlanSubscription) => void;
   isBillingPage?: boolean;
   plans: Array<PlanSubscription>;
 }
 
 export function PricingTable({ plans, isBillingPage, currentPlan, onSelectPlan, onCancelPlan }: Readonly<PricingTableProps>) {
+  const router = useRouter();
   const [frequency, setFrequency] = useState<SubscriptionsFrequency>("YEARLY");
   const isYearly = frequency === "YEARLY";
+
+  const handleOnSelectPlan = (plan: PlanSubscription) => {
+    if (typeof onSelectPlan === "function") {
+      onSelectPlan(plan, frequency);
+    } else {
+      router.push(ROUTES.AUTH.SIGNUP.path);
+    }
+  };
   return (
     <div className="w-full">
       <div className="mb-10 flex justify-center items-center gap-4">
@@ -36,7 +48,7 @@ export function PricingTable({ plans, isBillingPage, currentPlan, onSelectPlan, 
             currentPlan={currentPlan}
             isBillingPage={isBillingPage}
             frequency={frequency}
-            onSelectPlan={() => onSelectPlan(plan, frequency)}
+            onSelectPlan={handleOnSelectPlan}
             onCancelPlan={onCancelPlan}
           />
         ))}

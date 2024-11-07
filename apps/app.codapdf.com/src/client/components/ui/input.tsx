@@ -1,9 +1,9 @@
+"use client";
 import * as React from "react";
-
 import { cn } from "@/client/lib/utils";
 import { Button } from "@/components/ui/button";
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
-import { ClassNameValue } from "tailwind-merge";
+import type { ClassNameValue } from "tailwind-merge";
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -13,7 +13,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   inputClassName?: ClassNameValue;
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type, id, label, error, hepText, inputClassName, hideTextError, ...props }, ref) => {
+const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type, id, label, error, hepText, inputClassName, hideTextError, name, ...props }, ref) => {
   const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
   return (
     <div className={className}>
@@ -37,10 +37,19 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type,
           )}
           ref={ref}
           id={id}
+          name={name}
           {...props}
         />
       </div>
-      {error && !hideTextError && <p className="text-sm font-medium text-red-500 pt-1">{error}</p>}
+
+      <p
+        className={cn("text-sm font-medium text-red-500 pt-1 hidden", {
+          block: Boolean(error),
+        })}
+        data-error={name}
+      >
+        {error}
+      </p>
       {hepText && <p className="text-sm font-medium text-muted-foreground pt-1">{hepText}</p>}
     </div>
   );
