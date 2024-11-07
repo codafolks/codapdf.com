@@ -4,7 +4,6 @@ import { AppLogo } from "@/client/components/app/AppLogo";
 import { ButtonUpdateTheme } from "@/client/components/app/ButtonUpdateTheme";
 import { Button } from "@/client/components/ui/button";
 import { useIsMobile } from "@/client/hooks/useIsMobile";
-import { cn } from "@/client/lib/utils";
 import { AlignJustify } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -34,6 +33,7 @@ export const Header = () => {
         className="self-end md:hidden"
         variant="ghost"
         onClick={() => {
+          document.getElementById("navigation")?.classList.add("flex");
           document.getElementById("navigation")?.classList.toggle("hidden");
         }}
       >
@@ -54,13 +54,7 @@ export const Header = () => {
       >
         <AppLogo className="h-4 md:h-6" />
       </Link>
-      <nav
-        className={cn("mt-4 hidden flex-col items-center p-2 md:mt-auto md:ml-auto md:flex-1 md:flex-row md:justify-end", {
-          flex: isMobile,
-          "md:flex": !isMobile,
-        })}
-        id="navigation"
-      >
+      <nav className="mt-4 hidden flex-col items-center p-2 md:mt-auto md:ml-auto md:flex md:flex-1 md:flex-row md:justify-end" id="navigation">
         <Button variant="link" asChild>
           <Link
             href="#features"
