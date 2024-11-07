@@ -60,10 +60,10 @@ const AuthForm = ({ type }: AuthFormProps) => {
   const router = useRouter();
   const pathname = useSearchParams();
 
-  const token = pathname.get("token");
+  const token = pathname?.get("token");
 
   // NOTE: This is a temporary solution to show a success message after a user has successfully Signed In/Up with google
-  const success = pathname.get("success");
+  const success = pathname?.get("success");
   const isGoogleSuccess = success === "true" && type === "login";
   // useEffect(() => {
   //   if (isGoogleSuccess) {
