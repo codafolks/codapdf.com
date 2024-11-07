@@ -8,7 +8,7 @@ type HeaderActionsActionsProps = {
 const HeaderActions = ({ actions }: HeaderActionsActionsProps) => {
   if (actions.length === 0) return null;
   return (
-    <div className="flex gap-2 items-center mr-0 ml-auto">
+    <div className="mr-0 ml-auto flex items-center gap-2">
       <Menu actions={actions} />
     </div>
   );

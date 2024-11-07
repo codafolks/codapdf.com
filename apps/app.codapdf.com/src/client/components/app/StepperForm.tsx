@@ -16,12 +16,12 @@ export const StepperForm = ({ children, currentStep, steps, className, onStep }:
     if (index < currentStep) onStep?.(index);
   };
   return (
-    <div className={cn("flex flex-col flex-1 gap-4", className)}>
-      <div className="flex gap-4 justify-between">
+    <div className={cn("flex flex-1 flex-col gap-4", className)}>
+      <div className="flex justify-between gap-4">
         {steps.map((step, index) => (
           <div
             key={step}
-            className="flex flex-col flex-1 gap-2 cursor-pointer"
+            className="flex flex-1 cursor-pointer flex-col gap-2"
             onClick={() => handleStep(index)}
             onKeyUp={(e) => {
               if (e.key === "Enter") handleStep(index);
@@ -29,7 +29,7 @@ export const StepperForm = ({ children, currentStep, steps, className, onStep }:
           >
             <strong className="font-normal">{step}</strong>
             <div
-              className={cn("h-2 w-full  rounded-md", {
+              className={cn("h-2 w-full rounded-md", {
                 "bg-blue-600": currentStep >= index,
               })}
             />

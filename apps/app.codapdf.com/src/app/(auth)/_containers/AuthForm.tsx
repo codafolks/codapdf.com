@@ -126,15 +126,15 @@ const AuthForm = ({ type }: AuthFormProps) => {
   });
 
   return (
-    <form onSubmit={onSubmit} className="grid w-full gap-4 bg-background text-foreground p-8 shadow-sm border rounded-md">
-      <h2 className="text-2xl font-bold">{titleMap[type]}</h2>
+    <form onSubmit={onSubmit} className="grid w-full gap-4 rounded-md border bg-background p-8 text-foreground shadow-sm">
+      <h2 className="font-bold text-2xl">{titleMap[type]}</h2>
       {apiError && <div className="rounded-md bg-red-100 p-2 text-center text-red-500">{apiError}</div>}
       <div className="grid gap-4">{formMap[type](form)}</div>
       {(type === "login" || type === "signup") && (
         <div className="flex justify-between">
           <div className="flex items-center gap-2">
             <Checkbox id="remember" />
-            <label htmlFor="remember" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <label htmlFor="remember" className="font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               Remember me
             </label>
           </div>
@@ -154,11 +154,11 @@ const AuthForm = ({ type }: AuthFormProps) => {
               window.location.href = ROUTES.PUBLIC.GITHUB.path;
             }}
           >
-            <GitHubLogoIcon className="w-6 h-6" />
+            <GitHubLogoIcon className="h-6 w-6" />
             Continue with GitHub
           </Button>
           <Button type="button" className="w-full" variant="secondary" loading={isGoogleSuccess} onClick={() => (window.location.href = ROUTES.PUBLIC.GOOGLE.path)}>
-            <GoogleIcon className="w-6 h-6" />
+            <GoogleIcon className="h-6 w-6" />
             Continue with Google
           </Button>
         </div>

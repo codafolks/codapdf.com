@@ -1,6 +1,6 @@
 "use client";
 import { submitContactForm } from "@/app/(marketing)/actions";
-import { InputController, ComboBoxController, TextareaController } from "@/client/components/app/forms";
+import { ComboBoxController, InputController, TextareaController } from "@/client/components/app/forms";
 import { useToast } from "@/client/components/ui/use-toast";
 import { useZodForm } from "@/client/utils/useZodForm";
 import { Button } from "@/components/ui/button";
@@ -31,10 +31,10 @@ export function Contact() {
   });
 
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 text-foreground bg-secondary" id="contact">
+    <section className="w-full bg-secondary py-12 text-foreground md:py-24 lg:py-32" id="contact">
       <div className="marketing-section px-4 md:px-6">
-        <div className="p-4 md:p-8 border rounded-md bg-background">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12 ">Contact Us</h2>
+        <div className="rounded-md border bg-background p-4 md:p-8">
+          <h2 className="mb-12 text-center font-bold text-3xl tracking-tighter sm:text-5xl ">Contact Us</h2>
           <form className="space-y-4" id="contact-form" onSubmit={onSubmit}>
             <InputController control={form.control} id="name" label="Name" name="name" placeholder="John Doe" />
             <InputController control={form.control} id="email" label="Email" name="email" placeholder="your.email@example.com" />

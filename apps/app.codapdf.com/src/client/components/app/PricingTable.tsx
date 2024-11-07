@@ -30,15 +30,15 @@ export function PricingTable({ plans, isBillingPage, currentPlan, onSelectPlan, 
   };
   return (
     <div className="w-full">
-      <div className="mb-10 flex justify-center items-center gap-4">
-        <span className={cn("text-sm font-medium", !isYearly ? "text-primary" : "text-muted-foreground")}>Monthly</span>
+      <div className="mb-10 flex items-center justify-center gap-4">
+        <span className={cn("font-medium text-sm", !isYearly ? "text-primary" : "text-muted-foreground")}>Monthly</span>
         <Switch
           checked={isYearly}
           onCheckedChange={() => {
             setFrequency((prev) => (prev === "YEARLY" ? "MONTHLY" : "YEARLY"));
           }}
         />
-        <span className={cn("text-sm font-medium", isYearly ? "text-primary" : "text-muted-foreground")}>Yearly</span>
+        <span className={cn("font-medium text-sm", isYearly ? "text-primary" : "text-muted-foreground")}>Yearly</span>
       </div>
       <div className="mx-auto grid gap-8 lg:grid-cols-4">
         {plans.map((plan) => (

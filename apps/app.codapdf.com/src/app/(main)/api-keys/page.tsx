@@ -14,7 +14,7 @@ const ApiKeysPage = () => {
   ]);
 
   return (
-    <div className="p-4 grid gap-4">
+    <div className="grid gap-4 p-4">
       <ApiKeysList />
       <CreateApiKeyDialog open={openDialog} onClose={() => setOpenDialog(false)} />
     </div>

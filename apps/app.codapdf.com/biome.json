@@ -38,6 +38,9 @@
           "options": { "syntax": "generic" }
         }
       },
+      "nursery": {
+        "useSortedClasses": "error"
+      },
       "suspicious": {
         "noArrayIndexKey": "warn",
         "noConsoleLog": "warn",

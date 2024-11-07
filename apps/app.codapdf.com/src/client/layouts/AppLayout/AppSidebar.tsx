@@ -8,7 +8,7 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarGroupContent, SidebarMen
 const AppSidebar = () => {
   return (
     <Sidebar className="bg-background p-0">
-      <div className="border-b px-6 flex h-16 overflow-hidden">
+      <div className="flex h-16 overflow-hidden border-b px-6">
         <AppLogo />
       </div>
       <SidebarContent className="bg-background">

@@ -1,5 +1,5 @@
 import { db } from "@/server/database";
-import { Profile, User, users } from "@/server/database/schemas/users";
+import { type Profile, type User, users } from "@/server/database/schemas/users";
 import { eq } from "drizzle-orm";
 
 export type UserDTO = {

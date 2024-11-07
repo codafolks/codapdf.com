@@ -1,7 +1,7 @@
 import { sendWelcomeEmail } from "@/server/actions/emails/sendWelcomeEmail";
 import { getUserById } from "@/server/actions/users/getUserById";
 import { db } from "@/server/database";
-import { AuthProvider, authentications } from "@/server/database/schemas/authentications";
+import { type AuthProvider, authentications } from "@/server/database/schemas/authentications";
 import { profiles, users } from "@/server/database/schemas/users";
 
 type SignupFromSocialAuth = {

@@ -1,7 +1,7 @@
 import { getAllImagesLinksFromHtml } from "@/app/(main)/templates/_utils/getAllImagesLinksFromHtml";
 import { getAllJavascriptBetweenScriptTagFromHtml, getAllScriptsLinksFromHtml } from "@/app/(main)/templates/_utils/getAllScriptsLinksFromHtml";
 import { useUser } from "@/client/queries/users";
-import { License } from "@/server/database/schemas/licenses";
+import type { License } from "@/server/database/schemas/licenses";
 
 const getMessage = ({ license, html }: { license?: License | null; html: string | null }) => {
   if (!html) return null;

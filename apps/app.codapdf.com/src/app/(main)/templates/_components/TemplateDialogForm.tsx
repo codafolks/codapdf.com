@@ -38,7 +38,7 @@ const TemplateDialogForm = ({ template, open, isSaving, onSubmit, onCancel }: Te
               <InputController type="text" placeholder="Template Name" name="name" label="Template Name" control={form.control} />
               <TextareaController placeholder="Template Description" name="description" label="Description" control={form.control} />
             </div>
-            <div className="mt-4 flex gap-2 justify-end flex-1">
+            <div className="mt-4 flex flex-1 justify-end gap-2">
               <Button variant="destructive" onClick={handleOnCancel} disabled={isSaving}>
                 Cancel
               </Button>

@@ -21,7 +21,7 @@ export function DatePicker({ label, id, value, error, onChange }: Readonly<DateP
       <PopoverTrigger asChild>
         <div>
           {label && (
-            <label htmlFor={id} className="text-text-foreground block text-sm font-medium pb-1">
+            <label htmlFor={id} className="block pb-1 font-medium text-sm text-text-foreground">
               {label}
             </label>
           )}

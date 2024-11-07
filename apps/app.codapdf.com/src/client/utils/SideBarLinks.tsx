@@ -1,6 +1,6 @@
 import { ROUTES } from "@/app/routes";
 import { CodeXml, CreditCard, LayoutDashboardIcon, Lock, UserIcon } from "lucide-react";
-import { JSX } from "react";
+import type { JSX } from "react";
 
 const LINKS = ROUTES.PRIVATE;
 export type SideBarRoute = {

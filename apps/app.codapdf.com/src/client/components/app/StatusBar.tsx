@@ -25,13 +25,13 @@ export const StatusBar = ({ description, variant, actions, className }: StatusBa
   }[variant];
 
   return (
-    <div className={cn("px-4 py-2  grid grid-cols-[auto,max-content] gap-2 items-center ", color, className)}>
+    <div className={cn("grid grid-cols-[auto,max-content] items-center gap-2 px-4 py-2 ", color, className)}>
       <div>
         <span className="font-semibold text-black">{description}</span>
       </div>
-      <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-2">
         {actions}
-        <Icon className="text-black font-semibold" />
+        <Icon className="font-semibold text-black" />
       </div>
     </div>
   );

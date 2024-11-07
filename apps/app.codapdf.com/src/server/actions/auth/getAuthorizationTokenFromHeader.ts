@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 
 export const getAuthorizationTokenFromHeader = (req: NextRequest | Request) => {
   const authorization = req.headers.get("Authorization");

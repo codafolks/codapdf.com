@@ -44,8 +44,8 @@ export function FileSidebar({ files, activeFileId, onFileSelect, onFileCreate, o
 
   return (
     <div className="flex h-full w-full flex-col border-r">
-      <div className="flex items-center justify-between px-4 h-10  border-b">
-        <h2 className="text-sm font-semibold">Files</h2>
+      <div className="flex h-10 items-center justify-between border-b px-4">
+        <h2 className="font-semibold text-sm">Files</h2>
         <Button variant="ghost" size="icon" onClick={() => setIsCreatingFile(true)} className="size-4">
           <FilePlus className="h-4 w-4" />
         </Button>
@@ -54,11 +54,11 @@ export function FileSidebar({ files, activeFileId, onFileSelect, onFileCreate, o
         <div>
           {isCreatingFile && <FileNameForm onSubmit={handleCreateFile} onBlur={() => setIsCreatingFile(false)} files={fileNames} />}
           {values.map((file) => (
-            <div key={file.filename} className={cn("group grid grid-cols-[auto,max-content] items-center justify-between  text-sm hover:", activeFileId === file.filename && "")}>
+            <div key={file.filename} className={cn("group hover: grid grid-cols-[auto,max-content] items-center justify-between text-sm", activeFileId === file.filename && "")}>
               {oldFilename === file.filename ? (
                 <FileNameForm filename={oldFilename} onSubmit={handleRenameFile} onBlur={() => setOldFilename(null)} files={fileNames} />
               ) : (
-                <Button onClick={() => onFileSelect(file.filename)} variant="link" className="gap-1 ou">
+                <Button onClick={() => onFileSelect(file.filename)} variant="link" className="ou gap-1">
                   <File className="h-4 w-4" />
                   <span className="truncate">{file.filename}</span>
                 </Button>

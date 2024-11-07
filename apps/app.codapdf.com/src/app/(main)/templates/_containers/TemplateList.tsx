@@ -45,7 +45,7 @@ export const TemplateList = () => {
     },
   });
   return (
-    <div className="p-4 grid gap-4">
+    <div className="grid gap-4 p-4">
       <Tabs defaultValue="templates">
         <TabsList className="mb-4">
           <TabsTrigger value="templates">Your Templates</TabsTrigger>
@@ -71,14 +71,14 @@ export const TemplateList = () => {
           {isLoading && <div className="col-span-full text-center text-gray-400">Loading templates...</div>}
           {!templates?.length && !isLoading && <div className="text-center text-gray-400">No templates found</div>}
         </TabsContent>
-        <TabsContent value="sample" className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(250px,1fr))] transition-all">
+        <TabsContent value="sample" className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 transition-all">
           {templateExamples.map((template) => (
             <Link key={template.id} href={ROUTES.PRIVATE.TEMPLATES_SAMPLE.path(template.id)}>
-              <Card className="hover:bg-secondary h-full text-foreground bg-background">
+              <Card className="h-full bg-background text-foreground hover:bg-secondary">
                 <CardHeader>
                   <CardTitle>{template.name}</CardTitle>
                 </CardHeader>
-                <div className="bg-gray-300 overflow-hidden relative bg-cover bg-no-repeat bg-center aspect-video my-2" />
+                <div className="relative my-2 aspect-video overflow-hidden bg-center bg-cover bg-gray-300 bg-no-repeat" />
                 <CardContent>
                   <p>{template.description}</p>
                 </CardContent>

@@ -10,7 +10,7 @@ const AppLayout = ({ children }: { children: ReactNode }) => {
       <AppSidebar />
       <SidebarInset>
         <Header />
-        <div className="border-app-medium overflow-y-auto h-[calc(100vh-80px)]">
+        <div className="h-[calc(100vh-80px)] overflow-y-auto border-app-medium">
           <LicenseWarning />
           {children}
         </div>

@@ -13,7 +13,6 @@ const Contact = dynamic(() => import("@/app/(marketing)/_containers/Contact").th
   loading: () => <p>Loading...</p>,
   ssr: true,
 });
-
 export const fetchCache = "force-cache";
 const Page = () => {
   return (

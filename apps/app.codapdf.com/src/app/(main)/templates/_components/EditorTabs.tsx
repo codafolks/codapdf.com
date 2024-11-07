@@ -1,4 +1,4 @@
-import { EditorFiles } from "@/app/(main)/templates/_components/FileSidebar";
+import type { EditorFiles } from "@/app/(main)/templates/_components/FileSidebar";
 import { cn } from "@/client/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -28,7 +28,7 @@ const TabButton = ({
 }) => {
   return (
     <div
-      className={cn("relative h-10 px-4 rounded-none border-r flex items-center", {
+      className={cn("relative flex h-10 items-center rounded-none border-r px-4", {
         " data-[state=active]:border-b-app-medium": active,
       })}
       data-state-active={active}
@@ -62,7 +62,7 @@ export const EditorTabs = ({ activeFileId, setActiveFileId, openTabs, files, onC
   return (
     <ScrollArea className="flex-1" orientation="horizontal">
       <Tabs value={activeFileId} className="w-full" onValueChange={setActiveFileId}>
-        <TabsList className="h-10 p-0 bg-transparent w-full justify-start rounded-none border-none">
+        <TabsList className="h-10 w-full justify-start rounded-none border-none bg-transparent p-0">
           {openTabs.map((tabId) => {
             const file = files[tabId];
             if (!file) return null;

@@ -33,9 +33,9 @@ export default function APIUsage() {
     },
   ];
   return (
-    <div className="p-4 grid gap-4">
-      <h1 className="text-2xl font-bold  text-gray-100">API Usage Statistics</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid gap-4 p-4">
+      <h1 className="font-bold text-2xl text-gray-100">API Usage Statistics</h1>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {apiUsageData.map((item) => (
           <Card key={item.title}>
             <CardHeader>
@@ -43,7 +43,7 @@ export default function APIUsage() {
               <CardDescription className="text-gray-400">{item.description}</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold">{item.value}</p>
+              <p className="font-bold text-3xl">{item.value}</p>
             </CardContent>
           </Card>
         ))}

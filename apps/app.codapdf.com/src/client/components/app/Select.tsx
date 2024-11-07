@@ -12,7 +12,7 @@ export function Select({ value, options, placeholder = "Select..", onChange, lab
   return (
     <div>
       {label && (
-        <label htmlFor={id} className=" block text-sm font-medium pb-1">
+        <label htmlFor={id} className=" block pb-1 font-medium text-sm">
           {label}
         </label>
       )}

@@ -14,7 +14,7 @@ const Header = () => {
   const hasTitle = route && "header" in route;
 
   return (
-    <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 bg-background text-foreground">
+    <header className="flex h-16 shrink-0 items-center gap-2 border-b bg-background px-4 text-foreground">
       <SidebarTrigger className="-ml-1" />
       <Separator orientation="vertical" className="mr-2 h-4" />
       <Breadcrumb>
@@ -32,7 +32,7 @@ const Header = () => {
           )}
         </BreadcrumbList>
       </Breadcrumb>
-      <div className="flex gap-2 items-center ml-auto mr-0">
+      <div className="mr-0 ml-auto flex items-center gap-2">
         {actions.length > 0 && <HeaderActions actions={actions} />}
         <ButtonUpdateTheme />
       </div>

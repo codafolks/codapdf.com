@@ -3,7 +3,7 @@
 import { CheckTemplatePlanSupport } from "@/app/(main)/templates/_components/CheckTemplatePlanSupport";
 import { CodeEditor } from "@/app/(main)/templates/_components/CodeEditor";
 import { EditorTabs } from "@/app/(main)/templates/_components/EditorTabs";
-import { EditorFileData, EditorFiles, FileSidebar } from "@/app/(main)/templates/_components/FileSidebar";
+import { type EditorFileData, type EditorFiles, FileSidebar } from "@/app/(main)/templates/_components/FileSidebar";
 import { TemplateDialogForm } from "@/app/(main)/templates/_components/TemplateDialogForm";
 import { TemplatePreview } from "@/app/(main)/templates/_components/TemplatePreview";
 import { DATA_JSON_PLACEHOLDER } from "@/app/(main)/templates/_data/DATA_JSON_PLACEHOLDER";
@@ -18,7 +18,7 @@ import { useHeaderActions } from "@/client/hooks/useHeaderActions";
 import { useTemplateById, useTemplateConvertHtml2PDF, useTemplateSave } from "@/client/queries/templates";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { TemplateOnSavePayload } from "@/server/database/schemas/templates";
+import type { TemplateOnSavePayload } from "@/server/database/schemas/templates";
 import { PanelLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -262,9 +262,9 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
 
   return (
     <>
-      <div className="flex flex-col overflow-hidden relative h-[calc(100vh-100px)] ">
+      <div className="relative flex h-[calc(100vh-100px)] flex-col overflow-hidden ">
         <CheckTemplatePlanSupport html={parsedHtml} />
-        <div className="flex flex-1 overflow-hidden h-full w-full">
+        <div className="flex h-full w-full flex-1 overflow-hidden">
           <PanelGroup direction="horizontal" className="rounded-none">
             <Panel defaultSize={20} minSize={10} maxSize={20} className=" max-w-[250px]">
               <FileSidebar
@@ -276,7 +276,7 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
                 onFileRename={handleFileRename}
               />
             </Panel>
-            <PanelResizeHandle className="w-2 hover:bg-primary/10 transition-colors" />
+            <PanelResizeHandle className="w-2 transition-colors hover:bg-primary/10" />
             <Panel defaultSize={40} minSize={30} maxSize={80} className="grid grid-rows-[max-content,auto]">
               <div className="flex border-b">
                 <EditorTabs openTabs={openTabs} activeFileId={activeFileId} onClose={handleTabClose} setActiveFileId={setActiveFileId} files={files} />
@@ -284,17 +284,17 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
                   <PanelLeft size={16} className="text-foreground" />
                 </Button>
               </div>
-              {isLoading && <div className="flex items-center justify-center h-full">Loading...</div>}
+              {isLoading && <div className="flex h-full items-center justify-center">Loading...</div>}
               <CodeEditor files={files} activeFileId={activeFileId} onChange={handleCodeChange} />
             </Panel>
             {showPreview && (
               <>
-                <PanelResizeHandle className="w-2  hover:bg-primary/10 transition-colors" />
+                <PanelResizeHandle className="w-2 transition-colors hover:bg-primary/10" />
                 <Panel defaultSize={40} className="grid grid-rows-[max-content,auto] overflow-hidden">
-                  <div className="h-10 flex items-center justify-center border-br">
-                    <span className="px-4 text-sm font-semibold">Preview</span>
+                  <div className="flex h-10 items-center justify-center border-br">
+                    <span className="px-4 font-semibold text-sm">Preview</span>
                   </div>
-                  {isLoading && <div className="flex items-center justify-center h-full">Loading...</div>}
+                  {isLoading && <div className="flex h-full items-center justify-center">Loading...</div>}
                   {!isLoading && <TemplatePreview html={parsedHtml} />}
                 </Panel>
               </>

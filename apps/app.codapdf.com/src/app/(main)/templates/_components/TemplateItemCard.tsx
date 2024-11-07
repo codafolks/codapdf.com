@@ -15,7 +15,7 @@ type TemplateItemCardProps = {
 export const TemplateItemCard = ({ template, isDeleting, onDelete }: TemplateItemCardProps) => (
   <div
     className={cn("relative", {
-      "opacity-50 animate-pulse pointer-events-none": isDeleting,
+      "pointer-events-none animate-pulse opacity-50": isDeleting,
     })}
   >
     <Menu
@@ -31,12 +31,12 @@ export const TemplateItemCard = ({ template, isDeleting, onDelete }: TemplateIte
       isDropDown
     />
     <Link key={template.id} href={ROUTES.PRIVATE.TEMPLATES_EDIT.path(template.id)}>
-      <Card className="hover:bg-secondary h-full text-foreground bg-background">
+      <Card className="h-full bg-background text-foreground hover:bg-secondary">
         <CardHeader>
           <CardTitle>{template.name}</CardTitle>
         </CardHeader>
         {template?.thumbnail && (
-          <div className="bg-gray-300 overflow-hidden relative bg-cover bg-no-repeat bg-center aspect-video my-2">
+          <div className="relative my-2 aspect-video overflow-hidden bg-center bg-cover bg-gray-300 bg-no-repeat">
             <Image src={template.thumbnail} alt={template.name} fetchPriority="auto" width={300} height={300} quality={100} />
           </div>
         )}

@@ -9,7 +9,6 @@ export default function GlobalError({
 }: Readonly<{
   error: Error & { digest?: string };
 }>) {
-  
   useEffect(() => {
     captureException(error);
   }, [error]);

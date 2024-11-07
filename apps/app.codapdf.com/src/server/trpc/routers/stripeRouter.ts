@@ -10,7 +10,7 @@ import { subscriptionCreate } from "@/server/actions/stripe/subscriptions/subscr
 import { subscriptionRetrieve } from "@/server/actions/stripe/subscriptions/subscriptionRetrieve";
 import { subscriptions, subscriptionsFrequencyZodSchema } from "@/server/database/schemas/subscriptions";
 import { users } from "@/server/database/schemas/users";
-import { PlanSubscription, plansSubscription } from "@/server/static/plansSubscription";
+import { type PlanSubscription, plansSubscription } from "@/server/static/plansSubscription";
 import { protectedProcedure } from "@/server/trpc/procedures/protectedProcedure";
 import { publicProcedure } from "@/server/trpc/procedures/publicProcedure";
 import { and, desc, eq } from "drizzle-orm";

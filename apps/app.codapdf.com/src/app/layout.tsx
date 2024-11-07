@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("dark", inter.className)} suppressHydrationWarning>
-      <body className={cn("bg-background h-screen font-sans antialiased overflow-hidden", inter.className)}>
+      <body className={cn("h-screen overflow-hidden bg-background font-sans antialiased", inter.className)}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem storageKey="coda-theme">
           {children}
           <Toaster />

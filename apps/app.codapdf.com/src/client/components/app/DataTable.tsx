@@ -37,15 +37,15 @@ function DataTable<TData, TValue>({
   const totalRows = table.getRowModel().rows?.length;
   const rows = table.getRowModel().rows;
   return (
-    <div className="grid gap-4 items-center">
-      <Table className="rounded-md border overflow-hidden">
+    <div className="grid items-center gap-4">
+      <Table className="overflow-hidden rounded-md border">
         {!hideHeader && (
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="px-4 py-3 items-center flex">
+              <TableRow key={headerGroup.id} className="flex items-center px-4 py-3">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="font-semibold flex flex-1">
+                    <TableHead key={header.id} className="flex flex-1 font-semibold">
                       {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                     </TableHead>
                   );
@@ -66,21 +66,21 @@ function DataTable<TData, TValue>({
               }}
             >
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id} className="last:text-right font-semibold flex flex-1">
+                <TableCell key={cell.id} className="flex flex-1 font-semibold last:text-right">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
-              {isRowIdLoading === row.id && <div className="absolute w-full h-full animate-pulse rounded z-10 left-0 top-0" />}
+              {isRowIdLoading === row.id && <div className="absolute top-0 left-0 z-10 h-full w-full animate-pulse rounded" />}
             </TableRow>
           ))}
         </TableBody>
       </Table>
       {isLoading && (
-        <div className="grid gap-4 bg-background p-4 border">
-          <div className="h-6 w-full bg-secondary animate-pulse rounded" />
-          <div className="h-6 w-full bg-secondary animate-pulse rounded" />
-          <div className="h-6 w-full bg-secondary animate-pulse rounded" />
-          <div className="h-6 w-full bg-secondary animate-pulse rounded" />
+        <div className="grid gap-4 border bg-background p-4">
+          <div className="h-6 w-full animate-pulse rounded bg-secondary" />
+          <div className="h-6 w-full animate-pulse rounded bg-secondary" />
+          <div className="h-6 w-full animate-pulse rounded bg-secondary" />
+          <div className="h-6 w-full animate-pulse rounded bg-secondary" />
         </div>
       )}
       {EmptyState && !isLoading && !totalRows && EmptyState ? EmptyState : null}

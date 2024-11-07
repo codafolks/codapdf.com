@@ -1,5 +1,5 @@
 "use client";
-import { StatusBar, StatusBarVariant } from "@/client/components/app/StatusBar";
+import { StatusBar, type StatusBarVariant } from "@/client/components/app/StatusBar";
 import { env } from "@/constants/env.client";
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";

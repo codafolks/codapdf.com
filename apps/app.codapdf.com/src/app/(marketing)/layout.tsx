@@ -6,7 +6,7 @@ type MarketingLayoutProps = {
 };
 
 const MarketingLayout = ({ children }: MarketingLayoutProps) => (
-  <div className="flex flex-col bg-primary relative h-screen overflow-y-auto" id="marketing-layout">
+  <div className="relative flex h-screen flex-col overflow-y-auto bg-primary" id="marketing-layout">
     <Header />
     <main className="flex-1">{children}</main>
     <Footer />

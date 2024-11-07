@@ -5,9 +5,9 @@ import { StripeCheckoutDialog } from "@/app/(billing)/_components/StripeCheckout
 import { CancelSubscriptionDialog } from "@/app/(billing)/_components/CancelSubscriptionDialog";
 import { PricingTable } from "@/client/components/app/PricingTable";
 import { useToast } from "@/client/components/ui/use-toast";
-import { StripePlan, useStripeSubscriptionCancel } from "@/client/queries/stripe";
-import { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
-import { PlanSubscription } from "@/server/static/plansSubscription";
+import { type StripePlan, useStripeSubscriptionCancel } from "@/client/queries/stripe";
+import type { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
+import type { PlanSubscription } from "@/server/static/plansSubscription";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -58,8 +58,8 @@ export const BillingPlans = ({ plans, activePlan, subscriptionId }: BillingPlans
 
   return (
     <>
-      <div className="flex flex-col items-center py-4 gap-8">
-        <h1 className="text-3xl font-bold  text-foreground">
+      <div className="flex flex-col items-center gap-8 py-4">
+        <h1 className="font-bold text-3xl text-foreground">
           Choose a plan that works best for you.
           <br />
           You can change your plan at any time.

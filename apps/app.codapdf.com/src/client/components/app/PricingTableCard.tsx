@@ -1,8 +1,8 @@
 import { Button } from "@/client/components/ui/button";
 import { cn } from "@/client/lib/utils";
 import { toMoney } from "@/client/utils/toMoney";
-import { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
-import { PlanSubscription } from "@/server/static/plansSubscription";
+import type { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
+import type { PlanSubscription } from "@/server/static/plansSubscription";
 import { Check } from "lucide-react";
 
 interface PricingTableCardProps {
@@ -25,36 +25,36 @@ export function PricingTableCard({ plan, currentPlan, isBillingPage, frequency =
       )}
     >
       {typeof currentPlan === "string" && plan.nickname === currentPlan && (
-        <div className="absolute -top-4 left-0 right-0 mx-auto w-32 rounded-full bg-gradient-to-r from-primary to-primary/80 px-3 py-1 text-center text-sm font-medium text-primary-foreground">
+        <div className="-top-4 absolute right-0 left-0 mx-auto w-32 rounded-full bg-gradient-to-r from-primary to-primary/80 px-3 py-1 text-center font-medium text-primary-foreground text-sm">
           {isBillingPage ? "Current Plan" : "Popular"}
         </div>
       )}
 
       <div className="mb-6">
-        <h3 className="text-xl font-bold text-foreground">{plan.title}</h3>
-        <p className="mt-2 text-sm text-muted-foreground">{plan.description}</p>
+        <h3 className="font-bold text-foreground text-xl">{plan.title}</h3>
+        <p className="mt-2 text-muted-foreground text-sm">{plan.description}</p>
       </div>
 
       {typeof plan.price !== "undefined" ? (
         <div className="mb-6">
           <div className="flex items-baseline">
-            <span className="text-4xl font-bold tracking-tight text-foreground">
+            <span className="font-bold text-4xl text-foreground tracking-tight">
               {isYearly ? toMoney((plan.price?.yearly ?? 0) / 100) : toMoney((plan.price?.monthly ?? 0) / 100)}
             </span>
-            <span className="ml-1 text-sm font-semibold text-muted-foreground">/{isYearly ? "year" : "month"}</span>
+            <span className="ml-1 font-semibold text-muted-foreground text-sm">/{isYearly ? "year" : "month"}</span>
           </div>
-          {isYearly && plan.economize && <p className="mt-1 text-sm font-medium text-emerald-600 dark:text-emerald-400">{plan.economize}</p>}
+          {isYearly && plan.economize && <p className="mt-1 font-medium text-emerald-600 text-sm dark:text-emerald-400">{plan.economize}</p>}
         </div>
       ) : (
         <div className="mb-6">
-          <p className="text-4xl font-bold tracking-tight text-foreground">Custom Pricing</p>
-          <span className="text-sm font-bold tracking-tight text-foreground">STARTING AT $500 PER MONTH</span>
+          <p className="font-bold text-4xl text-foreground tracking-tight">Custom Pricing</p>
+          <span className="font-bold text-foreground text-sm tracking-tight">STARTING AT $500 PER MONTH</span>
         </div>
       )}
 
       <Button
         className={cn(
-          "w-full rounded-lg px-4 py-2.5 text-sm font-semibold transition-colors",
+          "w-full rounded-lg px-4 py-2.5 font-semibold text-sm transition-colors",
           plan.nickname === currentPlan ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         )}
         onClick={() => {
@@ -74,7 +74,7 @@ export function PricingTableCard({ plan, currentPlan, isBillingPage, frequency =
             <Check className="h-5 w-5 flex-shrink-0 text-primary" />
             <div>
               <p className="font-medium text-foreground">{feature.title}</p>
-              <p className="text-sm text-muted-foreground">{feature.description}</p>
+              <p className="text-muted-foreground text-sm">{feature.description}</p>
             </div>
           </li>
         ))}

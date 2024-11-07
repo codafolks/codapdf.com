@@ -5,8 +5,8 @@ import { getUserById } from "@/server/actions/users/getUserById";
 import { db } from "@/server/database";
 import { authentications } from "@/server/database/schemas/authentications";
 import { users } from "@/server/database/schemas/users";
-import { GitHubUser } from "@/server/types/GitHubUser";
-import { GitHubUserEmail } from "@/server/types/GitHubUserEmail";
+import type { GitHubUser } from "@/server/types/GitHubUser";
+import type { GitHubUserEmail } from "@/server/types/GitHubUserEmail";
 import { logger } from "@/server/utils/logger";
 
 import { and, eq } from "drizzle-orm";

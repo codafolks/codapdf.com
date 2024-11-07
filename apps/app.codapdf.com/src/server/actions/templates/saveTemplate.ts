@@ -3,7 +3,7 @@ import { deleteTemplateFolder } from "@/server/actions/templates/deleteTemplateF
 import { uploadTemplateFile } from "@/server/actions/templates/uploadTemplateFile";
 import { uploadTemplateThumbnail } from "@/server/actions/templates/uploadTemplateThumbnail";
 import { db } from "@/server/database";
-import { TemplateOnSavePayload, templates } from "@/server/database/schemas/templates";
+import { type TemplateOnSavePayload, templates } from "@/server/database/schemas/templates";
 import { eq } from "drizzle-orm";
 
 export const saveTemplate = async (input: TemplateOnSavePayload) => {

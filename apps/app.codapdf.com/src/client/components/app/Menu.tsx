@@ -70,7 +70,7 @@ export const Menu = ({ actions, isDropDown, className }: MenuProps) => {
         <DropdownMenuTrigger className={className}>
           <EllipsisVertical />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="flex flex-col z-10 border min-w-[100px]" side="left" align="start">
+        <DropdownMenuContent className="z-10 flex min-w-[100px] flex-col border" side="left" align="start">
           <Actions actions={actions} isDropDown />
         </DropdownMenuContent>
       </DropdownMenu>

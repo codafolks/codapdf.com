@@ -45,7 +45,7 @@ export function CodeEditor({ onChange, files, activeFileId }: Readonly<CodeEdito
           height="100%"
           width="100%"
           data-filename={file.filename}
-          className={cn("h-full overflow-hidden hidden", {
+          className={cn("hidden h-full overflow-hidden", {
             flex: activeFileId === file.filename,
           })}
         />
