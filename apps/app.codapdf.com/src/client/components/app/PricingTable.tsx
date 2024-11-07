@@ -34,6 +34,7 @@ export function PricingTable({ plans, isBillingPage, currentPlan, onSelectPlan, 
         <span className={cn("font-medium text-sm", !isYearly ? "text-primary" : "text-muted-foreground")}>Monthly</span>
         <Switch
           checked={isYearly}
+          name="plan-frequency"
           onCheckedChange={() => {
             setFrequency((prev) => (prev === "YEARLY" ? "MONTHLY" : "YEARLY"));
           }}
