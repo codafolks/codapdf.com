@@ -33,6 +33,9 @@ const getMiddlewareSession = async () => {
           Authorization: token,
         },
       });
+      if (!response.ok || typeof response?.json !== "function") {
+        return { user: null };
+      }
       const data = await response.json();
       if (data.user) return { user: data.user };
     }

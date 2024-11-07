@@ -1,10 +1,7 @@
-import { isProductionEnvironment } from "./src/utils/isProductionEnvironment";
 import type { NextConfig } from "next";
 type MappedOmit<T, K extends keyof T> = { [P in keyof T as P extends K ? never : P]: T[P] };
 type Config = MappedOmit<NextConfig, "rewrites">;
-/**
- * @type {import('next').NextConfig}
- */
+
 const nextConfig: Config = {
   output: "standalone",
   serverExternalPackages: ["pino", "pino-pretty"],
@@ -22,8 +19,6 @@ const nextConfig: Config = {
       },
     ],
   },
-  cacheHandler: isProductionEnvironment ? require.resolve("./cache-handler.mjs") : undefined,
-  cacheMaxMemorySize: 0, // disable default in-memory caching
   rewrites() {
     return [
       // PRIVATE PAGES
