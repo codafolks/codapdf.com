@@ -8,15 +8,6 @@ type Config = MappedOmit<NextConfig, "rewrites">;
 const nextConfig: Config = {
   output: "standalone",
   serverExternalPackages: ["pino", "pino-pretty"],
-  experimental: {
-    optimizeCss: true,
-    optimisticClientCache: true,
-    nextScriptWorkers: true,
-    staleTimes: {
-      static: 60 * 60 * 24 * 7, // 7 days
-      dynamic: 60 * 60 * 24, // 1 day
-    },
-  },
   compiler: {
     removeConsole: {
       exclude: ["error", "info", "warn"],
