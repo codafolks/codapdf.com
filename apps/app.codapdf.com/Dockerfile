@@ -58,6 +58,7 @@ ENV NEXT_MANUAL_SIG_HANDLE=true
 RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/cache/fetch-cache/ ./.next/standalone/.next/cache/fetch-cache/
 
 # Set the correct permission for prerender cache
 RUN mkdir .next && chown nextjs:nodejs .next
@@ -67,7 +68,8 @@ RUN mkdir .next && chown nextjs:nodejs .next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/next.config.ts .
-# COPY --from=builder --chown=nextjs:nodejs /app/cache-handler.mjs .
+COPY --from=builder --chown=nextjs:nodejs /app/cache-handler.mjs .
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone/.next/cache/fetch-cache/ .
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static

@@ -10,6 +10,13 @@ const nextConfig: Config = {
       exclude: ["error", "info", "warn"],
     },
   },
+  cacheHandler: process.env.NODE_ENV === "production" ? "./cache-handler.mjs" : undefined,
+  cacheMaxMemorySize: 0, // disable default in-memory caching
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   images: {
     remotePatterns: [
       {
