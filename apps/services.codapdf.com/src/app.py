@@ -59,6 +59,7 @@ async def html2pdf(request: Request, authorization: str = Header(None)):
   REQUEST_COUNTER.inc()
   REQUESTS_PER_SECOND.inc() 
   payload = await request.json()
+  logger.info(f"Request payload: {payload}")
   try:
     user_license = validate_authorization(authorization)
     data = parse_request_data(payload)

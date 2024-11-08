@@ -27,10 +27,13 @@ async def html_converter_controller(html:str, data: dict, user_license: str, con
   try:
     html_template = html;
     data_variables = data
+    logger.info(f"html: {html}")
+    logger.info(f"data_variables: {data_variables}")
     validate_license(html=html_template, user_license= user_license)
   
     # Render the HTML template with data variables
     modified_html = await render_template_string(html_template, data_variables);
+    logger.info(f"modified_html: {modified_html}")
     modified_html = minify_html_with_inline(modified_html)
     cache_key = cache_client.generate_key(modified_html)
     cached_pdf_url = cache_client.get(cache_key)

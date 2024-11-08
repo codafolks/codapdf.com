@@ -1,5 +1,4 @@
 "use client";
-
 import { TemplateItemCard } from "@/app/(main)/templates/_components/TemplateItemCard";
 import { cn } from "@/client/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -15,8 +14,12 @@ import { useQueryClient } from "@tanstack/react-query";
 import { getQueryKey } from "@trpc/react-query";
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { TemplateItemCardSkeleton } from "@/app/(main)/templates/_components/TemplateItemCardSkeleton";
+import { Button } from "@/client/components/ui/button";
 
 export const TemplateList = () => {
+  const [tabValue, setTabValue] = useState<"templates" | "sample">("templates");
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const templateId = useRef<number | null>(null);
@@ -45,8 +48,8 @@ export const TemplateList = () => {
     },
   });
   return (
-    <div className="grid gap-4 p-4">
-      <Tabs defaultValue="templates">
+    <div className="grid gap-4 p-4 text-foreground">
+      <Tabs value={tabValue} onValueChange={(value) => setTabValue(value as "templates" | "sample")}>
         <TabsList className="mb-4">
           <TabsTrigger value="templates">Your Templates</TabsTrigger>
           <TabsTrigger value="sample">Examples</TabsTrigger>
@@ -54,7 +57,7 @@ export const TemplateList = () => {
         <TabsContent
           value="templates"
           className={cn("grid gap-4", {
-            "grid-cols-[repeat(auto-fill,minmax(250px,1fr))]": templates.length > 0,
+            "grid-cols-[repeat(auto-fill,minmax(250px,1fr))]": isLoading || templates.length > 0,
           })}
         >
           {templates.map((template) => (
@@ -68,8 +71,30 @@ export const TemplateList = () => {
               isDeleting={isTemplateIdDeleting === template.id}
             />
           ))}
-          {isLoading && <div className="col-span-full text-center text-gray-400">Loading templates...</div>}
-          {!templates?.length && !isLoading && <div className="text-center text-gray-400">No templates found</div>}
+
+          {isLoading && (
+            <>
+              <TemplateItemCardSkeleton />
+              <TemplateItemCardSkeleton />
+              <TemplateItemCardSkeleton />
+              <TemplateItemCardSkeleton />
+            </>
+          )}
+
+          {!isLoading && !templates?.length && (
+            <div className="flex flex-col items-center gap-2">
+              <h3 className="m-auto font-semibold">You don't have any templates yet. Get started by:</h3>
+              <div className="flex items-center gap-2">
+                <Button asChild size="sm" variant="outline">
+                  <Link href={ROUTES.PRIVATE.TEMPLATES_CREATE.path}>Creating a new template</Link>
+                </Button>
+                or
+                <Button size="sm" variant="outline" onClick={() => setTabValue("sample")}>
+                  Check out some examples
+                </Button>
+              </div>
+            </div>
+          )}
         </TabsContent>
         <TabsContent value="sample" className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 transition-all">
           {templateExamples.map((template) => (

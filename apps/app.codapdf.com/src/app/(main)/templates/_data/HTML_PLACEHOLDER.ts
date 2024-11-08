@@ -19,12 +19,12 @@ export const HTML_PLACEHOLDER = `<!DOCTYPE html>
 </head>
 <body>
   <div class="container">
-    <h1>Welcome to HTML Editor</h1>
-    <p>Start editing the HTML code on the left to see the changes live!</p>
+    <h1>{{title}}</h1>
+    <p>{{description}}</p>
     <ul>
-      <li>Edit HTML, CSS, and JavaScript</li>
-      <li>See changes in real-time</li>
-      <li>Responsive preview pane</li>
+      {% for item in bulletPoints %}
+      <li>{{item.description}}</li>
+      {% endfor %}
     </ul>
   </div>
 </body>

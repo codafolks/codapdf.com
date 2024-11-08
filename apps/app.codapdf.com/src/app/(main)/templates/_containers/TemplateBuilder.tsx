@@ -125,8 +125,8 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
     const filesName = Object.keys(files);
     const data: TemplateOnSavePayload = {
       id: isSample || !template?.id ? undefined : (template.id as number),
-      name: template?.name || "",
-      description: template?.description || "",
+      name: template?.name ?? "",
+      description: template?.description ?? "",
       thumbnail,
       filesName,
       files: Object.values(files),
@@ -210,11 +210,23 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
     return htmlContent;
   };
 
+  const getProcessedHtmlAndData = () => {
+    if (isLoading) return null;
+    if (!files["index.html"]) return null;
+    let htmlContent = files["index.html"].content;
+    htmlContent = getProcessedCssFiles(htmlContent);
+    htmlContent = getProcessedJSFiles(htmlContent);
+    const dataValue = getJsonFiles();
+    return { htmlContent, dataValue };
+  };
+
   const handleOnConvertHtml2PDF = async () => {
     try {
-      const html = getProcessedHtml();
-      if (!html) throw new Error("HTML content not found.");
-      const res = await convertHtml2PDF.mutateAsync({ html });
+      const files = getProcessedHtmlAndData();
+      if (!files) return;
+      const { htmlContent, dataValue } = files;
+      if (!htmlContent) throw new Error("HTML content not found.");
+      const res = await convertHtml2PDF.mutateAsync({ html: htmlContent, data: dataValue });
       window.open(res.file_url, "_blank");
     } catch (error) {
       toast({

@@ -72,13 +72,13 @@ export const templateRouter = {
     )
     .query(listTemplates),
   convertHtml2PDF: protectedProcedure
-    .input(z.object({ html: z.string(), data: z.any() }))
+    .input(z.object({ html: z.string(), data: z.any().optional() }))
     .output(
       z.object({
         file_url: z.string().url(),
       }),
     )
     .mutation(async ({ input }) => {
-      return await convertHtmlToPDF(input);
+      return await convertHtmlToPDF({ ...input, data: input.data ?? {} });
     }),
 };

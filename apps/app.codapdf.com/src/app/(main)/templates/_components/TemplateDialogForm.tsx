@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogClose, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 
 import { InputController, TextareaController } from "@/components/app/forms";
 
@@ -29,8 +29,9 @@ const TemplateDialogForm = ({ template, open, isSaving, onSubmit, onCancel }: Te
 
   return (
     <Dialog open={open} onOpenChange={handleOnCancel}>
-      <DialogContent>
-        <DialogTitle>{template ? "Edit" : "Save"} Template</DialogTitle>
+      <DialogContent className="bg-background text-foreground">
+        <DialogTitle>Template</DialogTitle>
+        <DialogDescription>{template ? "Edit the template details" : "Enter the template details"}</DialogDescription>
         <DialogClose />
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
