@@ -62,4 +62,4 @@ ENV PYTHONPATH=./src
 ENV APP_ENV=production
 
 # Command to run the app (adjust based on your app and whether you're using Flask or FastAPI)
-CMD ["sh", "-c", "doppler run -p codapdf -c ${RAILWAY_ENVIRONMENT}_services -- uvicorn src.app:app --host 0.0.0.0 --port 3001"]
+CMD ["sh", "-c", "doppler run -p codapdf -c ${RAILWAY_ENVIRONMENT}_services -- gunicorn src.app:app -c gunicorn_conf.py"]
