@@ -10,8 +10,8 @@ export async function register() {
       // By default, it populates the cache with pre-rendered pages, routes, and fetch calls.
       // You can disable these features by setting the options to false.
       // For example, if you want to populate the cache with only pre-rendered pages, you can set the options as follows:
-      fetch: false,
       pages: true,
+      fetch: false,
       routes: false,
     });
   }
