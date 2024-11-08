@@ -33,13 +33,13 @@ export default function APIUsage() {
     },
   ];
   return (
-    <div className="grid gap-4 p-4">
-      <h1 className="font-bold text-2xl text-gray-100">API Usage Statistics</h1>
+    <div className="grid gap-4 p-4 text-foreground">
+      <h1 className="font-bold text-2xl">API Usage Statistics</h1>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {apiUsageData.map((item) => (
           <Card key={item.title}>
             <CardHeader>
-              <CardTitle className="text-gray-100">{item.title}</CardTitle>
+              <CardTitle>{item.title}</CardTitle>
               <CardDescription className="text-gray-400">{item.description}</CardDescription>
             </CardHeader>
             <CardContent>
