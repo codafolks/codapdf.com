@@ -1,12 +1,14 @@
 import sys
 import os
 import threading
-from actions.validate_authorization import validate_authorization;
-from actions.parse_request_data import parse_request_data;
 from fastapi import FastAPI, Header, Request, Response, HTTPException
 from prometheus_client import Counter, Summary, Gauge, REGISTRY
-from controllers.html_converter_controller import html_converter_controller
 
+from actions.validate_authorization import validate_authorization;
+from actions.parse_request_data import parse_request_data;
+from controllers.html_converter_controller import html_converter_controller
+from actions.html_pdf_converter import HTMLToPDFConverter
+from utils.logger import logger
 
 src_path = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(src_path)
@@ -28,11 +30,23 @@ def collect_metrics():
       metrics_data[metric_name] = metric_value
   return metrics_data
 
-app = FastAPI()
+converter = HTMLToPDFConverter()
+# Define the lifespan function
+async def app_lifespan(app: FastAPI):
+  """
+  Lifespan context manager for startup and shutdown events.
+  """
+  logger.info("Starting up...")
+  await converter.start()  # Start the browser
+  yield
+  logger.info("Shutting down...")
+  await converter.stop()   # 
+
+app = FastAPI(lifespan=app_lifespan)
 
 @app.get('/')
 async def index():
-  return Response(content='Welcome to the HTML to PDF API', media_type='text/html')
+  return Response(content='Welcome to the <CodaPDF /> API', media_type='text/html')
 
 @app.get('/api/v1/healthcheck',)
 async def healthcheck():
@@ -47,8 +61,13 @@ async def html2pdf(request: Request, authorization: str = Header(None)):
   payload = await request.json()
   try:
     user_license = validate_authorization(authorization)
-    request_data = parse_request_data(payload)
-    response = await html_converter_controller(request_data,user_license)
+    data = parse_request_data(payload)
+    response = await html_converter_controller(
+      html=data["html_template"],
+      data= data["data_variables"],
+      user_license=user_license,
+      converter=converter
+    )
     BANDWIDTH_USED.inc(len(response))
     return response
   except HTTPException as error:
@@ -76,5 +95,4 @@ def reset_rps_counter():
     PEAK_RPS.set(peak_rps_value)
   REQUESTS_PER_SECOND._value.set(0)
   threading.Timer(1.0, reset_rps_counter).start()
-
 reset_rps_counter()

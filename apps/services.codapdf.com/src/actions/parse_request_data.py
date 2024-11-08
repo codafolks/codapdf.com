@@ -1,11 +1,12 @@
 from pydantic import BaseModel
-from typing import Coroutine, Any
-
-class ParseResult(BaseModel):
+class Result(BaseModel):
   html_template: str
   data_variables: dict
-
-def parse_request_data(payload: Coroutine[Any, Any, Any]) -> ParseResult:
+class Payload(BaseModel):
+  html: str
+  data: dict
+  
+def parse_request_data(payload: Payload) -> Result:
   """
   Parses and validates the JSON data from the request.
 
