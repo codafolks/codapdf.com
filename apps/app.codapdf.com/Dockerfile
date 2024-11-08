@@ -67,7 +67,7 @@ RUN mkdir .next && chown nextjs:nodejs .next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/next.config.ts .
-COPY --from=builder --chown=nextjs:nodejs /app/cache-handler.mjs .
+# COPY --from=builder --chown=nextjs:nodejs /app/cache-handler.mjs .
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
