@@ -4,7 +4,7 @@ export async function register() {
     // Assuming that your CacheHandler configuration is in the root of the project and the instrumentation is in the src directory.
     // Please adjust the path accordingly.
     // CommonJS CacheHandler configuration is also supported.
-    const CacheHandler = (await import("./cache-handler.mjs")).default;
+    const CacheHandler = (await import("../cache-handler.mjs")).default;
 
     await registerInitialCache(CacheHandler, {
       // By default, it populates the cache with pre-rendered pages, routes, and fetch calls.

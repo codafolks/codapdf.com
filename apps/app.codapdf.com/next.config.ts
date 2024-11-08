@@ -5,6 +5,12 @@ type Config = MappedOmit<NextConfig, "rewrites">;
 const nextConfig: Config = {
   output: "standalone",
   serverExternalPackages: ["pino", "pino-pretty"],
+  experimental: {
+    staleTimes: {
+      dynamic: 60 * 60 * 24, // 24 hours
+      static: 60 * 60 * 24, // 24 hours
+    },
+  },
   compiler: {
     removeConsole: {
       exclude: ["error", "info", "warn"],
