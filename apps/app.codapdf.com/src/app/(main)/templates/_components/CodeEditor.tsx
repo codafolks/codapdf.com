@@ -5,8 +5,7 @@ import { css } from "@codemirror/lang-css";
 import { html } from "@codemirror/lang-html";
 import { javascript } from "@codemirror/lang-javascript";
 import { json } from "@codemirror/lang-json";
-import { vscodeDark, vscodeLight } from "@uiw/codemirror-theme-vscode";
-
+import { tomorrow, barf } from "thememirror";
 import CodeMirror from "@uiw/react-codemirror";
 
 import type { EditorFileData, EditorFiles } from "@/app/(main)/templates/_components/FileSidebar";
@@ -41,7 +40,7 @@ export function CodeEditor({ onChange, files, activeFileId }: Readonly<CodeEdito
           value={value}
           onChange={onChange}
           extensions={[history(), ...extensions]}
-          theme={theme === "dark" ? vscodeDark : vscodeLight}
+          theme={theme === "dark" ? barf : tomorrow}
           height="100%"
           width="100%"
           data-filename={file.filename}
