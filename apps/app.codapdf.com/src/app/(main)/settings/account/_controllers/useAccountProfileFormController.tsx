@@ -32,9 +32,8 @@ export const useAccountProfileFormController = (options?: UseUserProfileControll
   const form = useZodForm({
     defaultValues: {
       name: user?.name ?? "",
-      email: user?.email ?? "",
     },
-    schema: userZodSchema,
+    schema: userZodSchema.pick({ name: true, email: true }).extend({ email: userZodSchema.shape.email.optional() }),
   });
 
   useEffect(() => {

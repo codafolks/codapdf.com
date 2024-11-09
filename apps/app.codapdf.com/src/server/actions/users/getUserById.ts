@@ -9,6 +9,7 @@ export type UserDTO = {
   name: string;
   customerId: string | null;
   profile: Profile;
+  hasPassword: boolean;
 };
 
 export const userDTO = (user: User): UserDTO => {
@@ -19,6 +20,7 @@ export const userDTO = (user: User): UserDTO => {
     name: user.name,
     customerId: user.customerId,
     profile: user.profile,
+    hasPassword: !!user.password,
   };
 };
 

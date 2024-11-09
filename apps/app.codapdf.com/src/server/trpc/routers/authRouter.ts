@@ -14,7 +14,7 @@ export const authRouter = {
   signup: publicProcedure.input(authSignupZodSchema).mutation(async ({ input }) => {
     const user = await signUp(input);
     await saveSession(user);
-    await sendWelcomeEmail({
+    sendWelcomeEmail({
       email: user.email,
       name: user.name,
     });

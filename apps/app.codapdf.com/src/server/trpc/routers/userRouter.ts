@@ -23,10 +23,10 @@ export const userRouter = {
     }
     return userDTO(user);
   }),
-  update: protectedProcedure.input(userZodSchema).mutation(({ input, ctx }) => {
+  update: protectedProcedure.input(userZodSchema.pick({ name: true })).mutation(({ input, ctx }) => {
     const id = ctx.user.id;
     const payload = input;
-    return db.update(profiles).set(payload).where(eq(profiles.userId, id)).execute();
+    return db.update(users).set(payload).where(eq(users.id, id)).execute();
   }),
   updateUserLicense: protectedProcedure.input(z.object({ license: licensesZodSchema })).mutation(({ input, ctx }) => {
     const userId = ctx.user.id;

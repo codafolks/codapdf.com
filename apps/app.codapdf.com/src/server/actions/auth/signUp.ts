@@ -1,4 +1,5 @@
 import { encryptPassword } from "@/server/actions/auth/encryptPassword";
+import { getUserById } from "@/server/actions/users/getUserById";
 import { db } from "@/server/database";
 import { authentications } from "@/server/database/schemas/authentications";
 import { profiles, users } from "@/server/database/schemas/users";
@@ -27,7 +28,7 @@ export const signUp = async (payload: AuthSignupInput) => {
         providerId: savedUser.email,
         userId: savedUser.id,
       });
-      return savedUser;
+      return await getUserById(savedUser.id);
     });
 
     return user;

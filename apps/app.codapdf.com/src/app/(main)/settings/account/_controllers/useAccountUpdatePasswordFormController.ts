@@ -1,15 +1,22 @@
+import { useUser } from "@/client/queries/users";
 import { useZodForm } from "@/client/utils/useZodForm";
 import { useToast } from "@/components/ui/use-toast";
 import { updateAccountPassword } from "@/server/actions/auth/updateAccountPassword";
-import { accountUpdatePasswordZodSchema } from "@/server/schemas/accountUpdatePasswordZodSchema";
+import {
+  accountUpdatePasswordZodSchema,
+  accountSetPasswordZodSchema,
+  type AccountSetPasswordInput,
+  type AccountUpdatePasswordInput,
+} from "@/server/schemas/accountUpdatePasswordZodSchema";
 
 export const useAccountUpdatePasswordFormController = () => {
+  const { data: user } = useUser();
   const { toast } = useToast();
   const form = useZodForm({
-    schema: accountUpdatePasswordZodSchema,
+    schema: user?.hasPassword ? accountUpdatePasswordZodSchema : accountSetPasswordZodSchema,
   });
 
-  const onSubmit = form.handleSubmit(async (data) => {
+  const onSubmit = form.handleSubmit(async (data: AccountSetPasswordInput | AccountUpdatePasswordInput) => {
     try {
       await updateAccountPassword(data);
       toast({
@@ -26,5 +33,5 @@ export const useAccountUpdatePasswordFormController = () => {
     }
   });
 
-  return { form, onSubmit };
+  return { form, onSubmit, hasPassword: user?.hasPassword };
 };
