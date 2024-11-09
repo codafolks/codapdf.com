@@ -97,13 +97,15 @@ export const TemplateList = () => {
           )}
         </TabsContent>
         <TabsContent value="sample" className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 transition-all">
-          {templateExamples.map((template) => (
+          {templateExamples.map((template, idx) => (
             <Link key={template.id} href={ROUTES.PRIVATE.TEMPLATES_SAMPLE.path(template.id)}>
               <Card className="h-full bg-background text-foreground hover:bg-secondary">
                 <CardHeader>
                   <CardTitle>{template.name}</CardTitle>
                 </CardHeader>
-                <div className="relative my-2 aspect-video overflow-hidden bg-center bg-cover bg-gray-300 bg-no-repeat" />
+                <div className="relative my-2 flex aspect-video items-center justify-center overflow-hidden border bg-center bg-cover bg-no-repeat text-foreground">
+                  <strong className="font-semibold text-3xl">{idx + 1}</strong>
+                </div>
                 <CardContent>
                   <p>{template.description}</p>
                 </CardContent>

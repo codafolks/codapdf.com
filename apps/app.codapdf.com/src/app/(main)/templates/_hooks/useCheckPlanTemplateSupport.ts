@@ -26,5 +26,5 @@ export const useCheckPlanTemplateSupport = (html: string | null) => {
     html,
   });
 
-  return { message };
+  return { message, isSupported: !message };
 };

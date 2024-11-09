@@ -27,9 +27,8 @@ const getMiddlewareSession = async () => {
     if (token) {
       const response = await fetch(`${process.env.APP_DOMAIN}/api/edge/users`, {
         method: "POST",
-        cache: "no-cache",
         headers: {
-          "Content-Type": "application",
+          "Content-Type": "application/json",
           Authorization: token,
         },
       });

@@ -61,7 +61,6 @@ class HTMLToPDFConverter:
       await page.emulate_media(media="print")
 
       default_pdf_options = {
-        'format': 'A4',
         'print_background': True,
         'margin': {
           'top': '0',

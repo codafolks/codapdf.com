@@ -9,6 +9,7 @@ import { TemplatePreview } from "@/app/(main)/templates/_components/TemplatePrev
 import { DATA_JSON_PLACEHOLDER } from "@/app/(main)/templates/_data/DATA_JSON_PLACEHOLDER";
 import { HTML_PLACEHOLDER } from "@/app/(main)/templates/_data/HTML_PLACEHOLDER";
 import { STYLES_PLACEHOLDER } from "@/app/(main)/templates/_data/STYLES_PLACEHOLDER";
+import { useCheckPlanTemplateSupport } from "@/app/(main)/templates/_hooks/useCheckPlanTemplateSupport";
 import { generateTemplateThumbnail } from "@/app/(main)/templates/_utils/generateTemplateThumbnail";
 import type { TemplateSourceId } from "@/app/(main)/templates/_utils/getTemplateSourceId";
 import { isJsonString } from "@/app/(main)/templates/_utils/isJsonString";
@@ -210,6 +211,8 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
     return htmlContent;
   };
 
+  const { isSupported } = useCheckPlanTemplateSupport(getProcessedHtml());
+
   const getProcessedHtmlAndData = () => {
     if (isLoading) return null;
     if (!files["index.html"]) return null;
@@ -244,6 +247,7 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
         {
           label: "Download",
           submitting: convertHtml2PDF.isPending,
+          disabled: !isSupported,
           onClick: () => handleOnConvertHtml2PDF(),
         },
         {
@@ -261,6 +265,7 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
       {
         label: "Download",
         submitting: convertHtml2PDF.isPending,
+        disabled: !isSupported,
         onClick: () => handleOnConvertHtml2PDF(),
       },
       {

@@ -39,19 +39,17 @@ const ActionGroup = ({ action, isDropDown }: ActionGroupProps) => {
 
 const Actions = ({ actions, isDropDown }: { actions: Array<MenuAction>; isDropDown?: boolean }) => {
   const Wrapper = useMemo(() => (isDropDown ? DropdownMenuItem : DropdownMenu), [isDropDown]);
-  const count = actions.length;
   return (
     <>
-      {actions.map(({ menuItems, ...action }, idx) => (
+      {actions.map(({ menuItems, ...action }) => (
         <Wrapper key={action.label}>
           <ActionGroup action={action} isDropDown={isDropDown} />
-          {isDropDown && idx < count - 1 && <DropdownMenuSeparator />}
           {menuItems && (
             <DropdownMenuContent>
-              {menuItems.map((subAction, idxs) => (
+              {menuItems.map((subAction, idx) => (
                 <DropdownMenuItem key={subAction.label}>
                   <ActionGroup action={subAction} isDropDown={isDropDown} />
-                  {idxs < menuItems.length - 1 && <DropdownMenuSeparator />}
+                  {idx < menuItems.length - 1 && <DropdownMenuSeparator />}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
@@ -70,7 +68,7 @@ export const Menu = ({ actions, isDropDown, className }: MenuProps) => {
         <DropdownMenuTrigger className={className}>
           <EllipsisVertical />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="z-10 flex min-w-[100px] flex-col border" side="left" align="start">
+        <DropdownMenuContent className="z-10 flex min-w-[100px] flex-col border bg-background text-foreground" side="left" align="start">
           <Actions actions={actions} isDropDown />
         </DropdownMenuContent>
       </DropdownMenu>

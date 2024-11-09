@@ -27,8 +27,6 @@ async def html_converter_controller(html:str, data: dict, user_license: str, con
   try:
     html_template = html;
     data_variables = data
-    logger.info(f"html: {html}")
-    logger.info(f"data_variables: {data_variables}")
     validate_license(html=html_template, user_license= user_license)
   
     # Render the HTML template with data variables
