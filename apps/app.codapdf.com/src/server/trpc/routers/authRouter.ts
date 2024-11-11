@@ -33,7 +33,7 @@ export const authRouter = {
   logout: protectedProcedure.mutation(async ({ ctx }) => {
     await destroySession();
     const req = ctx.req;
-    return Response.redirect(new URL(ROUTES.AUTH.LOGIN.path, req.url));
+    return Response.redirect(new URL(ROUTES.AUTH.LOGIN.pathname, req.url));
   }),
   forgotPassword: publicProcedure.input(authForgotPasswordZodSchema).mutation(async ({ input }) => {
     return await forgotPassword(input);

@@ -16,7 +16,7 @@ export const CheckTemplatePlanSupport = ({ html }: CheckTemplatePlanSupportProps
         variant="warning"
         actions={
           <Button size="sm" asChild>
-            <Link href={ROUTES.PRIVATE.ACCOUNT_BILLING.path}>Upgrade</Link>
+            <Link href={ROUTES.PRIVATE.ACCOUNT_BILLING.pathname}>Upgrade</Link>
           </Button>
         }
       />

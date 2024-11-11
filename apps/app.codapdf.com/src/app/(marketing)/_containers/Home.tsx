@@ -24,7 +24,7 @@ export const Home = () => (
         </div>
         <div className="w-full space-y-4">
           <Button asChild>
-            <Link href={ROUTES.AUTH.SIGNUP.path}>
+            <Link href={ROUTES.AUTH.SIGNUP.pathname}>
               Sign Up for Free <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>

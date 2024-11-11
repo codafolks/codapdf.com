@@ -1,5 +1,4 @@
 import { ROUTES } from "@/app/routes";
-import { env } from "@/constants/env.server";
 import { authByGoogle } from "@/server/actions/auth/authByGoogle";
 import { captureException } from "@/utils/captureException";
 
@@ -10,7 +9,7 @@ const reload = `
   <h3>Redirecting...</h3>
   <script>
     setTimeout(() => {
-      window.location.href = "${ROUTES.PRIVATE.DASHBOARD.path}";
+      window.location.href = "${ROUTES.PRIVATE.DASHBOARD.pathname}";
     }, 1000);
   </script>
 `;
@@ -29,6 +28,6 @@ export const GET = async (req: NextRequest) => {
     });
   } catch (error) {
     captureException(error);
-    return Response.redirect(`${env.APP_DOMAIN}/${ROUTES.AUTH.LOGIN.path}`);
+    return Response.redirect(ROUTES.AUTH.LOGIN.pathname);
   }
 };

@@ -8,6 +8,7 @@ import { useState } from "react";
 
 export default function ApiDocs() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <header className="flex items-center justify-between border-b bg-background px-4 py-3">
@@ -58,13 +59,20 @@ export default function ApiDocs() {
             <div className="mx-auto max-w-3xl space-y-8">
               <section id="introduction">
                 <h2 className="mb-4 font-bold text-2xl">Introduction</h2>
-                <p className="text-muted-foreground">Welcome to our API documentation. This guide will help you get started with integrating our API into your applications.</p>
+                <p className="text-muted-foreground">Welcome to the API documentation. Here you will find information on how to use the API to convert HTML to PDF.</p>
               </section>
               <section id="authentication">
-                <h2 className="mb-4 font-bold text-2xl">Authentication</h2>
-                <p className="mb-4 text-muted-foreground">To use our API, you'll need to authenticate your requests. We use API keys for authentication.</p>
+                <h2 className="mb-4 font-bold text-2xl">Using the API to convert the HTML to PDF</h2>
+                <p className="mb-4 text-muted-foreground">After signing up, you can create an API key in your API keys. Use this key to authenticate your requests.</p>
                 <pre className="overflow-x-auto rounded-md bg-muted p-4">
-                  <code>curl -H "Authorization: Bearer YOUR_API_KEY" https://api.example.com/v1/users</code>
+                  <code>
+                    curl -H "Authorization: Bearer YOUR_API_KEY" https://services.codapdf.com/v1/html2pdf \ <br />
+                    -H "Content-Type: application/json" \
+                    <br />
+                    -d 'html:"{"<h1>Hello, World! I am {{ name }}</h1>"}", data: {`{ name: "Joe Doe"}`}'\
+                    <br />
+                    -x POST
+                  </code>
                 </pre>
               </section>
               <section id="users">

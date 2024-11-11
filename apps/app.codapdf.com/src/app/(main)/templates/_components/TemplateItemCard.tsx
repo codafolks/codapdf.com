@@ -21,7 +21,7 @@ export const TemplateItemCard = ({ template, isDeleting, onDelete }: TemplateIte
     <Menu
       className="absolute top-4 right-2 z-10"
       actions={[
-        { label: "Edit", href: ROUTES.PRIVATE.TEMPLATES_EDIT.path(template.id) },
+        { label: "Edit", href: ROUTES.PRIVATE.TEMPLATES_EDIT.pathname(template.id) },
         {
           label: "Delete",
           onClick: onDelete,
@@ -30,7 +30,7 @@ export const TemplateItemCard = ({ template, isDeleting, onDelete }: TemplateIte
       ]}
       isDropDown
     />
-    <Link key={template.id} href={ROUTES.PRIVATE.TEMPLATES_EDIT.path(template.id)}>
+    <Link key={template.id} href={ROUTES.PRIVATE.TEMPLATES_EDIT.pathname(template.id)}>
       <Card className="h-full bg-background text-foreground hover:bg-secondary">
         <CardHeader>
           <CardTitle>{template.name}</CardTitle>

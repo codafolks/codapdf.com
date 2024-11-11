@@ -33,8 +33,8 @@ export const basicPriceYearly = Number(Math.round(basicPriceMonthly * 12 * (1 - 
 export const proPriceYearly = Number(Math.round(proPriceMonthly * 12 * (1 - proDiscount)).toPrecision(2));
 
 export const hobbyConversionLimit = 500;
-export const basicConversionLimit = 1500;
-export const proConversionLimit = 3000;
+export const basicConversionLimit = 1000;
+export const proConversionLimit = 1500;
 
 export const plansSubscription: Array<PlanSubscription> = [
   {

@@ -21,7 +21,7 @@ const Header = () => {
         <BreadcrumbList>
           {hasParent && (
             <BreadcrumbItem>
-              <BreadcrumbLink href={route?.parent().path}>{route?.parent().header}</BreadcrumbLink>
+              <BreadcrumbLink href={route?.parent().pathname}>{route?.parent().header}</BreadcrumbLink>
             </BreadcrumbItem>
           )}
           {hasParent && <BreadcrumbSeparator />}

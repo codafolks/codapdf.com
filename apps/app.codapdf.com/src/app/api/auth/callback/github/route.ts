@@ -1,5 +1,4 @@
 import { ROUTES } from "@/app/routes";
-import { env } from "@/constants/env.server";
 import { authByGithub } from "@/server/actions/auth/authByGithub";
 import { captureException } from "@/utils/captureException";
 import type { NextRequest } from "next/server";
@@ -9,7 +8,7 @@ const reload = `
   <h3>Redirecting...</h3>
   <script>
     setTimeout(() => {
-      window.location.href = "${ROUTES.PRIVATE.DASHBOARD.path}";
+      window.location.href = "${ROUTES.PRIVATE.DASHBOARD.pathname}";
     }, 1000);
   </script>
 `;
@@ -27,7 +26,6 @@ export const GET = async (req: NextRequest) => {
     });
   } catch (error) {
     captureException(error);
-    const redirectUrl = `${env.APP_DOMAIN}/${ROUTES.AUTH.LOGIN.path}`;
-    return Response.redirect(redirectUrl);
+    return Response.redirect(ROUTES.AUTH.LOGIN.pathname);
   }
 };

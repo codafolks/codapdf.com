@@ -25,7 +25,7 @@ export function PricingTable({ plans, isBillingPage, currentPlan, onSelectPlan, 
     if (typeof onSelectPlan === "function") {
       onSelectPlan(plan, frequency);
     } else {
-      router.push(ROUTES.AUTH.SIGNUP.path);
+      router.push(ROUTES.AUTH.SIGNUP.pathname);
     }
   };
   return (

@@ -140,7 +140,7 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
       const payload = await getTemplateData();
       if (!payload) return;
       const response = await saveTemplate.mutateAsync({ ...payload, ...data });
-      router.replace(ROUTES.PRIVATE.TEMPLATES_EDIT.path(response.data.id));
+      router.replace(ROUTES.PRIVATE.TEMPLATES_EDIT.pathname(response.data.id));
       toast({
         title: "Template Saved",
         description: "Your template has been saved successfully.",

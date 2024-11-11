@@ -35,7 +35,7 @@ export const checkUserLicense = async (userId: number) => {
   if (typeof license !== "string" && daysLeft < 0) {
     return {
       isTrial: true,
-      daysLeft,
+      daysLeft: 0,
       license,
     };
   }

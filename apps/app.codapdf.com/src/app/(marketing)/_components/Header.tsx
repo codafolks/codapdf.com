@@ -80,7 +80,7 @@ export const Header = () => {
           </Link>
         </Button>
         <Button variant="link" asChild>
-          <Link href={ROUTES.PUBLIC.DOCS.path} scroll={false}>
+          <Link href={ROUTES.PUBLIC.DOCS.pathname} scroll={false}>
             Docs
           </Link>
         </Button>

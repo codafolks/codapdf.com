@@ -53,11 +53,11 @@ export async function authMiddleware({ request }: { request: NextRequest }) {
 
     if (checkIfPrivate(pathname) && method === "GET") {
       const { user } = await getMiddlewareSession();
-      if (!user) return Response.redirect(new URL(ROUTES.AUTH.LOGIN.path, request.url));
+      if (!user) return Response.redirect(new URL(ROUTES.AUTH.LOGIN.pathname, request.url));
     }
     if (checkIfAuth(pathname) && method === "GET") {
       const { user } = await getMiddlewareSession();
-      if (user) return Response.redirect(new URL(ROUTES.PRIVATE.DASHBOARD.path, request.url));
+      if (user) return Response.redirect(new URL(ROUTES.PRIVATE.DASHBOARD.pathname, request.url));
     }
     return response;
   } catch (error) {

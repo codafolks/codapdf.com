@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 export const LicenseWarning = () => {
   const { data: license, isFetched } = useUserLicense();
   const pathname = usePathname();
-  const isBillingPage = pathname === ROUTES.PRIVATE.ACCOUNT_BILLING.path;
+  const isBillingPage = pathname === ROUTES.PRIVATE.ACCOUNT_BILLING.pathname;
 
   if (license?.isTrial && isFetched) {
     return (
@@ -20,7 +20,7 @@ export const LicenseWarning = () => {
         actions={
           !isBillingPage ? (
             <Button size="sm" asChild>
-              <Link href={ROUTES.PRIVATE.ACCOUNT_BILLING.path}>Upgrade</Link>
+              <Link href={ROUTES.PRIVATE.ACCOUNT_BILLING.pathname}>Upgrade</Link>
             </Button>
           ) : null
         }

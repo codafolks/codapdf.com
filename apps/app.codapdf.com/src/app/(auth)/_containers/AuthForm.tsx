@@ -59,19 +59,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
   const resetPassword = useResetPassword();
   const router = useRouter();
   const pathname = useSearchParams();
-
   const token = pathname?.get("token");
-
-  // NOTE: This is a temporary solution to show a success message after a user has successfully Signed In/Up with google
-  const success = pathname?.get("success");
-  const isGoogleSuccess = success === "true" && type === "login";
-  // useEffect(() => {
-  //   if (isGoogleSuccess) {
-  //     setTimeout(() => {
-  //       router.replace(ROUTES.PRIVATE.DASHBOARD.path);
-  //     }, 1000);
-  //   }
-  // }, [isGoogleSuccess]);
 
   const form = useZodForm({
     schema: authSchemas[type],
@@ -87,11 +75,11 @@ const AuthForm = ({ type }: AuthFormProps) => {
     () => ({
       login: async (data: AuthInput) => {
         await login.mutateAsync(data as AuthLoginInput);
-        router.push(ROUTES.PRIVATE.DASHBOARD.path);
+        router.push(ROUTES.PRIVATE.DASHBOARD.pathname);
       },
       signup: async (data: AuthInput) => {
         await signup.mutateAsync(data as AuthSignupInput);
-        router.push(ROUTES.PRIVATE.DASHBOARD.path);
+        router.push(ROUTES.PRIVATE.DASHBOARD.pathname);
       },
       "forgot-password": async (data: AuthInput) => {
         await forgotPassword.mutateAsync(data as AuthForgotPasswordInput);
@@ -109,7 +97,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
           title: "Password reset",
           description: "Your password has been successfully reset",
         });
-        router.push(ROUTES.AUTH.LOGIN.path);
+        router.push(ROUTES.AUTH.LOGIN.pathname);
       },
     }),
     [forgotPassword, login, resetPassword, router, signup, toast, token],
@@ -138,7 +126,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
               Remember me
             </label>
           </div>
-          <a href={ROUTES.AUTH.FORGOT_PASSWORD.path} className="text-blue-500">
+          <a href={ROUTES.AUTH.FORGOT_PASSWORD.pathname} className="text-blue-500">
             Forgot password?
           </a>
         </div>
@@ -151,13 +139,13 @@ const AuthForm = ({ type }: AuthFormProps) => {
             className="w-full"
             variant="secondary"
             onClick={() => {
-              window.location.href = ROUTES.PUBLIC.GITHUB.path;
+              window.location.href = ROUTES.PUBLIC.GITHUB.pathname;
             }}
           >
             <GitHubLogoIcon className="h-6 w-6" />
             Continue with GitHub
           </Button>
-          <Button type="button" className="w-full" variant="secondary" loading={isGoogleSuccess} onClick={() => (window.location.href = ROUTES.PUBLIC.GOOGLE.path)}>
+          <Button type="button" className="w-full" variant="secondary" onClick={() => (window.location.href = ROUTES.PUBLIC.GOOGLE.pathname)}>
             <GoogleIcon className="h-6 w-6" />
             Continue with Google
           </Button>
