@@ -9,7 +9,7 @@ const reload = `
   <h3>Redirecting...</h3>
   <script>
     setTimeout(() => {
-      window.location.href = "${ROUTES.PRIVATE.DASHBOARD.pathname}";
+      window.location.href = "${ROUTES.PRIVATE.DASHBOARD.pathname()}";
     }, 1000);
   </script>
 `;
@@ -28,6 +28,6 @@ export const GET = async (req: NextRequest) => {
     });
   } catch (error) {
     captureException(error);
-    return Response.redirect(ROUTES.AUTH.LOGIN.pathname);
+    return Response.redirect(ROUTES.AUTH.LOGIN.pathname());
   }
 };

@@ -16,7 +16,13 @@ interface PricingTableProps {
   plans: Array<PlanSubscription>;
 }
 
-export function PricingTable({ plans, isBillingPage, currentPlan, onSelectPlan, onCancelPlan }: Readonly<PricingTableProps>) {
+export function PricingTable({
+  plans,
+  isBillingPage,
+  currentPlan,
+  onSelectPlan,
+  onCancelPlan,
+}: Readonly<PricingTableProps>) {
   const router = useRouter();
   const [frequency, setFrequency] = useState<SubscriptionsFrequency>("YEARLY");
   const isYearly = frequency === "YEARLY";
@@ -25,7 +31,7 @@ export function PricingTable({ plans, isBillingPage, currentPlan, onSelectPlan, 
     if (typeof onSelectPlan === "function") {
       onSelectPlan(plan, frequency);
     } else {
-      router.push(ROUTES.AUTH.SIGNUP.pathname);
+      router.push(ROUTES.AUTH.SIGNUP.pathname());
     }
   };
   return (

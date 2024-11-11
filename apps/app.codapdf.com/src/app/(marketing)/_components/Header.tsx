@@ -54,7 +54,10 @@ export const Header = () => {
       >
         <AppLogo className="h-4 md:h-6" />
       </Link>
-      <nav className="mt-4 hidden flex-col items-center p-2 md:mt-auto md:ml-auto md:flex md:flex-1 md:flex-row md:justify-end" id="navigation">
+      <nav
+        className="mt-4 hidden flex-col items-center p-2 md:mt-auto md:ml-auto md:flex md:flex-1 md:flex-row md:justify-end"
+        id="navigation"
+      >
         <Button variant="link" asChild>
           <Link
             href="#features"
@@ -80,7 +83,7 @@ export const Header = () => {
           </Link>
         </Button>
         <Button variant="link" asChild>
-          <Link href={ROUTES.PUBLIC.DOCS.pathname} scroll={false}>
+          <Link href={ROUTES.PUBLIC.DOCS.pathname()} scroll={false}>
             Docs
           </Link>
         </Button>

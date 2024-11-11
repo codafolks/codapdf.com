@@ -6,7 +6,12 @@ import { resetPassword } from "@/server/actions/auth/resetPassword";
 import { signIn } from "@/server/actions/auth/signIn";
 import { signUp } from "@/server/actions/auth/signUp";
 import { sendWelcomeEmail } from "@/server/actions/emails/sendWelcomeEmail";
-import { authForgotPasswordZodSchema, authLoginZodSchema, authResetPasswordZodSchema, authSignupZodSchema } from "@/server/schemas/authZodSchema";
+import {
+  authForgotPasswordZodSchema,
+  authLoginZodSchema,
+  authResetPasswordZodSchema,
+  authSignupZodSchema,
+} from "@/server/schemas/authZodSchema";
 import { protectedProcedure } from "@/server/trpc/procedures/protectedProcedure";
 import { publicProcedure } from "@/server/trpc/procedures/publicProcedure";
 
@@ -33,7 +38,7 @@ export const authRouter = {
   logout: protectedProcedure.mutation(async ({ ctx }) => {
     await destroySession();
     const req = ctx.req;
-    return Response.redirect(new URL(ROUTES.AUTH.LOGIN.pathname, req.url));
+    return Response.redirect(new URL(ROUTES.AUTH.LOGIN.pathname(), req.url));
   }),
   forgotPassword: publicProcedure.input(authForgotPasswordZodSchema).mutation(async ({ input }) => {
     return await forgotPassword(input);

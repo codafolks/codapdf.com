@@ -6,9 +6,12 @@ import { ArrowRight } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
-const ParticleBackground = dynamic(() => import("@/components/app/ParticleBackground").then((m) => m.ParticleBackground), {
-  loading: () => <div>Loading...</div>,
-});
+const ParticleBackground = dynamic(
+  () => import("@/components/app/ParticleBackground").then((m) => m.ParticleBackground),
+  {
+    loading: () => <div>Loading...</div>,
+  },
+);
 
 export const Home = () => (
   <section className="relative w-full bg-background py-6 text-foreground md:py-8 lg:py-10 xl:py-48" id="home">
@@ -19,12 +22,13 @@ export const Home = () => (
             Turn HTML into PDFs with <AppLogo className="h-5 md:mt-1 md:h-9" />
           </h1>
           <p className="mx-auto max-w-[800px] md:text-xl">
-            A developer-friendly API to quickly convert HTML templates into PDFs. Plus, a slick dashboard to help you keep track and manage everything smoothly.
+            A developer-friendly API to quickly convert HTML templates into PDFs. Plus, a slick dashboard to help you
+            keep track and manage everything smoothly.
           </p>
         </div>
         <div className="w-full space-y-4">
           <Button asChild>
-            <Link href={ROUTES.AUTH.SIGNUP.pathname}>
+            <Link href={ROUTES.AUTH.SIGNUP.pathname()}>
               Sign Up for Free <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>

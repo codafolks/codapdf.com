@@ -86,7 +86,7 @@ export const TemplateList = () => {
               <h3 className="m-auto font-semibold">You don't have any templates yet. Get started by:</h3>
               <div className="flex items-center gap-2">
                 <Button asChild size="sm" variant="outline">
-                  <Link href={ROUTES.PRIVATE.TEMPLATES_CREATE.pathname}>Creating a new template</Link>
+                  <Link href={ROUTES.PRIVATE.TEMPLATES_CREATE.pathname()}>Creating a new template</Link>
                 </Button>
                 or
                 <Button size="sm" variant="outline" onClick={() => setTabValue("sample")}>
@@ -96,7 +96,10 @@ export const TemplateList = () => {
             </div>
           )}
         </TabsContent>
-        <TabsContent value="sample" className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 transition-all">
+        <TabsContent
+          value="sample"
+          className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 transition-all"
+        >
           {templateExamples.map((template, idx) => (
             <Link key={template.id} href={ROUTES.PRIVATE.TEMPLATES_SAMPLE.pathname(template.id)}>
               <Card className="h-full bg-background text-foreground hover:bg-secondary">

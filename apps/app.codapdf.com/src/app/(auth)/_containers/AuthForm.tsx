@@ -36,7 +36,13 @@ const authSchemas = {
   signup: authSignupZodSchema,
   "forgot-password": authForgotPasswordZodSchema,
   "reset-password": authResetPasswordZodSchema,
-} as Record<string, typeof authLoginZodSchema | typeof authSignupZodSchema | typeof authForgotPasswordZodSchema | typeof authResetPasswordZodSchema>;
+} as Record<
+  string,
+  | typeof authLoginZodSchema
+  | typeof authSignupZodSchema
+  | typeof authForgotPasswordZodSchema
+  | typeof authResetPasswordZodSchema
+>;
 
 const titleMap = {
   login: "Login",
@@ -75,11 +81,11 @@ const AuthForm = ({ type }: AuthFormProps) => {
     () => ({
       login: async (data: AuthInput) => {
         await login.mutateAsync(data as AuthLoginInput);
-        router.push(ROUTES.PRIVATE.DASHBOARD.pathname);
+        router.push(ROUTES.PRIVATE.DASHBOARD.pathname());
       },
       signup: async (data: AuthInput) => {
         await signup.mutateAsync(data as AuthSignupInput);
-        router.push(ROUTES.PRIVATE.DASHBOARD.pathname);
+        router.push(ROUTES.PRIVATE.DASHBOARD.pathname());
       },
       "forgot-password": async (data: AuthInput) => {
         await forgotPassword.mutateAsync(data as AuthForgotPasswordInput);
@@ -97,7 +103,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
           title: "Password reset",
           description: "Your password has been successfully reset",
         });
-        router.push(ROUTES.AUTH.LOGIN.pathname);
+        router.push(ROUTES.AUTH.LOGIN.pathname());
       },
     }),
     [forgotPassword, login, resetPassword, router, signup, toast, token],
@@ -114,7 +120,10 @@ const AuthForm = ({ type }: AuthFormProps) => {
   });
 
   return (
-    <form onSubmit={onSubmit} className="grid w-full gap-4 rounded-md border bg-background p-8 text-foreground shadow-sm">
+    <form
+      onSubmit={onSubmit}
+      className="grid w-full gap-4 rounded-md border bg-background p-8 text-foreground shadow-sm"
+    >
       <h2 className="font-bold text-2xl">{titleMap[type]}</h2>
       {apiError && <div className="rounded-md bg-red-100 p-2 text-center text-red-500">{apiError}</div>}
       <div className="grid gap-4">{formMap[type](form)}</div>
@@ -122,11 +131,14 @@ const AuthForm = ({ type }: AuthFormProps) => {
         <div className="flex justify-between">
           <div className="flex items-center gap-2">
             <Checkbox id="remember" />
-            <label htmlFor="remember" className="font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <label
+              htmlFor="remember"
+              className="font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
               Remember me
             </label>
           </div>
-          <a href={ROUTES.AUTH.FORGOT_PASSWORD.pathname} className="text-blue-500">
+          <a href={ROUTES.AUTH.FORGOT_PASSWORD.pathname()} className="text-blue-500">
             Forgot password?
           </a>
         </div>
@@ -139,13 +151,18 @@ const AuthForm = ({ type }: AuthFormProps) => {
             className="w-full"
             variant="secondary"
             onClick={() => {
-              window.location.href = ROUTES.PUBLIC.GITHUB.pathname;
+              window.location.href = ROUTES.PUBLIC.GITHUB.pathname();
             }}
           >
             <GitHubLogoIcon className="h-6 w-6" />
             Continue with GitHub
           </Button>
-          <Button type="button" className="w-full" variant="secondary" onClick={() => (window.location.href = ROUTES.PUBLIC.GOOGLE.pathname)}>
+          <Button
+            type="button"
+            className="w-full"
+            variant="secondary"
+            onClick={() => (window.location.href = ROUTES.PUBLIC.GOOGLE.pathname())}
+          >
             <GoogleIcon className="h-6 w-6" />
             Continue with Google
           </Button>

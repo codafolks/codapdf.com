@@ -5,6 +5,7 @@ const envSchema = z.object({
   SITE_DOMAIN: z.string(),
   DOCS_DOMAIN: z.string(),
   STRIPE_PUBLISHABLE_KEY: z.string(),
+  SUPPORT_EMAIL: z.string().email(),
 });
 
 const variables = {
@@ -13,6 +14,7 @@ const variables = {
   SITE_DOMAIN: process.env.NEXT_PUBLIC_SITE_DOMAIN,
   DOCS_DOMAIN: process.env.NEXT_PUBLIC_DOCS_DOMAIN,
   STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+  SUPPORT_EMAIL: process.env.NEXT_PUBLIC_SUPPORT_EMAIL,
 } as const;
 
 const env = envSchema.parse(variables);
