@@ -1,5 +1,5 @@
 import { StripeCheckout } from "@/app/(billing)/_containers/StripeCheckout";
-import { Dialog, DialogClose, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import type { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
 import type { PlanSubscription } from "@/server/static/plansSubscription";
 
@@ -17,7 +17,9 @@ export const StripeCheckoutDialog = ({ open, onClose, ...rest }: StripeCheckoutD
         <DialogTitle className="inline p-4 font-medium text-xl">
           <span className="text-foreground">Subscription</span>
         </DialogTitle>
+        <DialogDescription></DialogDescription>
         <DialogClose />
+
         <div className="flex flex-1 flex-col overflow-hidden overflow-y-auto p-4">
           <StripeCheckout {...rest} />
         </div>

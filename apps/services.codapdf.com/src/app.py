@@ -31,6 +31,7 @@ def collect_metrics():
   return metrics_data
 
 converter = HTMLToPDFConverter()
+
 # Define the lifespan function
 async def app_lifespan(app: FastAPI):
   """

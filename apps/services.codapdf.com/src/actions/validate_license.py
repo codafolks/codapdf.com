@@ -15,7 +15,6 @@ def validate_license(html:str, user_license:str):
     The basic license supports plain HTML content without images but not JavaScript.
     The free license only supports plain HTML content without images and JavaScript.
   """
-
   has_javascript = check_for_javascript(html)
   has_images = check_for_images(html)
 

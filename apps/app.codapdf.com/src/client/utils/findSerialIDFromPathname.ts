@@ -1,4 +1,4 @@
-const findSerialIDFromPathname = (pathname: string): Array<string> | undefined => {
+export const findSerialIDFromPathname = (pathname: string): Array<string> | undefined => {
   // Create a regular expression to match digits in the pathname
   const regex = /(\d+)/g;
 
@@ -8,4 +8,3 @@ const findSerialIDFromPathname = (pathname: string): Array<string> | undefined =
   // Return the array of serial IDs
   return Array.isArray(serialIds) && serialIds.length > 0 ? serialIds : undefined;
 };
-export { findSerialIDFromPathname };

@@ -1,6 +1,7 @@
 import { saveSession } from "@/server/actions/auth/authSession";
 import { getAuthorizationTokenFromHeader } from "@/server/actions/auth/getAuthorizationTokenFromHeader";
 import { verifyJwt } from "@/server/actions/auth/verifyJwt";
+import { userDTO } from "@/server/actions/users/getUserById";
 import { db } from "@/server/database";
 import { users } from "@/server/database/schemas/users";
 import { captureException } from "@/utils/captureException";
@@ -22,7 +23,7 @@ export const POST = async (req: NextRequest) => {
     if (!user) {
       throw new Error("User not found");
     }
-    await saveSession(user);
+    await saveSession(userDTO(user));
     return NextResponse.json({
       user: true,
     });

@@ -8,4 +8,3 @@ export const useStripeSubscriptionCreate = trpcClient.stripe.createSubscription.
 export const useStripeSubscriptionCancel = trpcClient.stripe.cancelSubscription.useMutation;
 export const useStripeSubscription = trpcClient.stripe.getSubscription.useQuery;
 export const useStripePaymentMethods = trpcClient.stripe.getPaymentMethods.useQuery;
-export const useStripePaymentIntentCreate = trpcClient.stripe.createPaymentIntent.useMutation;

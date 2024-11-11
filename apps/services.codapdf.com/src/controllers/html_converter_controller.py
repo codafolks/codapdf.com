@@ -1,6 +1,5 @@
 import uuid
 import io
-from fastapi import HTTPException
 from jinja2 import Environment, BaseLoader
 from pydantic import BaseModel
 from actions.validate_license import validate_license
@@ -31,7 +30,6 @@ async def html_converter_controller(html:str, data: dict, user_license: str, con
   
     # Render the HTML template with data variables
     modified_html = await render_template_string(html_template, data_variables);
-    logger.info(f"modified_html: {modified_html}")
     modified_html = minify_html_with_inline(modified_html)
     cache_key = cache_client.generate_key(modified_html)
     cached_pdf_url = cache_client.get(cache_key)
@@ -44,7 +42,6 @@ async def html_converter_controller(html:str, data: dict, user_license: str, con
 
     modified_html = await replace_resources(modified_html)
     # Decide which conversion method to use based on license type
-    
     pdf_bytes = await converter.convert_html_to_pdf(modified_html)
     storage_client = StorageClient()
     # Generate a unique filename

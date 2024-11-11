@@ -36,24 +36,21 @@ export const StripeCheckoutForm = ({ defaultPlan, frequency: defaultFrequency }:
   const [message, setMessage] = useState<string>();
   const [isLoadingElements, setIsLoadingElements] = useState(true);
 
-  const productId = selectedPlan.productId;
-  const priceId = isYearly ? selectedPlan?.priceId?.yearly : selectedPlan?.priceId?.monthly;
   const license = selectedPlan.license;
-
   const isSubmitting = subscriptionCreate.isPending || updateUser.isPending || updateLicense.isPending;
 
   const handlePaymentForPaymentMethodSelected = async () => {
     try {
       setMessage(undefined);
-      if (!productId || !priceId || !paymentMethod) {
-        throw new Error("Missing productId, priceId or paymentMethod");
+      if (!paymentMethod || !selectedPlan?.price || !frequency) {
+        throw new Error("Missing prices or paymentMethod");
       }
       if (!stripe) {
         throw new Error("Stripe not loaded");
       }
       const { clientSecret } = await subscriptionCreate.mutateAsync({
-        priceId,
-        productId,
+        nickname: selectedPlan.nickname,
+        priceAmount: isYearly ? selectedPlan.price?.yearly : selectedPlan.price?.monthly,
         paymentMethodId: paymentMethod?.id,
         frequency,
       });
@@ -93,8 +90,8 @@ export const StripeCheckoutForm = ({ defaultPlan, frequency: defaultFrequency }:
       }
 
       setMessage(undefined);
-      if (!productId || !priceId) {
-        throw new Error("Missing productId or priceId");
+      if (!selectedPlan || !selectedPlan.price || !stripe || !elements?.submit) {
+        throw new Error("Missing prices or stripe or elements");
       }
 
       if (!stripe || !elements?.submit) {
@@ -106,8 +103,8 @@ export const StripeCheckoutForm = ({ defaultPlan, frequency: defaultFrequency }:
         throw new Error(submitError.message);
       }
       const { clientSecret } = await subscriptionCreate.mutateAsync({
-        priceId,
-        productId,
+        nickname: selectedPlan.nickname,
+        priceAmount: isYearly ? selectedPlan.price?.yearly : selectedPlan.price?.monthly,
         frequency,
       });
 
