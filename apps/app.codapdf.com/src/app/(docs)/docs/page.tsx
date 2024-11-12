@@ -49,15 +49,21 @@ export default function ApiDocs() {
           </p>
           <p className="text-muted-foreground">
             We also have a template gallery where you can find pre-built templates that you can use. The gallery will be
-            updated regularly with new templates.
+            updated regularly as we add more templates.
           </p>
-
           <iframe
-            src="https://www.loom.com/embed/a74d0844306c4f629c7170e2d0b7c90f?sid=ffc9c077-0662-41e3-b5f2-5c1682d28f03?autoplay=0"
-            title="HTML to PDF"
+            src="https://www.loom.com/embed/16f61120a2a04be282ca203ff36e500b?sid=d9232542-eed6-4f7c-ad8d-e280178bfe16?hideEmbedTopBar=true&hide_title=true&hide_owner=true&hide_share=true"
+            title="Creating Templates with Code Editor 👩‍💻"
             allowFullScreen
             className="aspect-video w-full"
           />
+        </section>
+        <section className="grid gap-4">
+          <h2 className="font-bold">API keys</h2>
+          <p className="text-muted-foreground">
+            To use the API, you will need an API key. You can create an API key in your account settings. You can use
+            this key to authenticate your requests.
+          </p>
         </section>
         <section className="grid gap-4">
           <h2 className="font-bold">Using the API to convert the HTML to PDF</h2>
