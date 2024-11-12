@@ -109,8 +109,8 @@ const ROUTES = {
       },
       title: "API Keys",
       header: "API Keys",
-    },
-  },
+    } as const,
+  } as const,
   AUTH: {
     LOGIN: {
       pathname: () => "/auth/login",

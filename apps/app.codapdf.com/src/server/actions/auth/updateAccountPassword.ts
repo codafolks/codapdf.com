@@ -6,7 +6,10 @@ import { userDTO } from "@/server/actions/users/getUserById";
 import { db } from "@/server/database";
 import { authentications } from "@/server/database/schemas/authentications";
 import { users } from "@/server/database/schemas/users";
-import type { AccountSetPasswordInput, AccountUpdatePasswordInput } from "@/server/schemas/accountUpdatePasswordZodSchema";
+import type {
+  AccountSetPasswordInput,
+  AccountUpdatePasswordInput,
+} from "@/server/schemas/accountUpdatePasswordZodSchema";
 import { eq } from "drizzle-orm";
 
 export const updateAccountPassword = async (payload: AccountUpdatePasswordInput | AccountSetPasswordInput) => {

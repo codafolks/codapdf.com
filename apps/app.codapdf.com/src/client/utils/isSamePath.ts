@@ -1,8 +1,17 @@
 import { env } from "@/constants/env.client";
+
+function getPathnameAndSearch(urlStr: string): string {
+  let url: URL;
+  try {
+    // Try parsing as an absolute URL
+    url = new URL(urlStr);
+  } catch (e) {
+    // If it fails, treat it as a relative URL
+    url = new URL(urlStr, env.APP_DOMAIN);
+  }
+  return url.pathname + url.search;
+}
+
 export const isSamePath = (pathname1: string, pathname2: string): boolean => {
-  if (pathname1 === pathname2) return true;
-  // remove domain from pathname if it exists
-  const _pathname1 = pathname1.startsWith(env.APP_DOMAIN) ? pathname1.replace(env.APP_DOMAIN, "") : pathname1;
-  const _pathname2 = pathname2.startsWith(env.APP_DOMAIN) ? pathname2.replace(env.APP_DOMAIN, "") : pathname2;
-  return _pathname1 === _pathname2;
+  return getPathnameAndSearch(pathname1) === getPathnameAndSearch(pathname2);
 };

@@ -32,7 +32,16 @@ const Option = (option: ComboBoxOption) => (
   </>
 );
 
-export function ComboboxBox({ options, value, onChange, label, name, id, error, placeholder }: Readonly<ComboboxBoxProps>) {
+export function ComboboxBox({
+  options,
+  value,
+  onChange,
+  label,
+  name,
+  id,
+  error,
+  placeholder,
+}: Readonly<ComboboxBoxProps>) {
   const [open, setOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
   const [localValue, setLocalValue] = React.useState(value);
@@ -95,7 +104,12 @@ export function ComboboxBox({ options, value, onChange, label, name, id, error, 
         </PopoverTrigger>
         <PopoverContent className="flex min-w-full flex-col rounded-none p-0" align="start">
           <Command className="rounded-none" shouldFilter={false}>
-            <CommandInput placeholder={placeholder ?? "Search..."} value={search} onValueChange={(e) => setSearch(e)} autoFocus />
+            <CommandInput
+              placeholder={placeholder ?? "Search..."}
+              value={search}
+              onValueChange={(e) => setSearch(e)}
+              autoFocus
+            />
             {!listOptions?.length && <CommandEmpty>No found.</CommandEmpty>}
             <CommandList>
               {listOptions

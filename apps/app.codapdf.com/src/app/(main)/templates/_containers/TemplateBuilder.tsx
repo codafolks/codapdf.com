@@ -190,7 +190,9 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
   };
 
   const getJsonFiles = () => {
-    const jsonFiles = Object.entries(files).filter(([filename]) => filename.endsWith(".json") && isJsonString(files[filename].content));
+    const jsonFiles = Object.entries(files).filter(
+      ([filename]) => filename.endsWith(".json") && isJsonString(files[filename].content),
+    );
     return jsonFiles.reduce((acc, [_, file]) => {
       try {
         return { ...acc, ...JSON.parse(file.content) };
@@ -296,7 +298,13 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
             <PanelResizeHandle className="w-2 transition-colors hover:bg-primary/10" />
             <Panel defaultSize={40} minSize={30} maxSize={80} className="grid grid-rows-[max-content,auto]">
               <div className="flex border-b">
-                <EditorTabs openTabs={openTabs} activeFileId={activeFileId} onClose={handleTabClose} setActiveFileId={setActiveFileId} files={files} />
+                <EditorTabs
+                  openTabs={openTabs}
+                  activeFileId={activeFileId}
+                  onClose={handleTabClose}
+                  setActiveFileId={setActiveFileId}
+                  files={files}
+                />
                 <Button variant="ghost" onClick={() => setShowPreview((prev) => !prev)}>
                   <PanelLeft size={16} className="text-foreground" />
                 </Button>

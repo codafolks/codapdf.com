@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { createClient, RedisFlushModes } from "redis";
+import { RedisFlushModes, createClient } from "redis";
 
 export async function GET(req: NextRequest) {
   const token = req.headers.get("x-api-key");

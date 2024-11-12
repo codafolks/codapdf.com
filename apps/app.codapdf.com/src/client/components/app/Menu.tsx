@@ -23,7 +23,13 @@ const ActionGroup = ({ action, isDropDown }: ActionGroupProps) => {
   const { label, href, loading, submitting, disabled, onClick } = action;
   if (href) {
     return (
-      <Button asChild loading={loading} submitting={submitting} disabled={disabled} variant={!isDropDown ? "default" : "ghost"}>
+      <Button
+        asChild
+        loading={loading}
+        submitting={submitting}
+        disabled={disabled}
+        variant={!isDropDown ? "default" : "ghost"}
+      >
         <Link href={href} onClick={onClick}>
           {label}
         </Link>
@@ -31,7 +37,13 @@ const ActionGroup = ({ action, isDropDown }: ActionGroupProps) => {
     );
   }
   return (
-    <Button onClick={onClick} loading={loading} submitting={submitting} disabled={disabled} variant={!isDropDown ? "default" : "ghost"}>
+    <Button
+      onClick={onClick}
+      loading={loading}
+      submitting={submitting}
+      disabled={disabled}
+      variant={!isDropDown ? "default" : "ghost"}
+    >
       {label}
     </Button>
   );
@@ -68,7 +80,11 @@ export const Menu = ({ actions, isDropDown, className }: MenuProps) => {
         <DropdownMenuTrigger className={className}>
           <EllipsisVertical />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="z-10 flex min-w-[100px] flex-col border bg-background text-foreground" side="left" align="start">
+        <DropdownMenuContent
+          className="z-10 flex min-w-[100px] flex-col border bg-background text-foreground"
+          side="left"
+          align="start"
+        >
           <Actions actions={actions} isDropDown />
         </DropdownMenuContent>
       </DropdownMenu>

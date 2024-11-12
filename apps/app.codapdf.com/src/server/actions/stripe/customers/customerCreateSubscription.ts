@@ -6,7 +6,11 @@ import { subscriptionCancel } from "@/server/actions/stripe/subscriptions/subscr
 import { subscriptionCreate } from "@/server/actions/stripe/subscriptions/subscriptionCreate";
 import type { UserDTO } from "@/server/actions/users/getUserById";
 import { db } from "@/server/database";
-import { productNicknameZodSchema, subscriptions, subscriptionsFrequencyZodSchema } from "@/server/database/schemas/subscriptions";
+import {
+  productNicknameZodSchema,
+  subscriptions,
+  subscriptionsFrequencyZodSchema,
+} from "@/server/database/schemas/subscriptions";
 import { users } from "@/server/database/schemas/users";
 import { and, desc, eq } from "drizzle-orm";
 import type Stripe from "stripe";
@@ -23,7 +27,13 @@ type CreateSubscriptionPayload = z.infer<typeof createSubscriptionPayloadZodSche
   user: UserDTO;
 };
 
-export const customerCreateSubscription = async ({ user, frequency, nickname, priceAmount, paymentMethodId }: CreateSubscriptionPayload) => {
+export const customerCreateSubscription = async ({
+  user,
+  frequency,
+  nickname,
+  priceAmount,
+  paymentMethodId,
+}: CreateSubscriptionPayload) => {
   const stripeApi = stripe();
   const userId = user.id;
   let customerId = user.customerId;
@@ -55,7 +65,11 @@ export const customerCreateSubscription = async ({ user, frequency, nickname, pr
     });
 
     //update status
-    await db.update(subscriptions).set({ status: "CANCELED" }).where(eq(subscriptions.subscriptionId, lastSubscriptionId)).execute();
+    await db
+      .update(subscriptions)
+      .set({ status: "CANCELED" })
+      .where(eq(subscriptions.subscriptionId, lastSubscriptionId))
+      .execute();
   }
   // Attach the payment method to the customer
   if (paymentMethodId) {

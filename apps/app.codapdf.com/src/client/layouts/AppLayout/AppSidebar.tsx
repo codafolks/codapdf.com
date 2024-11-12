@@ -3,7 +3,14 @@ import { SIDEBAR_ROUTES } from "@/client/utils/SideBarLinks";
 import { AppLogo } from "@/client/components/app/AppLogo";
 import { LogoutButton } from "@/client/layouts/AppLayout/LogoutButton";
 import { SideBarLink } from "@/client/layouts/AppLayout/SideBarLink";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarGroupContent, SidebarMenu, SidebarMenuItem } from "@/components/ui/sidebar";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
 
 const AppSidebar = () => {
   return (

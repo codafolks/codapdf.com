@@ -1,5 +1,8 @@
 import { getAllImagesLinksFromHtml } from "@/app/(main)/templates/_utils/getAllImagesLinksFromHtml";
-import { getAllJavascriptBetweenScriptTagFromHtml, getAllScriptsLinksFromHtml } from "@/app/(main)/templates/_utils/getAllScriptsLinksFromHtml";
+import {
+  getAllJavascriptBetweenScriptTagFromHtml,
+  getAllScriptsLinksFromHtml,
+} from "@/app/(main)/templates/_utils/getAllScriptsLinksFromHtml";
 import { useUser } from "@/client/queries/users";
 import type { License } from "@/server/database/schemas/licenses";
 

@@ -5,4 +5,11 @@ import { InputController } from "./InputController";
 import { NumericController } from "./NumericController";
 import { TextareaController } from "./TextareaController";
 
-export { ComboBoxController, CurrencyController, DatePickerController, InputController, NumericController, TextareaController };
+export {
+  ComboBoxController,
+  CurrencyController,
+  DatePickerController,
+  InputController,
+  NumericController,
+  TextareaController,
+};

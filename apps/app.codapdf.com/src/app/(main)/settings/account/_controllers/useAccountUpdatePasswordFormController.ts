@@ -3,10 +3,10 @@ import { useZodForm } from "@/client/utils/useZodForm";
 import { useToast } from "@/components/ui/use-toast";
 import { updateAccountPassword } from "@/server/actions/auth/updateAccountPassword";
 import {
-  accountUpdatePasswordZodSchema,
-  accountSetPasswordZodSchema,
   type AccountSetPasswordInput,
   type AccountUpdatePasswordInput,
+  accountSetPasswordZodSchema,
+  accountUpdatePasswordZodSchema,
 } from "@/server/schemas/accountUpdatePasswordZodSchema";
 
 export const useAccountUpdatePasswordFormController = () => {

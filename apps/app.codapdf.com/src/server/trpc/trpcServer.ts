@@ -1,4 +1,9 @@
-import { type TRPCContext, type TRPCEmptyContext, type TRPCPublicContext, createTRPCEmptyContext } from "@/server/trpc/contextTrpc";
+import {
+  type TRPCContext,
+  type TRPCEmptyContext,
+  type TRPCPublicContext,
+  createTRPCEmptyContext,
+} from "@/server/trpc/contextTrpc";
 import { authRouter } from "@/server/trpc/routers/authRouter";
 import { templateRouter } from "@/server/trpc/routers/templateRouter";
 import { userRouter } from "@/server/trpc/routers/userRouter";

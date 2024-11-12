@@ -20,9 +20,13 @@ export const subscriptionUpdateDB = async (payload: SubscriptionUpdatePaymentInt
       });
       lastPaymentMethodId = lastPayment.id;
     } else {
-      const lastPayment = await db.update(subscriptions).set(payload).where(eq(subscriptions.id, lastPaymentMethod.id)).returning({
-        id: subscriptions.id,
-      });
+      const lastPayment = await db
+        .update(subscriptions)
+        .set(payload)
+        .where(eq(subscriptions.id, lastPaymentMethod.id))
+        .returning({
+          id: subscriptions.id,
+        });
       lastPaymentMethodId = lastPayment[0].id;
     }
     return lastPaymentMethodId;

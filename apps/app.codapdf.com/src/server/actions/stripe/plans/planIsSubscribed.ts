@@ -13,7 +13,12 @@ type PlanIsSubscribed = {
 export const planIsSubscribed = async ({ userId, productId, priceId }: PlanIsSubscribed) => {
   try {
     const subscriptionData = await db.query.subscriptions.findFirst({
-      where: and(eq(subscriptions.userId, userId), eq(subscriptions.productId, productId), eq(subscriptions.priceId, priceId), eq(subscriptions.status, "ACTIVE")),
+      where: and(
+        eq(subscriptions.userId, userId),
+        eq(subscriptions.productId, productId),
+        eq(subscriptions.priceId, priceId),
+        eq(subscriptions.status, "ACTIVE"),
+      ),
     });
     if (!subscriptionData) return false;
     const subscriptionId = subscriptionData?.subscriptionId;

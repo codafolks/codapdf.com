@@ -40,7 +40,8 @@ export const plansSubscription: Array<PlanSubscription> = [
   {
     nickname: "hobby",
     title: "Hobby Plan",
-    description: "A great option for users who need basic functionality and want to explore the service before committing to a paid plan.",
+    description:
+      "A great option for users who need basic functionality and want to explore the service before committing to a paid plan.",
     cta: "Get Started",
     price: {
       monthly: hobbyPriceMonthly,
@@ -78,7 +79,8 @@ export const plansSubscription: Array<PlanSubscription> = [
   {
     nickname: "basic",
     title: "Basic Plan",
-    description: "Perfect for individuals or small teams that need occasional HTML to PDF conversions without complex requirements.",
+    description:
+      "Perfect for individuals or small teams that need occasional HTML to PDF conversions without complex requirements.",
     cta: "Get Started",
     price: {
       monthly: basicPriceMonthly,
@@ -122,7 +124,8 @@ export const plansSubscription: Array<PlanSubscription> = [
     },
     license: "PRO",
     economize: `Save ${proDiscount * 100}%`,
-    description: "Ideal for small to medium-sized businesses or professionals who need more control and flexibility with their HTML to PDF conversions.",
+    description:
+      "Ideal for small to medium-sized businesses or professionals who need more control and flexibility with their HTML to PDF conversions.",
     cta: "Get Started",
     features: [
       {
@@ -154,7 +157,8 @@ export const plansSubscription: Array<PlanSubscription> = [
   {
     nickname: "enterprise",
     title: "Enterprise Plan",
-    description: "Tailored for large businesses or SaaS platforms that require high scalability, customization, and API integrations for their workflow.",
+    description:
+      "Tailored for large businesses or SaaS platforms that require high scalability, customization, and API integrations for their workflow.",
     cta: "Contact Us",
     license: "ENTERPRISE",
     features: [

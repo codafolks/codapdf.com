@@ -37,7 +37,13 @@ export function Contact() {
           <h2 className="mb-12 text-center font-bold text-3xl tracking-tighter sm:text-5xl ">Contact Us</h2>
           <form className="space-y-4" id="contact-form" onSubmit={onSubmit}>
             <InputController control={form.control} id="name" label="Name" name="name" placeholder="John Doe" />
-            <InputController control={form.control} id="email" label="Email" name="email" placeholder="your.email@example.com" />
+            <InputController
+              control={form.control}
+              id="email"
+              label="Email"
+              name="email"
+              placeholder="your.email@example.com"
+            />
             <ComboBoxController
               control={form.control}
               label="Department"
@@ -50,7 +56,13 @@ export function Contact() {
                 { label: "Other", value: "other" },
               ]}
             />
-            <TextareaController control={form.control} id="message" label="Message" name="message" placeholder="Your message here..." />
+            <TextareaController
+              control={form.control}
+              id="message"
+              label="Message"
+              name="message"
+              placeholder="Your message here..."
+            />
             <Button type="submit" id="submit-content" submitting={form.formState.isSubmitting}>
               Send Message
             </Button>

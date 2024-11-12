@@ -22,7 +22,8 @@ type GetPrice = {
   frequency: SubscriptionsFrequency;
   amount: number;
 };
-export const getProductCacheKey = ({ nickname, frequency }: GetProduct) => `stripe:product:${nickname}:${frequency.toLocaleLowerCase()}`;
+export const getProductCacheKey = ({ nickname, frequency }: GetProduct) =>
+  `stripe:product:${nickname}:${frequency.toLocaleLowerCase()}`;
 const getProduct = async ({ nickname, frequency }: GetProduct): Promise<Stripe.Product> => {
   const cacheKey = getProductCacheKey({ nickname, frequency });
   const cache = await getCacheClient();
@@ -48,7 +49,8 @@ const getProduct = async ({ nickname, frequency }: GetProduct): Promise<Stripe.P
   return product;
 };
 
-export const getPriceCacheKey = ({ productId, frequency, amount }: GetPrice) => `stripe:price:${productId}:${amount}:${frequency.toLocaleLowerCase()}`;
+export const getPriceCacheKey = ({ productId, frequency, amount }: GetPrice) =>
+  `stripe:price:${productId}:${amount}:${frequency.toLocaleLowerCase()}`;
 const getPrice = async ({ productId, frequency, amount }: GetPrice): Promise<Stripe.Price> => {
   const cacheKey = `stripe:price:${productId}:${amount}:${frequency.toLocaleLowerCase()}`;
   const cache = await getCacheClient();
@@ -84,7 +86,13 @@ type SubscriptionCreateResponse = Stripe.Subscription & {
   priceId: string;
 };
 
-export const subscriptionCreate = async ({ customerId, nickname, frequency, priceAmount, paymentMethodId }: SubscriptionCreate): Promise<SubscriptionCreateResponse> => {
+export const subscriptionCreate = async ({
+  customerId,
+  nickname,
+  frequency,
+  priceAmount,
+  paymentMethodId,
+}: SubscriptionCreate): Promise<SubscriptionCreateResponse> => {
   try {
     const api = stripe();
     const product = await getProduct({ nickname, frequency });

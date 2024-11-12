@@ -3,8 +3,10 @@ import { TemplateItemCard } from "@/app/(main)/templates/_components/TemplateIte
 import { cn } from "@/client/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import { TemplateItemCardSkeleton } from "@/app/(main)/templates/_components/TemplateItemCardSkeleton";
 import { templateExamples } from "@/app/(main)/templates/_data/templates";
 import { ROUTES } from "@/app/routes";
+import { Button } from "@/client/components/ui/button";
 import { useTemplateDelete, useTemplateList } from "@/client/queries/templates";
 import { DeleteDialog } from "@/components/app/DeleteDialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,8 +16,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import { getQueryKey } from "@trpc/react-query";
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { TemplateItemCardSkeleton } from "@/app/(main)/templates/_components/TemplateItemCardSkeleton";
-import { Button } from "@/client/components/ui/button";
 
 export const TemplateList = () => {
   const [tabValue, setTabValue] = useState<"templates" | "sample">("templates");

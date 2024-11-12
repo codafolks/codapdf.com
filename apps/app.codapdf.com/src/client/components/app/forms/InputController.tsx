@@ -10,7 +10,15 @@ const InputController = <T extends FieldValues>({ name, control, ...rest }: Inpu
   const {
     fieldState: { error },
   } = useController<T>({ control, name });
-  return <Controller control={control} name={name} render={({ field }) => <Input {...rest} value={field.value ?? ""} onChange={field.onChange} error={error?.message} />} />;
+  return (
+    <Controller
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <Input {...rest} value={field.value ?? ""} onChange={field.onChange} error={error?.message} />
+      )}
+    />
+  );
 };
 
 export { InputController };

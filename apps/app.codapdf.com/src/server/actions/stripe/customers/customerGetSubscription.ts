@@ -1,8 +1,12 @@
 import { getCacheClient } from "@/server/actions/cache/getCacheClient";
 import type { UserDTO } from "@/server/actions/users/getUserById";
 import { db } from "@/server/database";
-import { type ProductNickname, subscriptions, type SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
-import { plansSubscription, type PlanSubscription } from "@/server/static/plansSubscription";
+import {
+  type ProductNickname,
+  type SubscriptionsFrequency,
+  subscriptions,
+} from "@/server/database/schemas/subscriptions";
+import { type PlanSubscription, plansSubscription } from "@/server/static/plansSubscription";
 import { and, desc, eq } from "drizzle-orm";
 
 type CustomerGetSubscription = {
@@ -21,7 +25,9 @@ type CustomerGetSubscriptionResponse = {
   frequency: SubscriptionsFrequency;
 };
 export const getCustomerGetSubscriptionCacheKey = ({ user }: CustomerGetSubscription) => `get:subscription:${user.id}`;
-export const customerGetSubscription = async ({ user }: CustomerGetSubscription): Promise<CustomerGetSubscriptionResponse | undefined> => {
+export const customerGetSubscription = async ({
+  user,
+}: CustomerGetSubscription): Promise<CustomerGetSubscriptionResponse | undefined> => {
   const client = await getCacheClient();
   const cacheKey = getCustomerGetSubscriptionCacheKey({ user });
   const cachedData = await client.get(cacheKey);

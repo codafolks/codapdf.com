@@ -16,7 +16,10 @@ export const setPageCss = ({ html, paper = "auto" }: SetPageCss) => {
         }
       /* [/CUSTOM_PAGE_STYLE] */
     `;
-    const htmlWithoutCustomStyle = html.replace(/\/\* \[CUSTOM_PAGE_STYLE\] \*\/([\s\S]*?)\/\* \[\/CUSTOM_PAGE_STYLE\] \*\//g, "");
+    const htmlWithoutCustomStyle = html.replace(
+      /\/\* \[CUSTOM_PAGE_STYLE\] \*\/([\s\S]*?)\/\* \[\/CUSTOM_PAGE_STYLE\] \*\//g,
+      "",
+    );
     const convertedHtml = new DOMParser().parseFromString(htmlWithoutCustomStyle, "text/html");
     const styleTag = convertedHtml?.head?.querySelector("style:first-of-type");
     if (styleTag) {

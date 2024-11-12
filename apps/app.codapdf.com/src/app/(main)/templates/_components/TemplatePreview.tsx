@@ -47,7 +47,14 @@ export const TemplatePreview = ({ html }: TemplatePreviewProps) => {
 
   return (
     <div className="flex overflow-hidden">
-      <iframe itemRef="template-preview-iframe" src={src} title="TemplatePreview" id="template-preview-iframe" suppressHydrationWarning className="h-full w-full overflow-hidden" />
+      <iframe
+        itemRef="template-preview-iframe"
+        src={src}
+        title="TemplatePreview"
+        id="template-preview-iframe"
+        suppressHydrationWarning
+        className="h-full w-full overflow-hidden"
+      />
     </div>
   );
 };

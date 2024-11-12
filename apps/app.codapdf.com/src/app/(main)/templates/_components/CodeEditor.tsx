@@ -5,8 +5,8 @@ import { css } from "@codemirror/lang-css";
 import { html } from "@codemirror/lang-html";
 import { javascript } from "@codemirror/lang-javascript";
 import { json } from "@codemirror/lang-json";
-import { tomorrow, barf } from "thememirror";
 import CodeMirror from "@uiw/react-codemirror";
+import { barf, tomorrow } from "thememirror";
 
 import type { EditorFileData, EditorFiles } from "@/app/(main)/templates/_components/FileSidebar";
 import { cn } from "@/client/lib/utils";

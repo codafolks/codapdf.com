@@ -9,7 +9,10 @@ export const useTemplateById = (sourceId: TemplateSourceId) => {
   const { templateId, sampleId } = getTemplateSourceId(sourceId);
 
   const templateById = trpcClient.templates.getById.useQuery({ id: templateId ?? -1 }, { enabled: !!templateId });
-  const templateSampleById = trpcClient.templates.getSampleById.useQuery({ id: sampleId ?? "" }, { enabled: !!sampleId });
+  const templateSampleById = trpcClient.templates.getSampleById.useQuery(
+    { id: sampleId ?? "" },
+    { enabled: !!sampleId },
+  );
   const template = templateId ? templateById : templateSampleById;
   return {
     ...template,

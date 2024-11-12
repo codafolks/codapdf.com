@@ -1,6 +1,6 @@
+import { javascript } from "@codemirror/lang-javascript";
 import ReactCodeMirror from "@uiw/react-codemirror";
 import { barf } from "thememirror";
-import { javascript } from "@codemirror/lang-javascript";
 const snippet = `
 const data = { 
   html: "<h1>Hello {{name}}</h1>",

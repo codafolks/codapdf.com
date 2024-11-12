@@ -9,7 +9,8 @@ export const authZodSchemaBase = z.object({
   // and one special character
   name: z.string().min(3),
   password: z.string().regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/, {
-    message: "Password must be at least 8 characters and contain at least one number, one uppercase letter, one lowercase letter, and one special character",
+    message:
+      "Password must be at least 8 characters and contain at least one number, one uppercase letter, one lowercase letter, and one special character",
   }),
 
   // confirmPassword must be equal to password

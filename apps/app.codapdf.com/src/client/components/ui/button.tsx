@@ -38,20 +38,28 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   submitting?: boolean;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({ className, variant, size, asChild = false, loading, submitting, type = "button", children, ...props }, ref) => {
-  const Comp = asChild ? Slot : "button";
-  const loadingText = React.useMemo(() => {
-    if (loading) return "Loading...";
-    if (submitting) return "Submitting...";
-    return children;
-  }, [loading, submitting, children]);
-  const disabled = loading || submitting || props.disabled;
-  return (
-    <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} type={type} {...props} disabled={disabled}>
-      {loadingText}
-    </Comp>
-  );
-});
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, loading, submitting, type = "button", children, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button";
+    const loadingText = React.useMemo(() => {
+      if (loading) return "Loading...";
+      if (submitting) return "Submitting...";
+      return children;
+    }, [loading, submitting, children]);
+    const disabled = loading || submitting || props.disabled;
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        type={type}
+        {...props}
+        disabled={disabled}
+      >
+        {loadingText}
+      </Comp>
+    );
+  },
+);
 Button.displayName = "Button";
 
 export { Button, buttonVariants };

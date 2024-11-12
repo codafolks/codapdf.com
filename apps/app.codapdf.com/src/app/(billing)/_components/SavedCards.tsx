@@ -24,7 +24,10 @@ export function SavedCards({ methods, paymentMethod, onSelectPaymentMethod }: Re
       </div>
       <RadioGroup value={paymentMethod?.id ?? ""} onValueChange={(value) => handleSelectPaymentMethod(value)}>
         {methods.map((method) => (
-          <div key={method.id} className="flex cursor-pointer items-center space-x-3 rounded-lg border p-4 hover:bg-accent">
+          <div
+            key={method.id}
+            className="flex cursor-pointer items-center space-x-3 rounded-lg border p-4 hover:bg-accent"
+          >
             <RadioGroupItem value={method.id} id={method.id} />
             <Label htmlFor={method.card?.last4} className="flex flex-1 cursor-pointer items-center space-x-3">
               <div className="flex items-center space-x-2">

@@ -14,7 +14,14 @@ interface PricingTableCardProps {
   onCancelPlan?: (plan: PlanSubscription) => void;
 }
 
-export function PricingTableCard({ plan, currentPlan, isBillingPage, frequency = "YEARLY", onSelectPlan, onCancelPlan }: Readonly<PricingTableCardProps>) {
+export function PricingTableCard({
+  plan,
+  currentPlan,
+  isBillingPage,
+  frequency = "YEARLY",
+  onSelectPlan,
+  onCancelPlan,
+}: Readonly<PricingTableCardProps>) {
   const isCancelPlan = typeof currentPlan === "string" && plan.nickname === currentPlan && isBillingPage;
   const isYearly = frequency === "YEARLY";
   return (
@@ -43,7 +50,9 @@ export function PricingTableCard({ plan, currentPlan, isBillingPage, frequency =
             </span>
             <span className="ml-1 font-semibold text-muted-foreground text-sm">/{isYearly ? "year" : "month"}</span>
           </div>
-          {isYearly && plan.economize && <p className="mt-1 font-medium text-emerald-600 text-sm dark:text-emerald-400">{plan.economize}</p>}
+          {isYearly && plan.economize && (
+            <p className="mt-1 font-medium text-emerald-600 text-sm dark:text-emerald-400">{plan.economize}</p>
+          )}
         </div>
       ) : (
         <div className="mb-6">
@@ -55,7 +64,9 @@ export function PricingTableCard({ plan, currentPlan, isBillingPage, frequency =
       <Button
         className={cn(
           "w-full rounded-lg px-4 py-2.5 font-semibold text-sm transition-colors",
-          plan.nickname === currentPlan ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+          plan.nickname === currentPlan
+            ? "bg-primary text-primary-foreground hover:bg-primary/90"
+            : "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         )}
         onClick={() => {
           if (isCancelPlan) {

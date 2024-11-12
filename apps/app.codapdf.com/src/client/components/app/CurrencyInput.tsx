@@ -8,7 +8,16 @@ export type CurrencyInputProps = NumericFormatProps<InputProps>;
 const CurrencyInput = forwardRef<HTMLInputElement, CurrencyInputProps>(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   (props, _) => {
-    return <NumericFormat {...props} customInput={Input} allowLeadingZeros thousandSeparator fixedDecimalScale decimalScale={2} />;
+    return (
+      <NumericFormat
+        {...props}
+        customInput={Input}
+        allowLeadingZeros
+        thousandSeparator
+        fixedDecimalScale
+        decimalScale={2}
+      />
+    );
   },
 );
 CurrencyInput.displayName = "CurrencyInput";

@@ -27,7 +27,9 @@ export function BillingToggle({ frequency, onToggle, economize }: Readonly<Billi
         <Label htmlFor="billing-toggle" className="font-medium text-sm">
           Yearly
         </Label>
-        {economize && isYearly && <span className="rounded-full bg-green-100 px-2 py-1 font-medium text-green-700 text-xs">{economize}</span>}
+        {economize && isYearly && (
+          <span className="rounded-full bg-green-100 px-2 py-1 font-medium text-green-700 text-xs">{economize}</span>
+        )}
       </div>
     </div>
   );
