@@ -13,7 +13,7 @@
     "format:check": "biome check ./src",
     "format:fix": "biome check ./src --write ",
     "email": "email dev --dir ./src/emails",
-    "secrets:output": "doppler secrets substitute .env.template.yaml --output .env",
+    "secrets:output": "doppler secrets download --no-file --format env > .env",
     "env:development": "doppler run -p codapdf -c development -- bun run secrets:output",
     "env:production": "doppler run -p codapdf -c production -- bun run secrets:output",
     "env:local": "doppler run -p codapdf -c development_local -- bun run secrets:output"

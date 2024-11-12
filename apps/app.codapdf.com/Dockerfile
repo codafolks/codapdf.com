@@ -26,7 +26,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Fetch secrets from Doppler
-RUN bun run env:${RAILWAY_ENVIRONMENT}
+RUN doppler run -p codapdf -c development -- doppler secrets download --no-file --format env > .env
 
 # Run migrations
 RUN sh -c 'i=1; \

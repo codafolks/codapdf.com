@@ -38,18 +38,27 @@ export default function ApiDocs() {
           </p>
         </section>
         <section className="grid gap-4">
-          <h2 className="font-bold">Build and test HTML templates</h2>
+          <h2 className="font-bold">Using the Code Editor</h2>
           <p className="text-muted-foreground">
-            You can build and test your HTML templates using the app. You can use the app to generate the PDF and
-            download it to your computer. This is a great way to test your templates before using the API.
+            You can build and test your HTML templates using the code editor provided by {"<CodaPDF />"}. This is a
+            great way to test your templates before using the API.
           </p>
           <p className="text-muted-foreground">
             To get started, you can sign up for a free account. Once you have signed up, you can create a new template
-            and start building your HTML template or paste your existing HTML template.
+            and start building your HTML template or paste your existing HTML template if you want.
           </p>
           <p className="text-muted-foreground">
-            We also have a template gallery where you can find pre-built templates that you can use. The gallery will be
-            updated regularly as we add more templates.
+            NOTE: The server uses Jinja templating engine to render the HTML templates. Check out the Jinja
+            documentation:{" "}
+            <a
+              href="https://jinja.palletsprojects.com/en/stable/"
+              className="text-blue-500"
+              target="_blank"
+              rel="noopener"
+            >
+              https://jinja.palletsprojects.com/en/stable/
+            </a>
+            for more information.
           </p>
           <iframe
             src="https://www.loom.com/embed/16f61120a2a04be282ca203ff36e500b?sid=d9232542-eed6-4f7c-ad8d-e280178bfe16?hideEmbedTopBar=true&hide_title=true&hide_owner=true&hide_share=true"
@@ -61,8 +70,8 @@ export default function ApiDocs() {
         <section className="grid gap-4">
           <h2 className="font-bold">API keys</h2>
           <p className="text-muted-foreground">
-            To use the API, you will need an API key. You can create an API key in your account settings. You can use
-            this key to authenticate your requests.
+            To use the API, you will need an API key. You can create an API key in the API keys section and then You can
+            use this key to authenticate your requests.
           </p>
         </section>
         <section className="grid gap-4">
