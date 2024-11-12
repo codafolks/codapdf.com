@@ -166,6 +166,16 @@ const ROUTES = {
         return isSamePath(pathname, ROUTES.PUBLIC.DOCS.pathname());
       },
     },
+    REDIRECTING: {
+      pathname: () => "/redirecting",
+      href: () => {
+        return `${env.APP_DOMAIN}/${ROUTES.PUBLIC.REDIRECTING.pathname()}`;
+      },
+      title: "Redirecting",
+      match: (pathname: string) => {
+        return isSamePath(pathname, ROUTES.PUBLIC.REDIRECTING.pathname());
+      },
+    },
   },
 } as const;
 
