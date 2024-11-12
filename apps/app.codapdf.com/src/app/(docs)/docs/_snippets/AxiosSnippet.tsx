@@ -1,10 +1,11 @@
+import { env } from "@/constants/env.client";
 import { javascript } from "@codemirror/lang-javascript";
 import ReactCodeMirror from "@uiw/react-codemirror";
 import { barf } from "thememirror";
 const snippet = `
 import axios from "axios"; 
 const data = {html: "<h1>Hello {{name}}</h1>", data: {name: "World"}}; 
-const response = await axios.post('http://services.codapdf/api/v1/html2pdf', data, { 
+const response = await axios.post('${env.SERVICES_DOMAIN}/html2pdf', data, { 
   headers: { 
     Authorization: 'Bearer YOUR_API_KEY', 
   } 

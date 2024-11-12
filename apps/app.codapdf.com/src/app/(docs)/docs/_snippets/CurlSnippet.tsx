@@ -1,8 +1,9 @@
+import { env } from "@/constants/env.client";
 import ReactCodeMirror from "@uiw/react-codemirror";
 import { barf } from "thememirror";
 const snippet = `
 curl --request POST \\
---url http://services.codapdf/api/v1/html2pdf\\
+--url ${env.SERVICES_DOMAIN}/html2pdf\\
 --header 'Authorization: Bearer YOUR_API_KEY'\\
 --data '{
   "html":"<h1>Hello {{name}}</h1>", 

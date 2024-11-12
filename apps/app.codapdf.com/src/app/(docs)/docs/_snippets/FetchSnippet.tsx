@@ -1,3 +1,4 @@
+import { env } from "@/constants/env.client";
 import { javascript } from "@codemirror/lang-javascript";
 import ReactCodeMirror from "@uiw/react-codemirror";
 import { barf } from "thememirror";
@@ -6,7 +7,7 @@ const data = {
   html: "<h1>Hello {{name}}</h1>",
   data: { name: "World" } 
 }; 
-const response = await fetch('http://services.codapdf/api/v1/html2pdf', { 
+const response = await fetch('${env.SERVICES_DOMAIN}/html2pdf', { 
   method: 'POST', 
   headers: { 
     'Authorization ': 'Bearer YOUR_API_KEY', 
