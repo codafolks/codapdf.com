@@ -1,41 +1,12 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { serverApi } from "@/server/trpc/trpcServer";
+import { use } from "react";
 export default function APIUsage() {
-  const apiUsageData = [
-    {
-      title: "Total Requests",
-      value: "1,234,567",
-      description: "API calls made this month",
-    },
-    {
-      title: "Average Response Time",
-      value: "120ms",
-      description: "Average time to process requests",
-    },
-    {
-      title: "Error Rate",
-      value: "0.5%",
-      description: "Percentage of failed requests",
-    },
-    {
-      title: "Unique Users",
-      value: "5,678",
-      description: "Distinct API users this month",
-    },
-    {
-      title: "Bandwidth Used",
-      value: "1.2 TB",
-      description: "Total data transferred",
-    },
-    {
-      title: "Peak Requests/Second",
-      value: "1,000",
-      description: "Highest request rate observed",
-    },
-  ];
+  const apiUsageData = use(serverApi.apiMetrics.metrics());
   return (
     <div className="grid gap-4 p-4 text-foreground">
       <h1 className="font-bold text-2xl">API Usage Statistics</h1>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         {apiUsageData.map((item) => (
           <Card key={item.title}>
             <CardHeader>

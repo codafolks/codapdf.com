@@ -29,6 +29,7 @@ export const checkUserLicense = async (userId: number) => {
       isTrial: true,
       daysLeft,
       license: "PRO",
+      userId,
     };
   }
 
@@ -37,11 +38,13 @@ export const checkUserLicense = async (userId: number) => {
       isTrial: true,
       daysLeft: 0,
       license,
+      userId,
     };
   }
 
   return {
     isTrial: false,
     license,
+    userId,
   };
 };

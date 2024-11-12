@@ -4,7 +4,7 @@ import { pgTable, serial, text, timestamp, unique, uuid } from "drizzle-orm/pg-c
 import { createSelectSchema } from "drizzle-zod";
 import type { z } from "zod";
 export const apiKeys = pgTable(
-  "api_keys",
+  "apiKeys",
   {
     uuid: uuid("uuid").default(sql`uuid_generate_v4()`).unique().notNull(),
     name: text("name").unique().notNull(),

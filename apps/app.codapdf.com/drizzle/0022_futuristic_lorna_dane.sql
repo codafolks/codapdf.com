@@ -1,0 +1,1 @@
+ALTER TABLE "apiMetrics" ALTER COLUMN "dataTransferredBytes" SET DATA TYPE integer;
