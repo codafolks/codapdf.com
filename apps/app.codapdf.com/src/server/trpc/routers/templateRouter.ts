@@ -5,6 +5,7 @@ import { getTemplateById } from "@/server/actions/templates/getTemplateById";
 import { listTemplates } from "@/server/actions/templates/listTemplates";
 import { saveTemplate } from "@/server/actions/templates/saveTemplate";
 import {
+  templateExample,
   templateOnFetchZodSchema,
   templateOnSaveZodSchema,
   templateOnSelectZodSchema,
@@ -16,19 +17,7 @@ export const templateRouter = {
   getSampleById: protectedProcedure
     .output(
       z.object({
-        data: z
-          .object({
-            id: z.string(),
-            name: z.string(),
-            description: z.string(),
-            files: z.array(
-              z.object({
-                filename: z.string(),
-                content: z.string(),
-              }),
-            ),
-          })
-          .nullable(),
+        data: templateExample.nullable(),
         message: z.string(),
       }),
     )

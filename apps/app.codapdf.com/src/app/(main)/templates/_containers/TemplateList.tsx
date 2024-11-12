@@ -19,7 +19,6 @@ import { useRef, useState } from "react";
 
 export const TemplateList = () => {
   const [tabValue, setTabValue] = useState<"templates" | "sample">("templates");
-  const triggerRef = useRef<HTMLButtonElement>(null);
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const templateId = useRef<number | null>(null);

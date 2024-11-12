@@ -3,21 +3,25 @@ import { AxiosSnippet } from "@/app/(docs)/docs/_snippets/AxiosSnippet";
 import { CurlSnippet } from "@/app/(docs)/docs/_snippets/CurlSnippet";
 import { FetchSnippet } from "@/app/(docs)/docs/_snippets/FetchSnippet";
 import { Footer } from "@/app/(marketing)/_components/Footer";
+import { ROUTES } from "@/app/routes";
 import { ButtonUpdateTheme } from "@/client/components/app/ButtonUpdateTheme";
 import { SidebarTrigger } from "@/client/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { env } from "@/constants/env.client";
+import Link from "next/link";
 
-export default function ApiDocs() {
+export default function Docs() {
   return (
-    <div className="relative h-screen overflow-y-auto bg-background text-foreground">
-      <header className="sticky top-0 left-0 z-10 flex items-center justify-between border-b bg-background px-4 py-3">
+    <div className="relative h-screen overflow-y-auto bg-background text-foreground" id="docs-container">
+      <header className="sticky top-0 left-0 z-10 flex items-center justify-between border-b bg-background px-4 py-4 lg:px-6">
         <SidebarTrigger />
         <div className="flex items-center space-x-4">
           <h1 className="font-bold">API Reference</h1>
         </div>
         <div className="flex items-center space-x-4">
-          <Button>Sign In</Button>
+          <Button asChild variant="secondary">
+            <Link href={ROUTES.AUTH.LOGIN.pathname()}>Sign In</Link>
+          </Button>
           <ButtonUpdateTheme />
         </div>
       </header>
@@ -25,19 +29,22 @@ export default function ApiDocs() {
         <section id="introduction">
           <h2 className="font-bold text-2xl">Introduction</h2>
           <p className="text-muted-foreground">
-            Welcome to the API documentation. Here you will find information on how to use the API to convert HTML to
-            PDF.
+            Welcome to the docs. Here you will find information on how to use the platform and also how to use the API
+            to convert your HTML templates to PDF.
           </p>
           <p className="text-muted-foreground">
-            For current the version of the app, we only have the HTML to PDF conversion feature. We will be adding more
-            features in the future. If you have any questions or need help, please contact us at{" "}
+            The documentation is divided into sections to help you find the information you need. If you have any issues
+            or questions, you can reach out to us at{" "}
             <a href={`mailto:${env.SUPPORT_EMAIL}`} className="text-blue-500">
               {env.SUPPORT_EMAIL}
+            </a>{" "}
+            or you can reach out to us on our{" "}
+            <a href="https://discord.gg/T8H7YqvXcW" className="text-blue-500" target="_blank" rel="noopener">
+              discord server
             </a>
-            .
           </p>
         </section>
-        <section className="grid gap-4">
+        <section className="grid gap-4" id="using-code-editor">
           <h2 className="font-bold">Using the Code Editor</h2>
           <p className="text-muted-foreground">
             You can build and test your HTML templates using the code editor provided by {"<CodaPDF />"}. This is a
@@ -67,7 +74,7 @@ export default function ApiDocs() {
             className="aspect-video w-full"
           />
         </section>
-        <section className="grid gap-4">
+        <section className="grid gap-4" id="api-keys">
           <h2 className="font-bold">API keys</h2>
           <p className="text-muted-foreground">
             To use the API, you will need an API key. You can create an API key in the API keys section and then You can

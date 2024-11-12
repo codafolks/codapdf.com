@@ -55,8 +55,21 @@ export const templateOnFetchZodSchema = templateOnSelectZodSchema.extend({
   files: z.array(z.object({ filename: z.string(), content: z.string() })),
 });
 
+export const templateExample = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  files: z.array(
+    z.object({
+      filename: z.string(),
+      content: z.string(),
+    }),
+  ),
+});
+
 export type TemplateOnSavePayload = z.infer<typeof templateOnSaveZodSchema>;
 export type TemplateOnFetchPayload = z.infer<typeof templateOnFetchZodSchema>;
 export type TemplateOnInsertPayload = z.infer<typeof templateOnInsertZodSchema>;
 export type TemplateOnSelectPayload = z.infer<typeof templateOnSelectZodSchema>;
 export type Template = z.infer<typeof templateOnSelectZodSchema>;
+export type TemplateExample = z.infer<typeof templateExample>;
