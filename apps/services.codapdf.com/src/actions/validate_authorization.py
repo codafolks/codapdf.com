@@ -20,10 +20,16 @@ def validate_authorization(authorization: str):
   ENDPOINT_VALIDATE_TOKEN=os.environ.get('ENDPOINT_VALIDATE_TOKEN')
   response = requests.post(ENDPOINT_VALIDATE_TOKEN, headers={'Authorization': f'Bearer {token}'}).json()
   user_license = response.get('license')
+  user_id = response.get('userId')
+  api_key = token
   
   if user_license not in LICENSE:
     logger.error(f"invalid license: {user_license}")
     raise HTTPException(detail='Unauthorized: Invalid license', status_code=401)
-  return user_license
+  return {
+    'license': user_license,
+    'userId': user_id,
+    'apiKey': api_key
+  }
  
 

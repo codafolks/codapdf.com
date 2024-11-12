@@ -32,26 +32,39 @@ async def html_converter_controller(html:str, data: dict, user_license: str, con
     modified_html = await render_template_string(html_template, data_variables);
     modified_html = minify_html_with_inline(modified_html)
     cache_key = cache_client.generate_key(modified_html)
+    cache_key_pdf_size = f"{cache_key}_pdf_size"
     cached_pdf_url = cache_client.get(cache_key)
-    
+    cached_pdf_size = cache_client.get(cache_key_pdf_size) 
     if cached_pdf_url:
       logger.info("Returning cached PDF.")
       return {
-        'file_url': cached_pdf_url,
+        "pdf_size": 0,
+        "file_url": cached_pdf_url,
       }
 
     modified_html = await replace_resources(modified_html)
     # Decide which conversion method to use based on license type
     pdf_bytes = await converter.convert_html_to_pdf(modified_html)
+    
     storage_client = StorageClient()
     # Generate a unique filename
     filename = f"{uuid.uuid4()}.pdf"
     # Upload and get the file URL
     pdf_file = io.BytesIO(pdf_bytes)
+    
+    
+
     file_url = storage_client.upload_file(pdf_file, filename)
+    # Calculate the pdf size
+    pdf_size = 0
+    if pdf_bytes is not None:
+        pdf_size = len(pdf_bytes)
+      
     cache_client.set(cache_key, file_url)
+    cache_client.set(cache_key_pdf_size, str(pdf_size))
     return {
-      'file_url': file_url,
+      "pdf_size": pdf_size,
+      "file_url": file_url,
     }
   except Exception as e:
     logger.error("PDF generation failed.", e)
