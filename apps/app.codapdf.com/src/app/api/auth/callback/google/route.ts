@@ -10,7 +10,7 @@ export const GET = async (req: NextRequest) => {
     const code = url.searchParams.get("code");
     const state = url.searchParams.get("state");
     await authByGoogle(code, state);
-    return Response.redirect(new URL("/redirecting", req.url));
+    return Response.redirect(new URL("/redirecting", req.nextUrl));
   } catch (error) {
     captureException(error);
     return Response.redirect(ROUTES.AUTH.LOGIN.pathname());
