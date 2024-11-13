@@ -20,16 +20,10 @@ type ActionGroupProps = {
 };
 
 const ActionGroup = ({ action, isDropDown }: ActionGroupProps) => {
-  const { label, href, loading, submitting, disabled, onClick } = action;
+  const { label, href, loading, submitting, disabled, onClick, buttonVariant, size, ...rest } = action;
   if (href) {
     return (
-      <Button
-        asChild
-        loading={loading}
-        submitting={submitting}
-        disabled={disabled}
-        variant={!isDropDown ? "default" : "ghost"}
-      >
+      <Button asChild size={size ?? "sm"} variant={!isDropDown ? (buttonVariant ?? "secondary") : "default"} {...rest}>
         <Link href={href} onClick={onClick}>
           {label}
         </Link>
@@ -39,10 +33,9 @@ const ActionGroup = ({ action, isDropDown }: ActionGroupProps) => {
   return (
     <Button
       onClick={onClick}
-      loading={loading}
-      submitting={submitting}
-      disabled={disabled}
-      variant={!isDropDown ? "default" : "ghost"}
+      size={size ?? "sm"}
+      variant={!isDropDown ? (buttonVariant ?? "secondary") : "default"}
+      {...rest}
     >
       {label}
     </Button>

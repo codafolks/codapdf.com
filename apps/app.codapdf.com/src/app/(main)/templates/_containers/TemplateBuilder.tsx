@@ -244,8 +244,19 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
 
   const hederActions = () => {
     if (isLoading) return [];
-    if (template?.id && !isSample)
+    const templateId = template && "uuid" in template ? template.uuid : null;
+    if (templateId)
       return [
+        {
+          label: "Copy Template ID",
+          onClick: () => {
+            navigator.clipboard.writeText(templateId);
+            toast({
+              title: "Template ID Copied",
+              description: "The template ID has been copied to the clipboard.",
+            });
+          },
+        },
         {
           label: "Download",
           submitting: convertHtml2PDF.isPending,

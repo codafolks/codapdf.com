@@ -11,6 +11,7 @@ type HeaderAction = {
   submitting?: boolean;
   disabled?: boolean;
   buttonVariant?: ButtonVariants["variant"];
+  size?: ButtonVariants["size"];
   menuItems?: Array<HeaderAction>;
   className?: string;
 };

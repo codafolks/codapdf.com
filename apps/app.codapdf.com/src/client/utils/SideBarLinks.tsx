@@ -24,7 +24,7 @@ const SIDEBAR_ROUTES = [
     title: LINKS.TEMPLATES.title,
     header: LINKS.TEMPLATES.header,
     icon: <CodeXml className="size-5" data-route={LINKS.TEMPLATES.pathname()} />,
-    createRoutePathname: {
+    createRoutePath: {
       pathname: LINKS.TEMPLATES_CREATE.pathname(),
     },
   },
