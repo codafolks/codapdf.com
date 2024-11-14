@@ -5,6 +5,11 @@ FROM python:3.9-slim
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
+# These are build arguments that will be passed from hosting server to the Docker image
+ARG DOPPLER_TOKEN
+ARG ENVIRONMENT
+
+
 # Install necessary system dependencies and tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
   curl \
@@ -62,4 +67,4 @@ ENV PYTHONPATH=./src
 ENV APP_ENV=production
 
 # Command to run the app (adjust based on your app and whether you're using Flask or FastAPI)
-CMD ["sh", "-c", "doppler run -p codapdf -c ${RAILWAY_ENVIRONMENT}_services -- gunicorn src.app:app -c gunicorn_conf.py"]
+CMD ["sh", "-c", "doppler run -p codapdf -c ${ENVIRONMENT}_services -- gunicorn src.app:app -c gunicorn_conf.py"]
