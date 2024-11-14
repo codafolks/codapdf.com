@@ -5,11 +5,6 @@ FROM python:3.9-slim
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
-# These are build arguments that will be passed from hosting server to the Docker image
-ARG DOPPLER_TOKEN
-ARG ENVIRONMENT
-
-
 # Install necessary system dependencies and tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
   curl \
