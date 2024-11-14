@@ -48,6 +48,8 @@ export const templateOnInsertZodSchema = createInsertSchema(templates).extend({
 export const templateOnSaveZodSchema = templateOnInsertZodSchema.extend({
   useId: z.string().optional(),
   files: z.array(z.object({ filename: z.string(), content: z.string() })),
+  // The HTML template.
+  html: z.string(),
 });
 
 // The payload that will be sent to the server when fetching the schema.

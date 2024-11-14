@@ -61,7 +61,6 @@ class StorageClient:
     except Exception as e:
       logger.error(f"Error downloading file: {e}")
       return None
- 
   
   def upload_file(self,file, filename):
     key = f"{self.directory}/{filename}"

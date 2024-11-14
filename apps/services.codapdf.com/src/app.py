@@ -3,8 +3,8 @@ import os
 import threading
 import time
 import asyncpg
-from fastapi import FastAPI, Header, Request, Response, HTTPException
-from prometheus_client import Counter, Summary, generate_latest, Gauge, REGISTRY, CONTENT_TYPE_LATEST
+from fastapi import FastAPI, Header, Request, HTTPException
+from prometheus_client import Counter, Summary, Gauge, REGISTRY, CONTENT_TYPE_LATEST
 
 from actions.validate_authorization import validate_authorization;
 from actions.parse_request_data import parse_request_data;
@@ -48,6 +48,7 @@ async def app_lifespan(app: FastAPI):
   await converter.stop()   # Stop the browser
   await db_pool.close()
   logger.info("Database connection pool closed.")
+  
 app = FastAPI(lifespan=app_lifespan)
 
 @app.post('/api/v1/html2pdf')

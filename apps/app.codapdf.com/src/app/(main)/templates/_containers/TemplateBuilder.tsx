@@ -119,41 +119,6 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
     }
   };
 
-  const getTemplateData = async () => {
-    if (isLoading) return null;
-    if (Object.keys(files).length === 0) return null;
-    const thumbnail = await generateTemplateThumbnail();
-    const filesName = Object.keys(files);
-    const data: TemplateOnSavePayload = {
-      id: isSample || !template?.id ? undefined : (template.id as number),
-      name: template?.name ?? "",
-      description: template?.description ?? "",
-      thumbnail,
-      filesName,
-      files: Object.values(files),
-    };
-    return data;
-  };
-
-  const handleSaveTemplate = async (data?: { name: string; description?: string | null }) => {
-    try {
-      const payload = await getTemplateData();
-      if (!payload) return;
-      const response = await saveTemplate.mutateAsync({ ...payload, ...data });
-      router.replace(ROUTES.PRIVATE.TEMPLATES_EDIT.pathname(response.data.id));
-      toast({
-        title: "Template Saved",
-        description: "Your template has been saved successfully.",
-      });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "An error occurred while saving the template.",
-        variant: "destructive",
-      });
-    }
-  };
-
   const getProcessedCssFiles = (content: string) => {
     let htmlContent = content;
     const regexToGetTags = /<link\s+rel="stylesheet"\s+href="\.\/([^"]+)\.css"\s*\/?>/g;
@@ -223,6 +188,44 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
     htmlContent = getProcessedJSFiles(htmlContent);
     const dataValue = getJsonFiles();
     return { htmlContent, dataValue };
+  };
+
+  const getTemplateData = async () => {
+    const content = getProcessedHtmlAndData();
+    if (isLoading || !content?.htmlContent) return null;
+    if (Object.keys(files).length === 0) return null;
+
+    const thumbnail = await generateTemplateThumbnail();
+    const filesName = Object.keys(files);
+    const data: TemplateOnSavePayload = {
+      id: isSample || !template?.id ? undefined : (template.id as number),
+      name: template?.name ?? "",
+      description: template?.description ?? "",
+      thumbnail,
+      filesName,
+      files: Object.values(files),
+      html: content.htmlContent,
+    };
+    return data;
+  };
+
+  const handleSaveTemplate = async (data?: { name: string; description?: string | null }) => {
+    try {
+      const payload = await getTemplateData();
+      if (!payload) return;
+      const response = await saveTemplate.mutateAsync({ ...payload, ...data });
+      router.replace(ROUTES.PRIVATE.TEMPLATES_EDIT.pathname(response.data.id));
+      toast({
+        title: "Template Saved",
+        description: "Your template has been saved successfully.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An error occurred while saving the template.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleOnConvertHtml2PDF = async () => {
