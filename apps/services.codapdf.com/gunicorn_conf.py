@@ -1,4 +1,4 @@
-bind = "0.0.0.0:3001"
+bind = "0.0.0.0:3002"
 workers = 4
 worker_class = "uvicorn.workers.UvicornWorker"
 timeout = 60
