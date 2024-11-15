@@ -55,7 +55,7 @@ RUN playwright install chromium
 COPY . .
 
 # Expose the port your app runs on (adjust if necessary)
-EXPOSE 3001
+EXPOSE 3002
 
 # Set environment variables (adjust as needed)
 ENV PYTHONPATH=./src
