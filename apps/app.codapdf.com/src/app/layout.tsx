@@ -2,6 +2,7 @@ import "./globals.css";
 import { cn } from "@/client/lib/utils";
 import { ThemeProvider } from "@/client/providers/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
+import { env } from "@/constants/env.server";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
@@ -28,7 +29,7 @@ export default function RootLayout({
         <Script
           defer
           src="https://analytics.codafolks.com/script.js"
-          data-website-id="cbbb9d83-89d9-4a2c-9aef-2e7cb3543272"
+          data-website-id={env.ANALYTICS_ID}
         />
       )}
       <body className={cn("h-screen overflow-hidden bg-background font-sans antialiased", inter.className)}>
