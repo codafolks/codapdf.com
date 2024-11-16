@@ -1,0 +1,61 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: myuser        # Replace 'myuser' with your desired username
+      POSTGRES_PASSWORD: mypassword # Replace 'mypassword' with your desired password
+      POSTGRES_DB: mydatabase       # Replace 'mydatabase' with your desired database name
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432" # Host Port : Container Port
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379" # Host Port : Container Port
+    volumes:
+      - redis_data:/data
+volumes:
+  postgres_data:
+  redis_data:
+
+# Instructions:
+
+# - To connect to PostgreSQL:
+#   - Host: localhost
+#   - Port: 5432
+#   - Username: myuser
+#   - Password: mypassword
+#   - Database: mydatabase
+#   - Example connection string (Python):
+#     postgresql://myuser:mypassword@localhost:5432/mydatabase
+
+# - To connect to Redis:
+#   - Host: localhost
+#   - Port: 6379
+#   - Example connection command (CLI): redis-cli -h localhost -p 6379
+#   - Example connection string (Python): redis://localhost:6379
+
+# - To connect to MinIO (S3-Compatible Storage):
+#   - Console (Web UI): http://localhost:9001
+#   - S3-Compatible Endpoint: http://localhost:9000
+#   - Access Key (STORAGE_ACCESS_KEY_ID): minioadmin
+#   - Secret Key (STORAGE_SECRET_ACCESS_KEY): minioadmin
+#   - Example connection string (Python, Boto3):
+#     s3 = boto3.client(
+#         's3',
+#         endpoint_url='http://localhost:9000',
+#         aws_access_key_id='minioadmin',
+#         aws_secret_access_key='minioadmin',
+#         region_name='us-east-1'
+#     )
+#   - Storage Variables:
+#     STORAGE_ACCESS_KEY_ID: minioadmin
+#     STORAGE_SECRET_ACCESS_KEY: minioadmin
+#     STORAGE_ENDPOINT: http://localhost:9000
+#     STORAGE_REGION: us-east-1          # MinIO defaults to us-east-1
+#     STORAGE_BUCKET_NAME: mybucket      # Ensure this matches the bucket created
+#     STORAGE_URL_DOMAIN: http://localhost:9000

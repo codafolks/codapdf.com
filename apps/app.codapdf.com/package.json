@@ -1,5 +1,5 @@
 {
-  "name": "app.codapdf.com",
+  "name": "app.app-codapdf.com",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,9 +14,9 @@
     "format:fix": "biome check ./src --write ",
     "email": "email dev --dir ./src/emails",
     "secrets:output": "doppler secrets download --no-file --format env > .env",
-    "env:development": "doppler run -p codapdf -c development -- bun run secrets:output",
-    "env:production": "doppler run -p codapdf -c production -- bun run secrets:output",
-    "env:local": "doppler run -p codapdf -c development_local -- bun run secrets:output"
+    "env:development": "doppler run -p app-codapdf -c development -- bun run secrets:output",
+    "env:production": "doppler run -p app-codapdf -c production -- bun run secrets:output",
+    "env:local": "doppler run -p app-codapdf -c local -- bun run secrets:output"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.689.0",

@@ -3,7 +3,7 @@ import os
 import threading
 import time
 import asyncpg
-from fastapi import FastAPI, Header, Request, HTTPException
+from fastapi import FastAPI, Header, Request, Response, HTTPException
 from prometheus_client import Counter, Summary, Gauge, REGISTRY, CONTENT_TYPE_LATEST
 
 from actions.validate_authorization import validate_authorization;
@@ -152,4 +152,10 @@ async def html2pdf(request: Request, authorization: str = Header(None)):
     }
     insert_api_metric(metric_data)
     return HTTPException(detail=f'Internal Server Error: {str(e)}', status_code=500)
+  
+  
+@app.get('/')
+def read_root():
+  escaped_content = "<h1>Welcome to the &lt;CodaPDF/&gt; API that turns HTML templates into PDF</h1>"
+  return Response(content=escaped_content, media_type="text/html")
   

@@ -24,11 +24,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("dark", inter.className)} suppressHydrationWarning>
-      <Script
-        defer
-        src="https://analytics.codafolks.com/script.js"
-        data-website-id="cbbb9d83-89d9-4a2c-9aef-2e7cb3543272"
-      />
+      {process.env.NODE_ENV === "production" && (
+        <Script
+          defer
+          src="https://analytics.codafolks.com/script.js"
+          data-website-id="cbbb9d83-89d9-4a2c-9aef-2e7cb3543272"
+        />
+      )}
       <body className={cn("h-screen overflow-hidden bg-background font-sans antialiased", inter.className)}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem storageKey="coda-theme">
           {children}
