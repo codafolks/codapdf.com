@@ -58,11 +58,11 @@ RUN playwright install chromium
 COPY . .
 
 # Expose the port your app runs on (adjust if necessary)
-EXPOSE 3002
+EXPOSE $PORT
 
 # Set environment variables (adjust as needed)
 ENV PYTHONPATH=./src
 ENV APP_ENV=production
 
 # Command to run the app (adjust based on your app and whether you're using Flask or FastAPI)
-CMD ["sh", "-c", "doppler run -p services-codapdf -c ${ENVIRONMENT} -- gunicorn src.app:app -c gunicorn_conf.py"]
+CMD ["sh", "-c", "doppler run -p services-codapdf -c ${ENVIRONMENT} -- gunicorn src.app:app --bind 0.0.0.0:$PORT --workers 4 --worker-class uvicorn.workers.UvicornWorker --timeout 300 --graceful-timeout 300 --log-level info"]
