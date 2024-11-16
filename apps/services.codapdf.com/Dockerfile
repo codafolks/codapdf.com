@@ -1,6 +1,9 @@
 # Use the official Python slim image
 FROM python:3.9-slim
 
+ARG DOPPLER_TOKEN
+ARG ENVIRONMENT
+
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
