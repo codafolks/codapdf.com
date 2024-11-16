@@ -58,7 +58,6 @@ RUN playwright install chromium
 COPY . .
 
 # Expose the port your app runs on (adjust if necessary)
-ARG PORT
 EXPOSE $PORT
 
 # Set environment variables (adjust as needed)
