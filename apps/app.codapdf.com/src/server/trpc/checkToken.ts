@@ -1,4 +1,4 @@
-import { UserSession } from "@/server/actions/auth/authSession";
+import type { UserSession } from "@/server/actions/auth/authSession";
 import { getAuthorizationTokenFromHeader } from "@/server/actions/auth/getAuthorizationTokenFromHeader";
 import { verifyJwt } from "@/server/actions/auth/verifyJwt";
 

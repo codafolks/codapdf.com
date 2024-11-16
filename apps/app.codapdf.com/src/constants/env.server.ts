@@ -3,14 +3,6 @@ import { loadEnvConfig } from "@next/env";
 loadEnvConfig(process.cwd());
 import { z } from "zod";
 
-const productSchema = z.object({
-  price: z.coerce.number(),
-  priceYearly: z.coerce.number(),
-  productId: z.string(),
-  priceIdMonthly: z.string(),
-  priceIdYearly: z.string(),
-});
-
 const envSchema = z.object({
   JWT_SECRET: z.string(),
   APP_DOMAIN: z.string().url(),
@@ -26,11 +18,6 @@ const envSchema = z.object({
   CONTACT_EMAIL: z.string(),
   SERVICES_DOMAIN: z.string().url(),
   REDIS_URL: z.string(),
-  STRIPE_PRODUCT_IDS: z.object({
-    hobby: productSchema,
-    basic: productSchema,
-    pro: productSchema,
-  }),
   GITHUB_CLIENT_ID: z.string(),
   GITHUB_CLIENT_SECRET: z.string(),
   GITHUB_REDIRECT_URI: z.string().url(),
@@ -54,29 +41,6 @@ const variables = {
   CONTACT_EMAIL: process.env.CONTACT_EMAIL,
   SERVICES_DOMAIN: process.env.SERVICES_DOMAIN,
   REDIS_URL: process.env.REDIS_URL,
-  STRIPE_PRODUCT_IDS: {
-    hobby: {
-      price: process.env.STRIPE_HOBBY_PRICE,
-      priceYearly: process.env.STRIPE_HOBBY_PRICE_YEARLY,
-      productId: process.env.STRIPE_HOBBY_PRODUCT_ID,
-      priceIdMonthly: process.env.STRIPE_HOBBY_PRICE_ID_MONTHLY,
-      priceIdYearly: process.env.STRIPE_HOBBY_PRICE_ID_YEARLY,
-    },
-    basic: {
-      price: process.env.STRIPE_BASIC_PRICE,
-      priceYearly: process.env.STRIPE_BASIC_PRICE_YEARLY,
-      productId: process.env.STRIPE_BASIC_PRODUCT_ID,
-      priceIdMonthly: process.env.STRIPE_BASIC_PRICE_ID_MONTHLY,
-      priceIdYearly: process.env.STRIPE_BASIC_PRICE_ID_YEARLY,
-    },
-    pro: {
-      price: process.env.STRIPE_PRO_PRICE,
-      priceYearly: process.env.STRIPE_PRO_PRICE_YEARLY,
-      productId: process.env.STRIPE_PRO_PRODUCT_ID,
-      priceIdMonthly: process.env.STRIPE_PRO_PRICE_ID_MONTHLY,
-      priceIdYearly: process.env.STRIPE_PRO_PRICE_ID_YEARLY,
-    },
-  },
   GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
   GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
   GITHUB_REDIRECT_URI: process.env.GITHUB_REDIRECT_URI,

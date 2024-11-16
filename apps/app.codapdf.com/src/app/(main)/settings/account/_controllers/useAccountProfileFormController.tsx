@@ -1,7 +1,7 @@
-import { useToast } from "@/components/ui/use-toast";
 import { useUser, useUserUpdate } from "@/client/queries/users";
-import { userZodSchema } from "@/server/database/schemas/users";
 import { useZodForm } from "@/client/utils/useZodForm";
+import { useToast } from "@/components/ui/use-toast";
+import { userZodSchema } from "@/server/database/schemas/users";
 import { useEffect } from "react";
 
 type UseUserProfileController = {
@@ -32,9 +32,8 @@ export const useAccountProfileFormController = (options?: UseUserProfileControll
   const form = useZodForm({
     defaultValues: {
       name: user?.name ?? "",
-      email: user?.email ?? "",
     },
-    schema: userZodSchema,
+    schema: userZodSchema.pick({ name: true, email: true }).extend({ email: userZodSchema.shape.email.optional() }),
   });
 
   useEffect(() => {

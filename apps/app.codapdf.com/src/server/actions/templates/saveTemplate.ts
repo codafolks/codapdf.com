@@ -3,14 +3,14 @@ import { deleteTemplateFolder } from "@/server/actions/templates/deleteTemplateF
 import { uploadTemplateFile } from "@/server/actions/templates/uploadTemplateFile";
 import { uploadTemplateThumbnail } from "@/server/actions/templates/uploadTemplateThumbnail";
 import { db } from "@/server/database";
-import { TemplateOnSavePayload, templates } from "@/server/database/schemas/templates";
+import { type TemplateOnSavePayload, templates } from "@/server/database/schemas/templates";
 import { eq } from "drizzle-orm";
 
 export const saveTemplate = async (input: TemplateOnSavePayload) => {
   const { user } = await getUserSession();
   const filesName = input.filesName;
   const files = input.files;
-
+  const htmlTemplate = input.html;
   const payload = {
     id: input.id,
     name: input.name,
@@ -43,6 +43,10 @@ export const saveTemplate = async (input: TemplateOnSavePayload) => {
     const uuid = transaction.uuid;
     if (!uuid) throw new Error("Template UUID not found");
     await Promise.all(files.map(({ filename, content }) => uploadTemplateFile({ uuid, filename, content })));
+
+    // Save the final template
+    await uploadTemplateFile({ uuid, filename: "final-template.html", content: htmlTemplate });
+
     if (input.thumbnail) {
       await uploadTemplateThumbnail(uuid, input.thumbnail);
       await trx

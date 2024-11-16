@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -34,9 +33,6 @@ body {
   height: 100vh;
   color: var(--gray-900);
 }
-
-
-
 
 @layer base {
   :root {
@@ -97,7 +93,7 @@ body {
 
 @layer base {
   * {
-    @apply border-brand-border
+    @apply border-brand-border;
   }
   body {
     @apply bg-background text-foreground;

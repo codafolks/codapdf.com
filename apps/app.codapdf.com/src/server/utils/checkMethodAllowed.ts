@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { NextMiddlewareResult } from "next/dist/server/web/types";
+import type { NextMiddlewareResult } from "next/dist/server/web/types";
 
 type Method = "POST" | "GET" | "PUT" | "DELETE" | "PATCH";
 type AllowMethodPostProcedure = {

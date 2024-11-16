@@ -1,22 +1,24 @@
 "use client";
-
 import { TemplateItemCard } from "@/app/(main)/templates/_components/TemplateItemCard";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/client/lib/utils";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import { TemplateItemCardSkeleton } from "@/app/(main)/templates/_components/TemplateItemCardSkeleton";
+import { templateExamples } from "@/app/(main)/templates/_data/templates";
 import { ROUTES } from "@/app/routes";
-import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/client/components/ui/button";
 import { useTemplateDelete, useTemplateList } from "@/client/queries/templates";
 import { DeleteDialog } from "@/components/app/DeleteDialog";
-import { useRef, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
-import { getQueryKey } from "@trpc/react-query";
 import { trpcClient } from "@/server/trpc/trpcClient";
 import { useQueryClient } from "@tanstack/react-query";
-import { templateExamples } from "@/app/(main)/templates/_data/templates";
+import { getQueryKey } from "@trpc/react-query";
+import Link from "next/link";
+import { useRef, useState } from "react";
 
 export const TemplateList = () => {
+  const [tabValue, setTabValue] = useState<"templates" | "sample">("templates");
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const templateId = useRef<number | null>(null);
@@ -45,8 +47,8 @@ export const TemplateList = () => {
     },
   });
   return (
-    <div className="p-4 grid gap-4">
-      <Tabs defaultValue="templates">
+    <div className="grid gap-4 p-4 text-foreground">
+      <Tabs value={tabValue} onValueChange={(value) => setTabValue(value as "templates" | "sample")}>
         <TabsList className="mb-4">
           <TabsTrigger value="templates">Your Templates</TabsTrigger>
           <TabsTrigger value="sample">Examples</TabsTrigger>
@@ -54,7 +56,7 @@ export const TemplateList = () => {
         <TabsContent
           value="templates"
           className={cn("grid gap-4", {
-            "grid-cols-[repeat(auto-fill,minmax(250px,1fr))]": templates.length > 0,
+            "grid-cols-[repeat(auto-fill,minmax(250px,1fr))]": isLoading || templates.length > 0,
           })}
         >
           {templates.map((template) => (
@@ -68,20 +70,44 @@ export const TemplateList = () => {
               isDeleting={isTemplateIdDeleting === template.id}
             />
           ))}
-          {isLoading && <div className="col-span-full text-center text-gray-400">Loading templates...</div>}
-          {!templates?.length && !isLoading && <div className="text-center text-gray-400">No templates found</div>}
+
+          {isLoading && (
+            <>
+              <TemplateItemCardSkeleton />
+              <TemplateItemCardSkeleton />
+              <TemplateItemCardSkeleton />
+              <TemplateItemCardSkeleton />
+            </>
+          )}
+
+          {!isLoading && !templates?.length && (
+            <div className="flex flex-col items-center gap-2">
+              <h3 className="m-auto font-semibold">You don't have any templates yet. Get started by:</h3>
+              <div className="flex items-center gap-2">
+                <Button asChild size="sm" variant="outline">
+                  <Link href={ROUTES.PRIVATE.TEMPLATES_CREATE.pathname()}>Creating a new template</Link>
+                </Button>
+                or
+                <Button size="sm" variant="outline" onClick={() => setTabValue("sample")}>
+                  Check out some examples
+                </Button>
+              </div>
+            </div>
+          )}
         </TabsContent>
         <TabsContent
           value="sample"
-          className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(250px,1fr))] transition-all"
+          className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 transition-all"
         >
-          {templateExamples.map((template) => (
-            <Link key={template.id} href={ROUTES.PRIVATE.TEMPLATES_SAMPLE.path(template.id)}>
-              <Card className="hover:bg-secondary h-full text-foreground bg-background">
+          {templateExamples.map((template, idx) => (
+            <Link key={template.id} href={ROUTES.PRIVATE.TEMPLATES_SAMPLE.pathname(template.id)}>
+              <Card className="h-full bg-background text-foreground hover:bg-secondary">
                 <CardHeader>
                   <CardTitle>{template.name}</CardTitle>
                 </CardHeader>
-                <div className="bg-gray-300 overflow-hidden relative bg-cover bg-no-repeat bg-center aspect-video my-2" />
+                <div className="relative my-2 flex aspect-video items-center justify-center overflow-hidden border bg-center bg-cover bg-no-repeat text-foreground">
+                  <strong className="font-semibold text-3xl">{idx + 1}</strong>
+                </div>
                 <CardContent>
                   <p>{template.description}</p>
                 </CardContent>

@@ -1,4 +1,8 @@
 "use client";
+import { ButtonUpdateTheme } from "@/client/components/app/ButtonUpdateTheme";
+import { useRouteInfo } from "@/client/hooks/useRouteInfo";
+import { HeaderActions } from "@/client/layouts/AppLayout/HeaderActions";
+import { useHeaderActionsStore } from "@/client/stores/useHeaderActionsStore";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,10 +13,6 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { useRouteInfo } from "@/client/hooks/useRouteInfo";
-import { HeaderActions } from "@/client/layouts/AppLayout/HeaderActions";
-import { useHeaderActionsStore } from "@/client/stores/useHeaderActionsStore";
-import { ButtonUpdateTheme } from "@/client/components/app/ButtonUpdateTheme";
 
 const Header = () => {
   const actions = useHeaderActionsStore((state) => state.actions);
@@ -21,14 +21,14 @@ const Header = () => {
   const hasTitle = route && "header" in route;
 
   return (
-    <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 bg-background text-foreground">
+    <header className="flex h-16 shrink-0 items-center gap-2 border-b bg-background px-4 text-foreground">
       <SidebarTrigger className="-ml-1" />
       <Separator orientation="vertical" className="mr-2 h-4" />
       <Breadcrumb>
         <BreadcrumbList>
           {hasParent && (
             <BreadcrumbItem>
-              <BreadcrumbLink href={route?.parent().path}>{route?.parent().header}</BreadcrumbLink>
+              <BreadcrumbLink href={route?.parent().pathname()}>{route?.parent().header}</BreadcrumbLink>
             </BreadcrumbItem>
           )}
           {hasParent && <BreadcrumbSeparator />}
@@ -39,7 +39,7 @@ const Header = () => {
           )}
         </BreadcrumbList>
       </Breadcrumb>
-      <div className="flex gap-2 items-center ml-auto mr-0">
+      <div className="mr-0 ml-auto flex items-center gap-2">
         {actions.length > 0 && <HeaderActions actions={actions} />}
         <ButtonUpdateTheme />
       </div>

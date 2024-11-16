@@ -12,20 +12,27 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div>
         {label && (
-          <label htmlFor={id} className="block text-sm font-medium pb-1">
+          <label htmlFor={id} className="block pb-1 font-medium text-sm">
             {label}
           </label>
         )}
         <textarea
           className={cn(
-            "flex w-full rounded-[4px] min-h-20 border border-input bg-background px-3 py-2 text-sm ring-offset-background f placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+            "f flex min-h-20 w-full rounded-[4px] border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
             error && "border-red-500",
             className,
           )}
           ref={ref}
           {...props}
         />
-        {error && <p className="text-sm font-medium text-red-500 pt-1">{error}</p>}
+        <p
+          className={cn("hidden pt-1 font-medium text-red-500 text-sm", {
+            block: Boolean(error),
+          })}
+          data-error={props.name}
+        >
+          {error}
+        </p>
       </div>
     );
   },

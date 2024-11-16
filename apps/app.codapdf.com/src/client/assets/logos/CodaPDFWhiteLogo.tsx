@@ -1,4 +1,4 @@
-import { IconProps } from "@/client/types";
+import type { IconProps } from "@/client/types";
 import React from "react";
 export const CodaPDFWhiteLogo = React.forwardRef<SVGSVGElement, IconProps>(
   ({ color = "currentColor", ...props }, ref) => {

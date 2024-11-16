@@ -1,28 +1,29 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import { EditorFileData, EditorFiles, FileSidebar } from "@/app/(main)/templates/_components/FileSidebar";
+import { CheckTemplatePlanSupport } from "@/app/(main)/templates/_components/CheckTemplatePlanSupport";
 import { CodeEditor } from "@/app/(main)/templates/_components/CodeEditor";
 import { EditorTabs } from "@/app/(main)/templates/_components/EditorTabs";
-import { TemplatePreview } from "@/app/(main)/templates/_components/TemplatePreview";
-import { Button } from "@/components/ui/button";
-import { PanelLeft } from "lucide-react";
-import type { TemplateSourceId } from "@/app/(main)/templates/_utils/getTemplateSourceId";
-import { useTemplateById, useTemplateConvertHtml2PDF, useTemplateSave } from "@/client/queries/templates";
-import { useHeaderActions } from "@/client/hooks/useHeaderActions";
+import { type EditorFileData, type EditorFiles, FileSidebar } from "@/app/(main)/templates/_components/FileSidebar";
 import { TemplateDialogForm } from "@/app/(main)/templates/_components/TemplateDialogForm";
-import { ROUTES } from "@/app/routes";
-import { HTML_PLACEHOLDER } from "@/app/(main)/templates/_data/HTML_PLACEHOLDER";
-import { useToast } from "@/components/ui/use-toast";
-import { renderTemplateData } from "@/app/(main)/templates/_utils/renderTemplateData";
-import { isJsonString } from "@/app/(main)/templates/_utils/isJsonString";
-import { generateTemplateThumbnail } from "@/app/(main)/templates/_utils/generateTemplateThumbnail";
-import { STYLES_PLACEHOLDER } from "@/app/(main)/templates/_data/STYLES_PLACEHOLDER";
+import { TemplatePreview } from "@/app/(main)/templates/_components/TemplatePreview";
 import { DATA_JSON_PLACEHOLDER } from "@/app/(main)/templates/_data/DATA_JSON_PLACEHOLDER";
-import { TemplateOnSavePayload } from "@/server/database/schemas/templates";
+import { HTML_PLACEHOLDER } from "@/app/(main)/templates/_data/HTML_PLACEHOLDER";
+import { STYLES_PLACEHOLDER } from "@/app/(main)/templates/_data/STYLES_PLACEHOLDER";
+import { useCheckPlanTemplateSupport } from "@/app/(main)/templates/_hooks/useCheckPlanTemplateSupport";
+import { generateTemplateThumbnail } from "@/app/(main)/templates/_utils/generateTemplateThumbnail";
+import type { TemplateSourceId } from "@/app/(main)/templates/_utils/getTemplateSourceId";
+import { isJsonString } from "@/app/(main)/templates/_utils/isJsonString";
+import { renderTemplateData } from "@/app/(main)/templates/_utils/renderTemplateData";
+import { ROUTES } from "@/app/routes";
+import { useHeaderActions } from "@/client/hooks/useHeaderActions";
+import { useTemplateById, useTemplateConvertHtml2PDF, useTemplateSave } from "@/client/queries/templates";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import type { TemplateOnSavePayload } from "@/server/database/schemas/templates";
+import { PanelLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { CheckTemplatePlanSupport } from "@/app/(main)/templates/_components/CheckTemplatePlanSupport";
+import { useEffect, useRef, useState } from "react";
+import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 
 type TemplateBuilderProps = {
   sourceId?: TemplateSourceId;
@@ -118,41 +119,6 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
     }
   };
 
-  const getTemplateData = async () => {
-    if (isLoading) return null;
-    if (Object.keys(files).length === 0) return null;
-    const thumbnail = await generateTemplateThumbnail();
-    const filesName = Object.keys(files);
-    const data: TemplateOnSavePayload = {
-      id: isSample || !template?.id ? undefined : (template.id as number),
-      name: template?.name || "",
-      description: template?.description || "",
-      thumbnail,
-      filesName,
-      files: Object.values(files),
-    };
-    return data;
-  };
-
-  const handleSaveTemplate = async (data?: { name: string; description?: string | null }) => {
-    try {
-      const payload = await getTemplateData();
-      if (!payload) return;
-      const response = await saveTemplate.mutateAsync({ ...payload, ...data });
-      router.replace(ROUTES.PRIVATE.TEMPLATES_EDIT.path(response.data.id));
-      toast({
-        title: "Template Saved",
-        description: "Your template has been saved successfully.",
-      });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "An error occurred while saving the template.",
-        variant: "destructive",
-      });
-    }
-  };
-
   const getProcessedCssFiles = (content: string) => {
     let htmlContent = content;
     const regexToGetTags = /<link\s+rel="stylesheet"\s+href="\.\/([^"]+)\.css"\s*\/?>/g;
@@ -212,11 +178,63 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
     return htmlContent;
   };
 
+  const { isSupported } = useCheckPlanTemplateSupport(getProcessedHtml());
+
+  const getProcessedHtmlAndData = () => {
+    if (isLoading) return null;
+    if (!files["index.html"]) return null;
+    let htmlContent = files["index.html"].content;
+    htmlContent = getProcessedCssFiles(htmlContent);
+    htmlContent = getProcessedJSFiles(htmlContent);
+    const dataValue = getJsonFiles();
+    return { htmlContent, dataValue };
+  };
+
+  const getTemplateData = async () => {
+    const content = getProcessedHtmlAndData();
+    if (isLoading || !content?.htmlContent) return null;
+    if (Object.keys(files).length === 0) return null;
+
+    const thumbnail = await generateTemplateThumbnail();
+    const filesName = Object.keys(files);
+    const data: TemplateOnSavePayload = {
+      id: isSample || !template?.id ? undefined : (template.id as number),
+      name: template?.name ?? "",
+      description: template?.description ?? "",
+      thumbnail,
+      filesName,
+      files: Object.values(files),
+      html: content.htmlContent,
+    };
+    return data;
+  };
+
+  const handleSaveTemplate = async (data?: { name: string; description?: string | null }) => {
+    try {
+      const payload = await getTemplateData();
+      if (!payload) return;
+      const response = await saveTemplate.mutateAsync({ ...payload, ...data });
+      router.replace(ROUTES.PRIVATE.TEMPLATES_EDIT.pathname(response.data.id));
+      toast({
+        title: "Template Saved",
+        description: "Your template has been saved successfully.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An error occurred while saving the template.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const handleOnConvertHtml2PDF = async () => {
     try {
-      const html = getProcessedHtml();
-      if (!html) throw new Error("HTML content not found.");
-      const res = await convertHtml2PDF.mutateAsync({ html });
+      const files = getProcessedHtmlAndData();
+      if (!files) return;
+      const { htmlContent, dataValue } = files;
+      if (!htmlContent) throw new Error("HTML content not found.");
+      const res = await convertHtml2PDF.mutateAsync({ html: htmlContent, data: dataValue });
       window.open(res.file_url, "_blank");
     } catch (error) {
       toast({
@@ -229,11 +247,23 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
 
   const hederActions = () => {
     if (isLoading) return [];
-    if (template?.id && !isSample)
+    const templateId = template && "uuid" in template ? template.uuid : null;
+    if (templateId)
       return [
+        {
+          label: "Copy Template ID",
+          onClick: () => {
+            navigator.clipboard.writeText(templateId);
+            toast({
+              title: "Template ID Copied",
+              description: "The template ID has been copied to the clipboard.",
+            });
+          },
+        },
         {
           label: "Download",
           submitting: convertHtml2PDF.isPending,
+          disabled: !isSupported,
           onClick: () => handleOnConvertHtml2PDF(),
         },
         {
@@ -251,6 +281,7 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
       {
         label: "Download",
         submitting: convertHtml2PDF.isPending,
+        disabled: !isSupported,
         onClick: () => handleOnConvertHtml2PDF(),
       },
       {
@@ -264,9 +295,9 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
 
   return (
     <>
-      <div className="flex flex-col overflow-hidden relative h-[calc(100vh-100px)] ">
+      <div className="relative flex h-[calc(100vh-100px)] flex-col overflow-hidden ">
         <CheckTemplatePlanSupport html={parsedHtml} />
-        <div className="flex flex-1 overflow-hidden h-full w-full">
+        <div className="flex h-full w-full flex-1 overflow-hidden">
           <PanelGroup direction="horizontal" className="rounded-none">
             <Panel defaultSize={20} minSize={10} maxSize={20} className=" max-w-[250px]">
               <FileSidebar
@@ -278,7 +309,7 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
                 onFileRename={handleFileRename}
               />
             </Panel>
-            <PanelResizeHandle className="w-2 hover:bg-primary/10 transition-colors" />
+            <PanelResizeHandle className="w-2 transition-colors hover:bg-primary/10" />
             <Panel defaultSize={40} minSize={30} maxSize={80} className="grid grid-rows-[max-content,auto]">
               <div className="flex border-b">
                 <EditorTabs
@@ -292,17 +323,17 @@ export function TemplateBuilder({ sourceId }: Readonly<TemplateBuilderProps>) {
                   <PanelLeft size={16} className="text-foreground" />
                 </Button>
               </div>
-              {isLoading && <div className="flex items-center justify-center h-full">Loading...</div>}
+              {isLoading && <div className="flex h-full items-center justify-center">Loading...</div>}
               <CodeEditor files={files} activeFileId={activeFileId} onChange={handleCodeChange} />
             </Panel>
             {showPreview && (
               <>
-                <PanelResizeHandle className="w-2  hover:bg-primary/10 transition-colors" />
+                <PanelResizeHandle className="w-2 transition-colors hover:bg-primary/10" />
                 <Panel defaultSize={40} className="grid grid-rows-[max-content,auto] overflow-hidden">
-                  <div className="h-10 flex items-center justify-center border-br">
-                    <span className="px-4 text-sm font-semibold">Preview</span>
+                  <div className="flex h-10 items-center justify-center border-br">
+                    <span className="px-4 font-semibold text-sm">Preview</span>
                   </div>
-                  {isLoading && <div className="flex items-center justify-center h-full">Loading...</div>}
+                  {isLoading && <div className="flex h-full items-center justify-center">Loading...</div>}
                   {!isLoading && <TemplatePreview html={parsedHtml} />}
                 </Panel>
               </>

@@ -52,7 +52,7 @@ export const CancelSubscriptionDialog = ({ open, onClose, onConfirm, isSubmittin
   });
   return (
     <Dialog open={open}>
-      <DialogContent className="text-foreground bg-background md:min-w-[700px] " onClose={onClose}>
+      <DialogContent className="bg-background text-foreground md:min-w-[700px] " onClose={onClose}>
         <DialogTitle>Cancel Subscription</DialogTitle>
         <div>
           <p className="font-semibold">Oh no! We're sad to see you here :(</p>
@@ -62,7 +62,7 @@ export const CancelSubscriptionDialog = ({ open, onClose, onConfirm, isSubmittin
         <form onSubmit={handleConfirm} className="flex flex-col gap-4">
           <CheckBoxGroupController control={control} name="reason" options={reasons} />
           <TextareaController control={control} name="message" label="Additional comments" />
-          <fieldset className="flex gap-4 items-center justify-end">
+          <fieldset className="flex items-center justify-end gap-4">
             <Button type="button" onClick={onClose} disabled={isSubmitting}>
               Go back
             </Button>

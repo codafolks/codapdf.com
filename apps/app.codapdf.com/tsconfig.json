@@ -52,7 +52,7 @@
     "src/client/providers",
     "src/client/stores",
     "src/client/utils",
-    "src/server/actions/auth/authByGooglets"
+    "src/server/actions/auth/authByGoogle"
   ],
   "exclude": ["node_modules", ".next"]
 }

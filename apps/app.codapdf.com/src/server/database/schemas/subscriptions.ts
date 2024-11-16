@@ -1,7 +1,7 @@
 import { users } from "@/server/database/schemas/users";
 
 import { type InferSelectModel, relations, sql } from "drizzle-orm";
-import { pgEnum, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
+import { integer, pgEnum, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -10,10 +10,16 @@ export const subscriptionsFrequency = pgEnum("subscriptions_frequency", ["MONTHL
 export const subscriptionsFrequencyZodSchema = z.enum(subscriptionsFrequency.enumValues);
 export type SubscriptionsFrequency = z.infer<typeof subscriptionsFrequencyZodSchema>;
 
+export const productNickname = pgEnum("product_nickname", ["hobby", "basic", "pro", "enterprise"]);
+export const productNicknameZodSchema = z.enum(productNickname.enumValues);
+export type ProductNickname = z.infer<typeof productNicknameZodSchema>;
+
 export const subscriptions = pgTable("subscriptions", {
   id: serial("id").primaryKey().unique(),
   priceId: text("priceId").notNull().default(sql`'None'`),
   productId: text("productId").notNull().default(sql`'None'`),
+  priceAmount: integer("priceAmount").notNull().default(sql`0`),
+  productNickname: productNickname("productNickname").notNull(),
   subscriptionId: text("subscriptionId").notNull().default(sql`'None'`),
   userId: serial("userId")
     .references(() => users.id, {

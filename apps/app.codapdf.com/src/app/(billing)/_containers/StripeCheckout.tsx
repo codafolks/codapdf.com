@@ -1,10 +1,10 @@
 import { StripeCheckoutForm } from "@/app/(billing)/_containers/StripeCheckoutForm";
 import { env } from "@/constants/env.client";
-import { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
-import { PlanSubscription } from "@/server/static/plansSubscription";
+import type { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
+import type { PlanSubscription } from "@/server/static/plansSubscription";
 
 import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe, StripeElementsOptions } from "@stripe/stripe-js";
+import { type StripeElementsOptions, loadStripe } from "@stripe/stripe-js";
 
 const elementOptions: StripeElementsOptions = {
   amount: 0,

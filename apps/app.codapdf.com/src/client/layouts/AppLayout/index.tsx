@@ -1,8 +1,8 @@
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { LicenseWarning } from "@/client/components/app/LicenseWarning";
 import { AppSidebar } from "@/client/layouts/AppLayout/AppSidebar";
 import { Header } from "@/client/layouts/AppLayout/Header";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import type { ReactNode } from "react";
-import { LicenseWarning } from "@/client/components/app/LicenseWarning";
 
 const AppLayout = ({ children }: { children: ReactNode }) => {
   return (
@@ -10,7 +10,7 @@ const AppLayout = ({ children }: { children: ReactNode }) => {
       <AppSidebar />
       <SidebarInset>
         <Header />
-        <div className="border-app-medium overflow-y-auto h-[calc(100vh-80px)]">
+        <div className="h-[calc(100vh-80px)] overflow-y-auto border-app-medium">
           <LicenseWarning />
           {children}
         </div>

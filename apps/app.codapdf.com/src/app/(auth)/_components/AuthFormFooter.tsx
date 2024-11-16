@@ -7,7 +7,7 @@ const AuthFormFooter = ({ type }: { type: AuthFormProps["type"] }) => (
     {type === "login" && (
       <p className="text-center">
         Don't have an account?{" "}
-        <Link href={ROUTES.AUTH.SIGNUP.path} className="text-blue-500">
+        <Link href={ROUTES.AUTH.SIGNUP.pathname()} className="text-blue-500">
           Signup
         </Link>
       </p>
@@ -15,7 +15,7 @@ const AuthFormFooter = ({ type }: { type: AuthFormProps["type"] }) => (
     {type === "signup" && (
       <p className="text-center">
         Already have an account?{" "}
-        <Link href={ROUTES.AUTH.LOGIN.path} className="text-blue-500">
+        <Link href={ROUTES.AUTH.LOGIN.pathname()} className="text-blue-500">
           Login
         </Link>
       </p>
@@ -23,7 +23,7 @@ const AuthFormFooter = ({ type }: { type: AuthFormProps["type"] }) => (
     {(type === "forgot-password" || type === "reset-password") && (
       <p className="text-center">
         Remember your password?{" "}
-        <Link href={ROUTES.AUTH.LOGIN.path} className="text-blue-500">
+        <Link href={ROUTES.AUTH.LOGIN.pathname()} className="text-blue-500">
           Login
         </Link>
       </p>

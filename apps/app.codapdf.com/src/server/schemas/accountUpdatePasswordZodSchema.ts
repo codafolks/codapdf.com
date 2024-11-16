@@ -14,5 +14,18 @@ export const accountUpdatePasswordZodSchema = z
     }
     return {};
   });
+export const accountSetPasswordZodSchema = z
+  .object({
+    currentPassword: z.string().optional(),
+    password: sharedPasswordZod,
+    confirmPassword: sharedPasswordZod,
+  })
+  .superRefine((data) => {
+    if (data.password !== data.confirmPassword) {
+      return { confirmPassword: "Passwords do not match" };
+    }
+    return {};
+  });
 
+export type AccountSetPasswordInput = z.infer<typeof accountSetPasswordZodSchema>;
 export type AccountUpdatePasswordInput = z.infer<typeof accountUpdatePasswordZodSchema>;

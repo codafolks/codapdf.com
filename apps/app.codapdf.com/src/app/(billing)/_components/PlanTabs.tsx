@@ -1,9 +1,9 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BillingToggle } from "@/app/(billing)/_components/BillingToggle";
 import { PlanFeatures } from "@/app/(billing)/_components/PlanFeatures";
-import { PlanSubscription } from "@/server/static/plansSubscription";
 import { toMoney } from "@/client/utils/toMoney";
-import { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
+import type { PlanSubscription } from "@/server/static/plansSubscription";
 
 interface PlanPrice {
   monthly: string;
@@ -43,22 +43,22 @@ export function PlanTabs({ plans: _plans, onChange, frequency, value }: Readonly
       <Tabs
         defaultValue={value.nickname}
         onValueChange={(v) => handleSelectPlan(v as PlanSubscription["nickname"])}
-        className="w-full grid gap-4"
+        className="grid w-full gap-4"
       >
-        <TabsList className="grid grid-cols-3 w-full">
+        <TabsList className="grid w-full grid-cols-3">
           {plans.map((plan) => (
-            <TabsTrigger key={plan.nickname} value={plan.nickname} className="text-sm uppercase font-bold">
+            <TabsTrigger key={plan.nickname} value={plan.nickname} className="font-bold text-sm uppercase">
               {plan.nickname}
             </TabsTrigger>
           ))}
         </TabsList>
         {plans.map((plan) => (
           <TabsContent key={plan.nickname} value={plan.nickname}>
-            <div className="rounded-lg border-2 border-muted bg-popover p-6 grid gap-4">
-              <div className="flex  justify-between">
-                <h3 className="text-lg font-bold capitalize">{plan.title}</h3>
+            <div className="grid gap-4 rounded-lg border-2 border-muted bg-popover p-6">
+              <div className="flex justify-between">
+                <h3 className="font-bold text-lg capitalize">{plan.title}</h3>
                 <div>
-                  <span className="text-2xl font-bold">
+                  <span className="font-bold text-2xl">
                     {isYearly ? toMoney((plan.price?.yearly ?? 0) / 100) : toMoney((plan.price?.monthly ?? 0) / 100)}
                   </span>
                   <span className="text-muted-foreground">/{isYearly ? "year" : "month"}</span>

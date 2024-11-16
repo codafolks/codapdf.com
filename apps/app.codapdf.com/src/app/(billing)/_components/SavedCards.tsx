@@ -1,8 +1,8 @@
-import { CreditCard as CreditCardIcon } from "lucide-react";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
+import type { StripePaymentMethod } from "@/client/queries/stripe";
 import { Button } from "@/components/ui/button";
-import { StripePaymentMethod } from "@/client/queries/stripe";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { CreditCard as CreditCardIcon } from "lucide-react";
 
 interface SavedCardsProps {
   methods: Array<StripePaymentMethod>;
@@ -17,7 +17,7 @@ export function SavedCards({ methods, paymentMethod, onSelectPaymentMethod }: Re
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold">Saved payment methods</h3>
+        <h3 className="font-semibold text-lg">Saved payment methods</h3>
         <Button variant="ghost" size="sm" onClick={() => onSelectPaymentMethod(null)} className="text-sm">
           Use new card
         </Button>
@@ -26,10 +26,10 @@ export function SavedCards({ methods, paymentMethod, onSelectPaymentMethod }: Re
         {methods.map((method) => (
           <div
             key={method.id}
-            className="flex items-center space-x-3 border rounded-lg p-4 cursor-pointer hover:bg-accent"
+            className="flex cursor-pointer items-center space-x-3 rounded-lg border p-4 hover:bg-accent"
           >
             <RadioGroupItem value={method.id} id={method.id} />
-            <Label htmlFor={method.card?.last4} className="flex items-center space-x-3 cursor-pointer flex-1">
+            <Label htmlFor={method.card?.last4} className="flex flex-1 cursor-pointer items-center space-x-3">
               <div className="flex items-center space-x-2">
                 <CreditCardIcon className="h-5 w-5 text-muted-foreground" />
                 <span className="font-medium">

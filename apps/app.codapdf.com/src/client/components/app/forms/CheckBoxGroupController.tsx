@@ -1,5 +1,5 @@
-import { Checkbox, CheckboxProps } from "@/client/components/ui/checkbox";
-import { Path, useController, type Control, type FieldValues } from "react-hook-form";
+import { Checkbox, type CheckboxProps } from "@/client/components/ui/checkbox";
+import { type Control, type FieldValues, type Path, useController } from "react-hook-form";
 
 type CheckBoxGroupControllerProps<T extends FieldValues> = Omit<CheckboxProps, "name"> & {
   control: Control<T, object>;

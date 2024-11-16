@@ -2,18 +2,7 @@
   "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
   "files": {
-    "ignore": [
-      "**/public",
-      "**/.next",
-      ".yarn/**",
-      ".vscode",
-      "!.storybook",
-      "build",
-      "test-results",
-      "coverage",
-      "postcss.config.js",
-      "public"
-    ]
+    "ignore": ["**/public", "**/.next", ".yarn/**", ".vscode", "!.storybook", "build", "test-results", "coverage", "postcss.config.js", "public"]
   },
   "formatter": {
     "enabled": true,
@@ -43,10 +32,14 @@
         "noNonNullAssertion": "warn",
         "noParameterAssign": "warn",
         "useCollapsedElseIf": "error",
+        "useImportType": "error",
         "useConsistentArrayType": {
           "level": "warn",
           "options": { "syntax": "generic" }
         }
+      },
+      "nursery": {
+        "useSortedClasses": "error"
       },
       "suspicious": {
         "noArrayIndexKey": "warn",

@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/client/lib/utils";
 import { ThemeProvider } from "@/client/providers/ThemeProvider";
+import { Toaster } from "@/components/ui/toaster";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,7 +24,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("dark", inter.className)} suppressHydrationWarning>
-      <body className={cn("bg-background h-screen font-sans antialiased overflow-hidden", inter.className)}>
+      {process.env.NODE_ENV === "production" && (
+        <Script
+          defer
+          src="https://analytics.codafolks.com/script.js"
+          data-website-id="cbbb9d83-89d9-4a2c-9aef-2e7cb3543272"
+        />
+      )}
+      <body className={cn("h-screen overflow-hidden bg-background font-sans antialiased", inter.className)}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem storageKey="coda-theme">
           {children}
           <Toaster />

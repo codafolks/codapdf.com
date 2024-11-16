@@ -1,5 +1,5 @@
 import { db } from "@/server/database";
-import { Profile, User, users } from "@/server/database/schemas/users";
+import { type Profile, type User, users } from "@/server/database/schemas/users";
 import { eq } from "drizzle-orm";
 
 export type UserDTO = {
@@ -9,6 +9,7 @@ export type UserDTO = {
   name: string;
   customerId: string | null;
   profile: Profile;
+  hasPassword: boolean;
 };
 
 export const userDTO = (user: User): UserDTO => {
@@ -19,6 +20,7 @@ export const userDTO = (user: User): UserDTO => {
     name: user.name,
     customerId: user.customerId,
     profile: user.profile,
+    hasPassword: !!user.password,
   };
 };
 

@@ -2,8 +2,10 @@
 __pycache__/
 # ignore virtualenv
 venv/
+.venv/
 files/
 .env
+!.env.template
 .cache
 
 # ignore logs

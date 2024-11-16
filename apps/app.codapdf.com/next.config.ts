@@ -1,20 +1,42 @@
 import type { NextConfig } from "next";
 type MappedOmit<T, K extends keyof T> = { [P in keyof T as P extends K ? never : P]: T[P] };
 type Config = MappedOmit<NextConfig, "rewrites">;
+
 const nextConfig: Config = {
   output: "standalone",
   serverExternalPackages: ["pino", "pino-pretty"],
+  experimental: {
+    optimizeCss: true,
+    optimisticClientCache: true,
+    optimizeServerReact: true,
+    nextScriptWorkers: true,
+    gzipSize: true,
+    staleTimes: {
+      dynamic: 60 * 60 * 24, // 24 hours
+      static: 60 * 60 * 24, // 24 hours
+    },
+  },
+  compiler: {
+    removeConsole: {
+      exclude: ["error", "info", "warn"],
+    },
+  },
+  cacheHandler: process.env.NODE_ENV === "production" ? "./cache-handler.mjs" : undefined,
+  cacheMaxMemorySize: 0, // disable default in-memory caching
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: process.env.STORAGE_URL_DOMAIN!?.replace("https://", ""),
+        hostname: (process.env.STORAGE_URL_DOMAIN ?? "")?.replace("https://", ""),
         port: "",
       },
     ],
   },
-  cacheHandler: process.env.NODE_ENV === "production" ? require.resolve("./cache-handler.mjs") : undefined,
-  cacheMaxMemorySize: 0, // disable default in-memory caching
   rewrites() {
     return [
       // PRIVATE PAGES

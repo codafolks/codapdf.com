@@ -1,5 +1,12 @@
+import { DocsSideBar } from "@/app/(docs)/docs/_components/docs-side-bar";
+import { SidebarInset, SidebarProvider } from "@/client/components/ui/sidebar";
 import type { ReactNode } from "react";
-
-const Layout = ({ children }: { children: ReactNode }) => <>{children}</>;
-
-export default Layout;
+const DocsLayout = ({ children }: { children: ReactNode }) => {
+  return (
+    <SidebarProvider>
+      <DocsSideBar />
+      <SidebarInset>{children}</SidebarInset>
+    </SidebarProvider>
+  );
+};
+export default DocsLayout;

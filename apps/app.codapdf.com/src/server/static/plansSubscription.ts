@@ -1,27 +1,40 @@
-import { env } from "@/constants/env.server";
-import { License } from "@/server/database/schemas/licenses";
+import type { License } from "@/server/database/schemas/licenses";
+import type { ProductNickname } from "@/server/database/schemas/subscriptions";
 
 export type PlanSubscription = {
-  nickname: "hobby" | "basic" | "pro" | "enterprise";
-  title: string;
+  nickname: ProductNickname;
+  title: "Hobby Plan" | "Basic Plan" | "Pro Plan" | "Enterprise Plan";
   description: string;
   cta: string;
   price?: {
     monthly: number;
     yearly: number;
   };
-  priceId?: {
-    monthly: string;
-    yearly: string;
-  };
   economize?: string;
-  productId?: string;
   features: Array<{
     title: string;
     description: string;
   }>;
   license: License;
 };
+
+export const factorPrice = 100;
+
+export const hobbyPriceMonthly = 3 * factorPrice;
+export const basicPriceMonthly = 6 * factorPrice;
+export const proPriceMonthly = 12 * factorPrice;
+
+export const hobbyDiscount = 0.05;
+export const basicDiscount = 0.1;
+export const proDiscount = 0.2;
+
+export const hobbyPriceYearly = Number(Math.round(hobbyPriceMonthly * 12 * (1 - hobbyDiscount)).toPrecision(2));
+export const basicPriceYearly = Number(Math.round(basicPriceMonthly * 12 * (1 - basicDiscount)).toPrecision(2));
+export const proPriceYearly = Number(Math.round(proPriceMonthly * 12 * (1 - proDiscount)).toPrecision(2));
+
+export const hobbyConversionLimit = 500;
+export const basicConversionLimit = 1000;
+export const proConversionLimit = 1500;
 
 export const plansSubscription: Array<PlanSubscription> = [
   {
@@ -31,16 +44,11 @@ export const plansSubscription: Array<PlanSubscription> = [
       "A great option for users who need basic functionality and want to explore the service before committing to a paid plan.",
     cta: "Get Started",
     price: {
-      monthly: env.STRIPE_PRODUCT_IDS.hobby.price,
-      yearly: env.STRIPE_PRODUCT_IDS.hobby.priceYearly,
+      monthly: hobbyPriceMonthly,
+      yearly: hobbyPriceYearly,
     },
-    priceId: {
-      monthly: env.STRIPE_PRODUCT_IDS.hobby.priceIdMonthly,
-      yearly: env.STRIPE_PRODUCT_IDS.hobby.priceIdYearly,
-    },
-    productId: env.STRIPE_PRODUCT_IDS.hobby.productId,
     license: "HOBBY",
-    economize: "Save 5%",
+    economize: `Save ${hobbyDiscount * 100}%`,
     features: [
       {
         title: "Customizable HTML Templates",
@@ -60,7 +68,7 @@ export const plansSubscription: Array<PlanSubscription> = [
       },
       {
         title: "Conversions",
-        description: "up to 300 PDFs per month",
+        description: `up to ${hobbyConversionLimit} PDFs per month`,
       },
       {
         title: "Support",
@@ -75,16 +83,11 @@ export const plansSubscription: Array<PlanSubscription> = [
       "Perfect for individuals or small teams that need occasional HTML to PDF conversions without complex requirements.",
     cta: "Get Started",
     price: {
-      monthly: env.STRIPE_PRODUCT_IDS.basic.price,
-      yearly: env.STRIPE_PRODUCT_IDS.basic.priceYearly,
+      monthly: basicPriceMonthly,
+      yearly: basicPriceYearly,
     },
-    priceId: {
-      monthly: env.STRIPE_PRODUCT_IDS.basic.priceIdMonthly,
-      yearly: env.STRIPE_PRODUCT_IDS.basic.priceIdYearly,
-    },
-    productId: env.STRIPE_PRODUCT_IDS.basic.productId,
     license: "BASIC",
-    economize: "Save 10%",
+    economize: `Save ${basicDiscount * 100}%`,
     features: [
       {
         title: "Customizable HTML Templates",
@@ -104,7 +107,7 @@ export const plansSubscription: Array<PlanSubscription> = [
       },
       {
         title: "Conversions",
-        description: "up to 600 PDFs per month",
+        description: `up to ${basicConversionLimit} PDFs per month`,
       },
       {
         title: "Support",
@@ -116,16 +119,11 @@ export const plansSubscription: Array<PlanSubscription> = [
     nickname: "pro",
     title: "Pro Plan",
     price: {
-      monthly: env.STRIPE_PRODUCT_IDS.pro.price,
-      yearly: env.STRIPE_PRODUCT_IDS.pro.priceYearly,
+      monthly: proPriceMonthly,
+      yearly: proPriceYearly,
     },
-    priceId: {
-      monthly: env.STRIPE_PRODUCT_IDS.pro.priceIdMonthly,
-      yearly: env.STRIPE_PRODUCT_IDS.pro.priceIdYearly,
-    },
-    productId: env.STRIPE_PRODUCT_IDS.pro.productId,
     license: "PRO",
-    economize: "Save 20%",
+    economize: `Save ${proDiscount * 100}%`,
     description:
       "Ideal for small to medium-sized businesses or professionals who need more control and flexibility with their HTML to PDF conversions.",
     cta: "Get Started",
@@ -148,7 +146,7 @@ export const plansSubscription: Array<PlanSubscription> = [
       },
       {
         title: "Conversions",
-        description: "up to 1200 PDFs per month",
+        description: `up to ${proConversionLimit} PDFs per month`,
       },
       {
         title: "Support",

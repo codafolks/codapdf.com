@@ -3,10 +3,10 @@
 import { Check, ChevronsUpDown } from "lucide-react";
 import * as React from "react";
 
+import { cn } from "@/client/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { cn } from "@/client/lib/utils";
 import Image from "next/image";
 
 export type ComboBoxOption = {
@@ -17,10 +17,12 @@ export type ComboBoxOption = {
 export type ComboboxBoxProps = {
   options: Array<ComboBoxOption>;
   placeholder?: string;
-  value: string;
+  value?: string;
   label?: string;
   error?: string;
-  onChange: (value: string | number) => void;
+  name?: string;
+  id?: string;
+  onChange?: (value: string | number) => void;
 };
 
 const Option = (option: ComboBoxOption) => (
@@ -30,11 +32,22 @@ const Option = (option: ComboBoxOption) => (
   </>
 );
 
-export function ComboboxBox({ options, value, onChange, label, error, placeholder }: Readonly<ComboboxBoxProps>) {
+export function ComboboxBox({
+  options,
+  value,
+  onChange,
+  label,
+  name,
+  id,
+  error,
+  placeholder,
+}: Readonly<ComboboxBoxProps>) {
   const [open, setOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
-  const getSelectedOption = (value: string) => {
-    const option = options?.find((option) => String(option.value) === String(value));
+  const [localValue, setLocalValue] = React.useState(value);
+
+  const getSelectedOption = () => {
+    const option = options?.find((option) => String(option.value) === String(value ?? localValue));
     if (option) {
       return <Option {...option} />;
     }
@@ -52,33 +65,44 @@ export function ComboboxBox({ options, value, onChange, label, error, placeholde
     return () => document.removeEventListener("keydown", down);
   }, []);
 
+  const handleOnChange = (newValue: string) => {
+    if (typeof onChange === "function") {
+      onChange(newValue);
+    } else {
+      setLocalValue(newValue);
+    }
+  };
+
   const listOptions = React.useMemo(() => {
     return options.filter((option) => option.label.toLowerCase().includes(search.toLowerCase()));
   }, [search, options]);
 
   return (
     <div className="relative w-full">
-      {label && <span className="text-foreground block text-sm font-medium pb-1">{label}</span>}
+      {label && (
+        <label className="block pb-1 font-medium text-foreground text-sm" htmlFor={id}>
+          {label}
+        </label>
+      )}
+      <input type="hidden" value={value ?? localValue ?? ""} defaultValue={value} name={name} id={id} />
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             role="combobox"
             aria-expanded={open}
             className={cn(
-              "flex h-10 w-full rounded-[4px] text-muted-foreground  border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50: hover:bg-background",
+              "flex h-10 w-full rounded-[4px] border border-input bg-background px-3 py-2 text-muted-foreground text-sm ring-offset-background hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50:",
               {
                 "border-red-500": !!error,
               },
             )}
             type="button"
           >
-            <span className="flex items-center gap-2 text-ellipsis flex-1 overflow-hidden ">
-              {getSelectedOption(value)}
-            </span>
+            <span className="flex flex-1 items-center gap-2 overflow-hidden text-ellipsis ">{getSelectedOption()}</span>
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="flex flex-col min-w-full p-0 rounded-none" align="start">
+        <PopoverContent className="flex min-w-full flex-col rounded-none p-0" align="start">
           <Command className="rounded-none" shouldFilter={false}>
             <CommandInput
               placeholder={placeholder ?? "Search..."}
@@ -95,10 +119,10 @@ export function ComboboxBox({ options, value, onChange, label, error, placeholde
                     key={option?.value}
                     value={String(option?.value)}
                     onSelect={(currentValue: string) => {
-                      onChange(currentValue === value ? "" : currentValue);
+                      handleOnChange(currentValue === (value ?? localValue) ? "" : currentValue);
                       setOpen(false);
                     }}
-                    className="flex items-center w-full gap-2 rounded-none"
+                    className="flex w-full items-center gap-2 rounded-none"
                   >
                     <Option {...option} />
                     <Check className={cn("mr-2 h-4 w-4", value === option?.value ? "opacity-100" : "opacity-0")} />
@@ -108,7 +132,7 @@ export function ComboboxBox({ options, value, onChange, label, error, placeholde
           </Command>
         </PopoverContent>
       </Popover>
-      {error && <p className="text-sm font-medium text-red-500 pt-1">{error}</p>}
+      {error && <p className="pt-1 font-medium text-red-500 text-sm">{error}</p>}
     </div>
   );
 }

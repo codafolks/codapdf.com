@@ -15,6 +15,8 @@ export const users = pgTable("users", {
   name: text("name").notNull(),
   password: text("password"),
   image: text("image"),
+  createdAt: timestamp("createdAt").default(sql`now()`),
+  updatedAt: timestamp("updatedAt").default(sql`now()`),
 });
 
 export const profiles = pgTable("profiles", {

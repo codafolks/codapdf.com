@@ -3,7 +3,7 @@ import { relations, sql } from "drizzle-orm";
 import { jsonb, pgTable, serial, text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
 import { z } from "zod";
 
-import { createSelectSchema, createInsertSchema } from "drizzle-zod";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 export const templates = pgTable(
   "templates",
@@ -48,6 +48,8 @@ export const templateOnInsertZodSchema = createInsertSchema(templates).extend({
 export const templateOnSaveZodSchema = templateOnInsertZodSchema.extend({
   useId: z.string().optional(),
   files: z.array(z.object({ filename: z.string(), content: z.string() })),
+  // The HTML template.
+  html: z.string(),
 });
 
 // The payload that will be sent to the server when fetching the schema.
@@ -55,8 +57,21 @@ export const templateOnFetchZodSchema = templateOnSelectZodSchema.extend({
   files: z.array(z.object({ filename: z.string(), content: z.string() })),
 });
 
+export const templateExample = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  files: z.array(
+    z.object({
+      filename: z.string(),
+      content: z.string(),
+    }),
+  ),
+});
+
 export type TemplateOnSavePayload = z.infer<typeof templateOnSaveZodSchema>;
 export type TemplateOnFetchPayload = z.infer<typeof templateOnFetchZodSchema>;
 export type TemplateOnInsertPayload = z.infer<typeof templateOnInsertZodSchema>;
 export type TemplateOnSelectPayload = z.infer<typeof templateOnSelectZodSchema>;
 export type Template = z.infer<typeof templateOnSelectZodSchema>;
+export type TemplateExample = z.infer<typeof templateExample>;

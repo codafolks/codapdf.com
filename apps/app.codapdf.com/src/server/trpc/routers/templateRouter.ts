@@ -1,34 +1,23 @@
-import { protectedProcedure } from "@/server/trpc/procedures/protectedProcedure";
+import { templateExamples } from "@/app/(main)/templates/_data/templates";
 import { convertHtmlToPDF } from "@/server/actions/templates/convertHtmlToPDF";
+import { deleteTemplate } from "@/server/actions/templates/deleteTemplate";
+import { getTemplateById } from "@/server/actions/templates/getTemplateById";
+import { listTemplates } from "@/server/actions/templates/listTemplates";
+import { saveTemplate } from "@/server/actions/templates/saveTemplate";
 import {
+  templateExample,
   templateOnFetchZodSchema,
   templateOnSaveZodSchema,
   templateOnSelectZodSchema,
 } from "@/server/database/schemas/templates";
+import { protectedProcedure } from "@/server/trpc/procedures/protectedProcedure";
 import { z } from "zod";
-import { saveTemplate } from "@/server/actions/templates/saveTemplate";
-import { deleteTemplate } from "@/server/actions/templates/deleteTemplate";
-import { listTemplates } from "@/server/actions/templates/listTemplates";
-import { getTemplateById } from "@/server/actions/templates/getTemplateById";
-import { templateExamples } from "@/app/(main)/templates/_data/templates";
 
 export const templateRouter = {
   getSampleById: protectedProcedure
     .output(
       z.object({
-        data: z
-          .object({
-            id: z.string(),
-            name: z.string(),
-            description: z.string(),
-            files: z.array(
-              z.object({
-                filename: z.string(),
-                content: z.string(),
-              }),
-            ),
-          })
-          .nullable(),
+        data: templateExample.nullable(),
         message: z.string(),
       }),
     )
@@ -76,13 +65,13 @@ export const templateRouter = {
     )
     .query(listTemplates),
   convertHtml2PDF: protectedProcedure
-    .input(z.object({ html: z.string(), data: z.any() }))
+    .input(z.object({ html: z.string(), data: z.any().optional() }))
     .output(
       z.object({
         file_url: z.string().url(),
       }),
     )
     .mutation(async ({ input }) => {
-      return await convertHtmlToPDF(input);
+      return await convertHtmlToPDF({ ...input, data: input.data ?? {} });
     }),
 };

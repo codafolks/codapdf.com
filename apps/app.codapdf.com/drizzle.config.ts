@@ -1,4 +1,4 @@
-const connectionString = process.env.DATABASE_URL!;
+const connectionString = process.env.DATABASE_URL ?? "";
 import { defineConfig } from "drizzle-kit";
 export default defineConfig({
   dialect: "postgresql", // "mysql" | "sqlite" | "postgresql"
@@ -8,3 +8,4 @@ export default defineConfig({
     url: connectionString,
   },
 });
+

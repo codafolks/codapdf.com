@@ -1,20 +1,20 @@
-import { env } from "@/constants/env.client";
 import {
-  StripePaymentMethod,
   useStripePaymentMethods,
   useStripeSubscriptionCreate,
   useStripeSubscriptionPlans,
 } from "@/client/queries/stripe";
+import type { StripePaymentMethod } from "@/client/queries/stripe";
+import { env } from "@/constants/env.client";
 
+import { PlanTabs } from "@/app/(billing)/_components/PlanTabs";
+import { SavedCards } from "@/app/(billing)/_components/SavedCards";
+import { Button } from "@/client/components/ui/button";
 import { useUser, useUserLicenseUpdate, useUserUpdate } from "@/client/queries/users";
+import type { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
+import type { PlanSubscription } from "@/server/static/plansSubscription";
 import { logger } from "@/server/utils/logger";
 import { PaymentElement, type PaymentElementProps, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useState } from "react";
-import { PlanTabs } from "@/app/(billing)/_components/PlanTabs";
-import { PlanSubscription } from "@/server/static/plansSubscription";
-import { Button } from "@/client/components/ui/button";
-import { SubscriptionsFrequency } from "@/server/database/schemas/subscriptions";
-import { SavedCards } from "@/app/(billing)/_components/SavedCards";
 
 type StripeCheckoutFormProps = {
   defaultPlan: PlanSubscription;
@@ -40,24 +40,21 @@ export const StripeCheckoutForm = ({ defaultPlan, frequency: defaultFrequency }:
   const [message, setMessage] = useState<string>();
   const [isLoadingElements, setIsLoadingElements] = useState(true);
 
-  const productId = selectedPlan.productId;
-  const priceId = isYearly ? selectedPlan?.priceId?.yearly : selectedPlan?.priceId?.monthly;
   const license = selectedPlan.license;
-
   const isSubmitting = subscriptionCreate.isPending || updateUser.isPending || updateLicense.isPending;
 
   const handlePaymentForPaymentMethodSelected = async () => {
     try {
       setMessage(undefined);
-      if (!productId || !priceId || !paymentMethod) {
-        throw new Error("Missing productId, priceId or paymentMethod");
+      if (!paymentMethod || !selectedPlan?.price || !frequency) {
+        throw new Error("Missing prices or paymentMethod");
       }
       if (!stripe) {
         throw new Error("Stripe not loaded");
       }
       const { clientSecret } = await subscriptionCreate.mutateAsync({
-        priceId,
-        productId,
+        nickname: selectedPlan.nickname,
+        priceAmount: isYearly ? selectedPlan.price?.yearly : selectedPlan.price?.monthly,
         paymentMethodId: paymentMethod?.id,
         frequency,
       });
@@ -97,8 +94,8 @@ export const StripeCheckoutForm = ({ defaultPlan, frequency: defaultFrequency }:
       }
 
       setMessage(undefined);
-      if (!productId || !priceId) {
-        throw new Error("Missing productId or priceId");
+      if (!selectedPlan || !selectedPlan.price || !stripe || !elements?.submit) {
+        throw new Error("Missing prices or stripe or elements");
       }
 
       if (!stripe || !elements?.submit) {
@@ -110,8 +107,8 @@ export const StripeCheckoutForm = ({ defaultPlan, frequency: defaultFrequency }:
         throw new Error(submitError.message);
       }
       const { clientSecret } = await subscriptionCreate.mutateAsync({
-        priceId,
-        productId,
+        nickname: selectedPlan.nickname,
+        priceAmount: isYearly ? selectedPlan.price?.yearly : selectedPlan.price?.monthly,
         frequency,
       });
 
@@ -156,20 +153,20 @@ export const StripeCheckoutForm = ({ defaultPlan, frequency: defaultFrequency }:
   };
   return (
     <div className="bg-background">
-      <h1 className="text-3xl font-bold">Choose your plan</h1>
-      <p className="text-gray-600 pb-4">
+      <h1 className="font-bold text-3xl">Choose your plan</h1>
+      <p className="pb-4 text-gray-600">
         Select the plan that works best for you. You can change your plan at any time.
       </p>
       {plans && defaultPlan && (
         <PlanTabs plans={plans} value={selectedPlan} frequency={frequency} onChange={handlePlanSelection} />
       )}
       <div className="grid pt-4">
-        <h1 className="text-3xl font-bold">Payment Details</h1>
-        <p className="text-gray-600 pb-4">Enter your card information to complete your subscription.</p>
+        <h1 className="font-bold text-3xl">Payment Details</h1>
+        <p className="pb-4 text-gray-600">Enter your card information to complete your subscription.</p>
         {savedCards && savedCards.length > 0 && (
           <SavedCards methods={savedCards} paymentMethod={paymentMethod} onSelectPaymentMethod={handleCardSelection} />
         )}
-        <form id="payment-form" onSubmit={handleSubmit} className="flex flex-col py-4 gap-6 text-foreground">
+        <form id="payment-form" onSubmit={handleSubmit} className="flex flex-col gap-6 py-4 text-foreground">
           <input type="hidden" name="email" value={user?.email} />
           {!paymentMethod && (
             <PaymentElement

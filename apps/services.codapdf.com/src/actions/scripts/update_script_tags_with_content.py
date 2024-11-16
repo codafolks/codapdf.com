@@ -15,7 +15,7 @@ async def update_script_tags_with_content(results, script_map, soup):
   for (content, error), src in zip(results, script_map.keys()):
     script = script_map[src]
     if content and not error:
-       # Create a new inline <script> tag using soup
+      # Create a new inline <script> tag using soup
       new_script_tag = soup.new_tag("script")
       new_script_tag.string = content
       script.replace_with(new_script_tag)

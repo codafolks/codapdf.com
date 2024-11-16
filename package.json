@@ -1,5 +1,4 @@
 {
   "name": "codapdf",
-  "private": true,
-  "workspaces": ["apps/*"]
+  "private": true
 }

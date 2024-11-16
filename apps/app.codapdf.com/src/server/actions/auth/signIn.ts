@@ -1,4 +1,5 @@
 import { comparePassword } from "@/server/actions/auth/comparePassword";
+import { userDTO } from "@/server/actions/users/getUserById";
 import { db } from "@/server/database";
 import { users } from "@/server/database/schemas/users";
 import type { AuthLoginInput } from "@/server/schemas/authZodSchema";
@@ -17,11 +18,11 @@ export const signIn = async (payload: AuthLoginInput) => {
       throw new Error("User not found");
     }
     if (!user.password) {
-      throw new Error("Invalid Email or Password");
+      throw new Error("This account has not been set up for password login");
     }
     const isPasswordMatch = await comparePassword(password, user.password);
     if (isPasswordMatch) {
-      return user;
+      return userDTO(user);
     }
     throw new Error("Invalid Email or Password");
   } catch (error) {

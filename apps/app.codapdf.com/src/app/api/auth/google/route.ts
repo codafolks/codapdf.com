@@ -1,4 +1,4 @@
-import crypto from "crypto";
+import crypto from "node:crypto";
 import { env } from "@/constants/env.server";
 import { cookies } from "next/headers";
 

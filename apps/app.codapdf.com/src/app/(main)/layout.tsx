@@ -13,14 +13,14 @@ const Layout = ({ children }: LayoutProps) => {
   const handleSIGINT = () => {
     console.info("[Received SIGINT]: cleaning up");
     // Perform any cleanup actions here
-    process.setMaxListeners(0);
+    process.setMaxListeners(1000);
     process.exit(0);
   };
 
   const handleSIGTERM = () => {
     console.info("[Received SIGTERM]: cleaning up");
     // Perform any cleanup actions here
-    process.setMaxListeners(0);
+    process.setMaxListeners(1000);
     process.exit(0);
   };
 

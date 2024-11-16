@@ -1,10 +1,10 @@
 import { users } from "@/server/database/schemas/users";
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { pgTable, serial, text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
 import { createSelectSchema } from "drizzle-zod";
-import { z } from "zod";
+import type { z } from "zod";
 export const apiKeys = pgTable(
-  "api_keys",
+  "apiKeys",
   {
     uuid: uuid("uuid").default(sql`uuid_generate_v4()`).unique().notNull(),
     name: text("name").unique().notNull(),
@@ -13,6 +13,7 @@ export const apiKeys = pgTable(
         onDelete: "cascade",
       })
       .notNull(),
+    apiKey: text("apiKey").unique().notNull(),
     createdAt: timestamp("createdAt").default(sql`now()`),
     updatedAt: timestamp("updatedAt").default(sql`now()`),
   },
@@ -23,21 +24,22 @@ export const apiKeys = pgTable(
   },
 );
 
-export const apiKeyZodDBSchema = createSelectSchema(apiKeys);
-export const apiKeyZodSchema = z.object({
-  uuid: z.string(),
-  name: z.string(),
-  userId: z.string(),
-  createdAt: z.coerce.date(),
-  updatedAt: z.coerce.date(),
-});
+export const apiKeysRelation = relations(apiKeys, ({ one }) => ({
+  user: one(users, {
+    fields: [apiKeys.userId],
+    references: [users.id],
+    relationName: "user_api_key",
+  }),
+}));
+
+export const apiKeyZodSchema = createSelectSchema(apiKeys);
 
 export const apiKeyZodCreateSchema = apiKeyZodSchema.omit({
   userId: true,
   uuid: true,
+  apiKey: true,
   createdAt: true,
   updatedAt: true,
 });
 
 export type ApiKey = z.infer<typeof apiKeyZodSchema>;
-export type ApiKeyDB = z.infer<typeof apiKeyZodDBSchema>;

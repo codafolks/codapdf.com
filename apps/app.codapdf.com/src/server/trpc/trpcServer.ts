@@ -14,6 +14,7 @@ import { apiKeyRouter } from "@/server/trpc/routers/apiKeyRouter";
 import { billingRouter } from "@/server/trpc/routers/billingRouter";
 import { contactFormRouter } from "@/server/trpc/routers/contactFormRouter";
 import { stripeRouter } from "@/server/trpc/routers/stripeRouter";
+import { apiMetricRouter } from "@/server/trpc/routers/apiMetricRouter";
 
 export const trpcServer = initTRPC.context<TRPCContext | TRPCPublicContext | TRPCEmptyContext>().create({
   transformer: SuperJSON,
@@ -28,6 +29,7 @@ export const appRouter = router({
   stripe: router(stripeRouter),
   contact: router(contactFormRouter),
   apiKeys: router(apiKeyRouter),
+  apiMetrics: router(apiMetricRouter),
 });
 
 export type AppRouter = typeof appRouter;

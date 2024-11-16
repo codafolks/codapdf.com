@@ -6,12 +6,10 @@ import { cache, use } from "react";
 const all = cache(() => {
   return Promise.all([serverApi.stripe.getPlans(), serverApi.stripe.getSubscription()]);
 });
+
 export default function BillingPage() {
   const [plans, subscription] = use(all());
-  const activePlan = subscription?.subscriptionId
-    ? plans?.find((plan) => plan.nickname === subscription?.nickname)
-    : undefined;
-
+  const activePlan = subscription?.activePlan;
   return (
     <>
       <PaymentStatus />

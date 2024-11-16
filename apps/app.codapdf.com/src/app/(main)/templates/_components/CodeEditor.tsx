@@ -1,18 +1,17 @@
 "use client";
 
-import { html } from "@codemirror/lang-html";
-import { css } from "@codemirror/lang-css";
-import { json } from "@codemirror/lang-json";
-import { javascript } from "@codemirror/lang-javascript";
 import { history } from "@codemirror/commands";
-import { vscodeDark, vscodeLight } from "@uiw/codemirror-theme-vscode";
-
+import { css } from "@codemirror/lang-css";
+import { html } from "@codemirror/lang-html";
+import { javascript } from "@codemirror/lang-javascript";
+import { json } from "@codemirror/lang-json";
 import CodeMirror from "@uiw/react-codemirror";
+import { barf, tomorrow } from "thememirror";
 
-import { useMemo } from "react";
 import type { EditorFileData, EditorFiles } from "@/app/(main)/templates/_components/FileSidebar";
 import { cn } from "@/client/lib/utils";
 import { useTheme } from "next-themes";
+import { useMemo } from "react";
 
 interface CodeEditorProps {
   onChange: (value: string) => void;
@@ -41,11 +40,11 @@ export function CodeEditor({ onChange, files, activeFileId }: Readonly<CodeEdito
           value={value}
           onChange={onChange}
           extensions={[history(), ...extensions]}
-          theme={theme === "dark" ? vscodeDark : vscodeLight}
+          theme={theme === "dark" ? barf : tomorrow}
           height="100%"
           width="100%"
           data-filename={file.filename}
-          className={cn("h-full overflow-hidden hidden", {
+          className={cn("hidden h-full overflow-hidden", {
             flex: activeFileId === file.filename,
           })}
         />

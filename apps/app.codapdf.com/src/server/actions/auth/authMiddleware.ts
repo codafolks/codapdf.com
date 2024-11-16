@@ -28,10 +28,13 @@ const getMiddlewareSession = async () => {
       const response = await fetch(`${process.env.APP_DOMAIN}/api/edge/users`, {
         method: "POST",
         headers: {
-          "Content-Type": "application",
+          "Content-Type": "application/json",
           Authorization: token,
         },
       });
+      if (!response.ok || typeof response?.json !== "function") {
+        return { user: null };
+      }
       const data = await response.json();
       if (data.user) return { user: data.user };
     }
@@ -50,11 +53,11 @@ export async function authMiddleware({ request }: { request: NextRequest }) {
 
     if (checkIfPrivate(pathname) && method === "GET") {
       const { user } = await getMiddlewareSession();
-      if (!user) return Response.redirect(new URL(ROUTES.AUTH.LOGIN.path, request.url));
+      if (!user) return Response.redirect(new URL(ROUTES.AUTH.LOGIN.pathname(), request.url));
     }
     if (checkIfAuth(pathname) && method === "GET") {
       const { user } = await getMiddlewareSession();
-      if (user) return Response.redirect(new URL(ROUTES.PRIVATE.DASHBOARD.path, request.url));
+      if (user) return Response.redirect(new URL(ROUTES.PRIVATE.DASHBOARD.pathname(), request.url));
     }
     return response;
   } catch (error) {

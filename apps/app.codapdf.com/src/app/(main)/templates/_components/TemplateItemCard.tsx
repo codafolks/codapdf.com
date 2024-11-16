@@ -1,8 +1,8 @@
 "use client";
 import { ROUTES } from "@/app/routes";
+import { cn } from "@/client/lib/utils";
 import { Menu } from "@/components/app/Menu";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/client/lib/utils";
 import type { Template } from "@/server/database/schemas/templates";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,13 +15,13 @@ type TemplateItemCardProps = {
 export const TemplateItemCard = ({ template, isDeleting, onDelete }: TemplateItemCardProps) => (
   <div
     className={cn("relative", {
-      "opacity-50 animate-pulse pointer-events-none": isDeleting,
+      "pointer-events-none animate-pulse opacity-50": isDeleting,
     })}
   >
     <Menu
       className="absolute top-4 right-2 z-10"
       actions={[
-        { label: "Edit", href: ROUTES.PRIVATE.TEMPLATES_EDIT.path(template.id) },
+        { label: "Edit", href: ROUTES.PRIVATE.TEMPLATES_EDIT.pathname(template.id) },
         {
           label: "Delete",
           onClick: onDelete,
@@ -30,13 +30,13 @@ export const TemplateItemCard = ({ template, isDeleting, onDelete }: TemplateIte
       ]}
       isDropDown
     />
-    <Link key={template.id} href={ROUTES.PRIVATE.TEMPLATES_EDIT.path(template.id)}>
-      <Card className="hover:bg-secondary h-full text-foreground bg-background">
+    <Link key={template.id} href={ROUTES.PRIVATE.TEMPLATES_EDIT.pathname(template.id)}>
+      <Card className="h-full bg-background text-foreground hover:bg-secondary">
         <CardHeader>
           <CardTitle>{template.name}</CardTitle>
         </CardHeader>
         {template?.thumbnail && (
-          <div className="bg-gray-300 overflow-hidden relative bg-cover bg-no-repeat bg-center aspect-video my-2">
+          <div className="relative my-2 aspect-video overflow-hidden bg-center bg-cover bg-gray-300 bg-no-repeat">
             <Image
               src={template.thumbnail}
               alt={template.name}
