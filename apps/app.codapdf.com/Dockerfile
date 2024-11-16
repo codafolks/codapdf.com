@@ -27,7 +27,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Fetch secrets from Doppler
-RUN doppler run -p codapdf -c development -- doppler secrets download --no-file --format env > .env
+RUN doppler run -p app-codapdf -c development -- doppler secrets download --no-file --format env > .env
 
 # Run migrations
 RUN sh -c 'i=1; \
