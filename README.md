@@ -3,6 +3,7 @@
 \<CodaPDF /> is an open-source project that allows users to convert HTML templates to PDF files using an API or web application. The project is built with Python, FastAPI, Next.js, and Playwright. It is still in development, but there’s a production version hosted on [codapdf.com](https://codapdf.com).. Feel free to contribute to the project, and let’s make it better together! :smile:
 
 <hr />
+
 ### Project Structure
 
 * [app.codapdf.com](./apps/app.codapdf.com) - The Next.js web application that allows users to sign up, log in, and convert HTML to PDF files.
