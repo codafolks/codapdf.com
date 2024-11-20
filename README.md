@@ -93,3 +93,4 @@ Troubleshooting
 * Make sure ports 5000 and 3000 are not occupied by other applications.
 * Review Logs:
 * Check the terminal output for any error messages during startup.
+
