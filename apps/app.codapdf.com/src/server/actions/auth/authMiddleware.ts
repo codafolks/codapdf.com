@@ -52,9 +52,7 @@ export async function authMiddleware({ request }: { request: NextRequest }) {
     const siteDomain = process.env.SITE_DOMAIN;
     const pathname = request.nextUrl.pathname;
     const response = NextResponse.next({ request });
-    console.info("currentDomain", currentDomain);
-    console.info("pathname", pathname);
-    console.info("siteDomain", siteDomain);
+
     if (checkIfPrivate(pathname) && method === "GET") {
       const { user } = await getMiddlewareSession();
       if (!user) return Response.redirect(ROUTES.AUTH.LOGIN.href());
