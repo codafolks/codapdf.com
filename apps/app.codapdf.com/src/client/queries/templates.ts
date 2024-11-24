@@ -1,4 +1,4 @@
-import { type TemplateSourceId, getTemplateSourceId } from "@/app/(main)/templates/_utils/getTemplateSourceId";
+import { type TemplateSourceId, getTemplateSourceId } from "@/app/admin/templates/_utils/getTemplateSourceId";
 import { type ReactQueryOptions, type RouterInputs, trpcClient } from "@/server/trpc/trpcClient";
 
 type TemplateSampleByIdQueryOptions = ReactQueryOptions["templates"]["getSampleById"];

@@ -8,9 +8,9 @@ Disallow: /templates/sample/*
 Disallow: /templates/create
 Disallow: /templates/edit/*
 Disallow: /api-keys
-Disallow: /auth/login
-Disallow: /auth/signup
-Disallow: /auth/forgot-password
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
 Disallow: /api/auth/github
 Disallow: /api/auth/google
 Disallow: /redirecting
