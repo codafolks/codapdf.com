@@ -7,7 +7,7 @@ const ROUTES = {
     DASHBOARD: {
       pathname: () => "/dashboard",
       href: () => {
-        return `${env.APP_DOMAIN}/${ROUTES.PRIVATE.DASHBOARD.pathname()}`;
+        return `${env.APP_DOMAIN}${ROUTES.PRIVATE.DASHBOARD.pathname()}`;
       },
       title: "Dashboard",
       match: (pathname: string) => {
@@ -18,7 +18,7 @@ const ROUTES = {
     SETTINGS: {
       pathname: () => "/settings",
       href: () => {
-        return `${env.APP_DOMAIN}/${ROUTES.PRIVATE.SETTINGS.pathname()}`;
+        return `${env.APP_DOMAIN}${ROUTES.PRIVATE.SETTINGS.pathname()}`;
       },
       match: (pathname: string) => {
         return isSamePath(pathname, ROUTES.PRIVATE.SETTINGS.pathname());
@@ -29,7 +29,7 @@ const ROUTES = {
     ACCOUNT_SETTINGS: {
       pathname: () => "/settings/account",
       href: () => {
-        return `${env.APP_DOMAIN}/${ROUTES.PRIVATE.ACCOUNT_SETTINGS.pathname()}`;
+        return `${env.APP_DOMAIN}${ROUTES.PRIVATE.ACCOUNT_SETTINGS.pathname()}`;
       },
       match: (pathname: string) => {
         return isSamePath(pathname, ROUTES.PRIVATE.ACCOUNT_SETTINGS.pathname());
@@ -40,7 +40,7 @@ const ROUTES = {
     ACCOUNT_BILLING: {
       pathname: () => "/settings/billing",
       href: () => {
-        return `${env.APP_DOMAIN}/${ROUTES.PRIVATE.ACCOUNT_BILLING.pathname()}`;
+        return `${env.APP_DOMAIN}${ROUTES.PRIVATE.ACCOUNT_BILLING.pathname()}`;
       },
       match: (pathname: string) => {
         return isSamePath(pathname, ROUTES.PRIVATE.ACCOUNT_BILLING.pathname());
@@ -51,7 +51,7 @@ const ROUTES = {
     TEMPLATES: {
       pathname: () => "/templates",
       href: () => {
-        return `${env.APP_DOMAIN}/${ROUTES.PRIVATE.TEMPLATES.pathname()}`;
+        return `${env.APP_DOMAIN}${ROUTES.PRIVATE.TEMPLATES.pathname()}`;
       },
       match: (pathname: string) => {
         return isSamePath(pathname, ROUTES.PRIVATE.TEMPLATES.pathname());
@@ -63,7 +63,7 @@ const ROUTES = {
       pathname: (id: string) => `/templates/sample/${id}`,
       params: ["id"],
       href: (id: string) => {
-        return `${env.APP_DOMAIN}/${ROUTES.PRIVATE.TEMPLATES_SAMPLE.pathname(id)}`;
+        return `${env.APP_DOMAIN}${ROUTES.PRIVATE.TEMPLATES_SAMPLE.pathname(id)}`;
       },
       match: (pathname: string) => {
         const id = pathname.split("/").pop();
@@ -77,7 +77,7 @@ const ROUTES = {
     TEMPLATES_CREATE: {
       pathname: () => "/templates/create",
       href: () => {
-        return `${env.APP_DOMAIN}/${ROUTES.PRIVATE.TEMPLATES_CREATE.pathname()}`;
+        return `${env.APP_DOMAIN}${ROUTES.PRIVATE.TEMPLATES_CREATE.pathname()}`;
       },
       match: (pathname: string) => {
         return isSamePath(pathname, ROUTES.PRIVATE.TEMPLATES_CREATE.pathname());
@@ -90,7 +90,7 @@ const ROUTES = {
       pathname: (id: number) => `/templates/edit/${id}`,
       params: ["id"],
       href: (id: number) => {
-        return `${env.APP_DOMAIN}/${ROUTES.PRIVATE.TEMPLATES_EDIT.pathname(id)}`;
+        return `${env.APP_DOMAIN}${ROUTES.PRIVATE.TEMPLATES_EDIT.pathname(id)}`;
       },
       match: (pathname: string) => {
         const ids = findSerialIDFromPathname(pathname);
@@ -105,7 +105,7 @@ const ROUTES = {
     API_KEYS: {
       pathname: () => "/api-keys",
       href: () => {
-        return `${env.APP_DOMAIN}/${ROUTES.PRIVATE.API_KEYS.pathname()}`;
+        return `${env.APP_DOMAIN}${ROUTES.PRIVATE.API_KEYS.pathname()}`;
       },
       match: (pathname: string) => {
         return isSamePath(pathname, ROUTES.PRIVATE.API_KEYS.pathname());
@@ -118,7 +118,7 @@ const ROUTES = {
     LOGIN: {
       pathname: () => "/login",
       href: () => {
-        return `${env.APP_DOMAIN}/${ROUTES.AUTH.LOGIN.pathname()}`;
+        return `${env.APP_DOMAIN}${ROUTES.AUTH.LOGIN.pathname()}`;
       },
       title: "Login",
       match: (pathname: string) => {
@@ -128,7 +128,7 @@ const ROUTES = {
     SIGNUP: {
       pathname: () => "/signup",
       href: () => {
-        return `${env.APP_DOMAIN}/${ROUTES.AUTH.SIGNUP.pathname()}`;
+        return `${env.APP_DOMAIN}${ROUTES.AUTH.SIGNUP.pathname()}`;
       },
       title: "Register",
       match: (pathname: string) => {
@@ -138,7 +138,7 @@ const ROUTES = {
     FORGOT_PASSWORD: {
       pathname: () => "/forgot-password",
       href: () => {
-        return `${env.APP_DOMAIN}/${ROUTES.AUTH.FORGOT_PASSWORD.pathname()}`;
+        return `${env.APP_DOMAIN}${ROUTES.AUTH.FORGOT_PASSWORD.pathname()}`;
       },
       title: "Register",
       match: (pathname: string) => {
@@ -150,19 +150,19 @@ const ROUTES = {
     GITHUB: {
       pathname: () => "/api/auth/github",
       href: () => {
-        return `${env.APP_DOMAIN}/${ROUTES.PUBLIC.GITHUB.pathname()}`;
+        return `${env.APP_DOMAIN}${ROUTES.PUBLIC.GITHUB.pathname()}`;
       },
     },
     GOOGLE: {
       pathname: () => "/api/auth/google",
       href: () => {
-        return `${env.APP_DOMAIN}/${ROUTES.PUBLIC.GOOGLE.pathname()}`;
+        return `${env.APP_DOMAIN}${ROUTES.PUBLIC.GOOGLE.pathname()}`;
       },
     },
     DOCS: {
       pathname: () => "/docs",
       href: () => {
-        return `${env.DOCS_DOMAIN}/${ROUTES.PUBLIC.DOCS.pathname()}`;
+        return `${env.DOCS_DOMAIN}${ROUTES.PUBLIC.DOCS.pathname()}`;
       },
       title: "Documentation",
       match: (pathname: string) => {
@@ -172,7 +172,7 @@ const ROUTES = {
     REDIRECTING: {
       pathname: () => "/redirecting",
       href: () => {
-        return `${env.APP_DOMAIN}/${ROUTES.PUBLIC.REDIRECTING.pathname()}`;
+        return `${env.APP_DOMAIN}${ROUTES.PUBLIC.REDIRECTING.pathname()}`;
       },
       title: "Redirecting",
       match: (pathname: string) => {
