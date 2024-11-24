@@ -1,9 +1,9 @@
 import { z } from "zod";
 const envSchema = z.object({
-  API_URL: z.string(),
-  APP_DOMAIN: z.string(),
-  SITE_DOMAIN: z.string(),
-  DOCS_DOMAIN: z.string(),
+  API_URL: z.string().url(),
+  APP_DOMAIN: z.string().url(),
+  SITE_DOMAIN: z.string().url(),
+  DOCS_DOMAIN: z.string().url(),
   STRIPE_PUBLISHABLE_KEY: z.string(),
   SUPPORT_EMAIL: z.string().email(),
   SERVICES_DOMAIN: z.string().url(),
