@@ -54,6 +54,10 @@ const nextConfig: Config = {
   },
   rewrites() {
     return [
+      {
+        source: '/:path*',
+        destination: `${process.env.SITE_DOMAIN}/:path*`,
+      },
       // PRIVATE
       {
         source: '/dashboard',
@@ -109,7 +113,6 @@ const nextConfig: Config = {
         destination: "/auth/reset-password",
       },
       { source: '/sitemap.xml', destination: '/api/sitemap' },
-      { source: '/robots.txt', destination: '/api/robots' }
     ];
   },
 };
