@@ -28,7 +28,7 @@ export const Home = () => (
         </div>
         <div className="w-full space-y-4">
           <Button asChild>
-            <Link href={ROUTES.AUTH.SIGNUP.pathname()}>
+            <Link href={ROUTES.AUTH.LOGIN.href()}>
               Sign Up for Free <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
