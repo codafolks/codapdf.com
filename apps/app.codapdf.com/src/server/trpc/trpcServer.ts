@@ -11,10 +11,10 @@ import { initTRPC } from "@trpc/server";
 import SuperJSON from "superjson";
 
 import { apiKeyRouter } from "@/server/trpc/routers/apiKeyRouter";
+import { apiMetricRouter } from "@/server/trpc/routers/apiMetricRouter";
 import { billingRouter } from "@/server/trpc/routers/billingRouter";
 import { contactFormRouter } from "@/server/trpc/routers/contactFormRouter";
 import { stripeRouter } from "@/server/trpc/routers/stripeRouter";
-import { apiMetricRouter } from "@/server/trpc/routers/apiMetricRouter";
 
 export const trpcServer = initTRPC.context<TRPCContext | TRPCPublicContext | TRPCEmptyContext>().create({
   transformer: SuperJSON,

@@ -26,11 +26,25 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("dark", inter.className)} suppressHydrationWarning>
       {process.env.NODE_ENV === "production" && (
-        <Script
-          defer
-          src="https://analytics.codafolks.com/script.js"
-          data-website-id={env.ANALYTICS_ID}
-        />
+        <Script defer src="https://analytics.codafolks.com/script.js" data-website-id={env.ANALYTICS_ID} />
+      )}
+
+      {process.env.NODE_ENV === "production" && (
+        <>
+          <Script
+            strategy="afterInteractive"
+            src={`https://www.googletagmanager.com/gtag/js?id=${env.GOOGLE_ANALYTICS_ID}`}
+          />
+
+          <Script id="google-analytics" strategy="afterInteractive">
+            {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${env.GOOGLE_ANALYTICS_ID}');
+        `}
+          </Script>
+        </>
       )}
       <body className={cn("h-screen overflow-hidden bg-background font-sans antialiased", inter.className)}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem storageKey="coda-theme">
