@@ -68,14 +68,6 @@ const nextConfig: Config = {
         destination: "/admin/templates/create",
       },
       {
-        source:"/dashboard",
-        destination: `${process.env.APP_DOMAIN}/dashboard`,
-      },
-      {
-        source:"/dashboard",
-        destination: `${process.env.APP_DOMAIN}/dashboard`,
-      },
-      {
         source: "/templates/sample/:id",
         destination: "/admin/templates/sample",
       },
