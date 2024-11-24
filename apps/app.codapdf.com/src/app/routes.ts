@@ -1,6 +1,7 @@
 import { findSerialIDFromPathname } from "@/client/utils/findSerialIDFromPathname";
 import { isSamePath } from "@/client/utils/isSamePath";
 import { env } from "@/constants/env.client";
+
 const ROUTES = {
   PRIVATE: {
     DASHBOARD: {

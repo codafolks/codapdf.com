@@ -73,6 +73,8 @@ const nextConfig: Config = {
         source: "/auth/reset-password",
         destination: "/reset-password",
       },
+      { source: '/sitemap.xml', destination: '/api/sitemap' },
+      { source: '/robots.txt', destination: '/api/robots' }
     ];
   },
 };
