@@ -76,7 +76,7 @@ export const Header = () => {
           </Link>
         </Button>
         <Button variant="link" asChild>
-          <Link href={ROUTES.PUBLIC.DOCS.pathname()} scroll={false}>
+          <Link href={ROUTES.PUBLIC.DOCS.href()} scroll={false}>
             Docs
           </Link>
         </Button>
