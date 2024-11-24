@@ -26,6 +26,7 @@ const envSchema = z.object({
   GOOGLE_REDIRECT_URI: z.string().url(),
   ANALYTICS_ID: z.string().optional(),
   GOOGLE_ANALYTICS_ID: z.string().optional(),
+  SITE_DOMAIN: z.string().url(),
 });
 
 const variables = {
@@ -51,6 +52,7 @@ const variables = {
   GOOGLE_REDIRECT_URI: process.env.GOOGLE_REDIRECT_URI,
   ANALYTICS_ID: process.env.ANALYTICS_ID,
   GOOGLE_ANALYTICS_ID: process.env.GOOGLE_ANALYTICS_ID,
+  SITE_DOMAIN: process.env.SITE_DOMAIN,
 } as const;
 
 const env = envSchema.parse(variables);

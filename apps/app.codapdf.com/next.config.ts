@@ -162,7 +162,10 @@ const nextConfig: Config = {
         source: '/reset-password',
         destination: "/auth/reset-password",
       },
+
+      // PUBLIC
       { source: '/sitemap.xml', destination: '/api/sitemap' },
+      { source: '/og-image.png', destination: '/api/og-image' },
     ];
   },
 };

@@ -13,9 +13,17 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-import { CodeXml, FileText, Home } from "lucide-react";
+import { FileText, Home } from "lucide-react";
 import Link from "next/link";
-
+type DocsSideBarItem ={
+  title: string;
+  id: string;
+  icon: React.FC;
+  subItems?: {
+    title: string;
+    id: string;
+  }[];
+}
 const items = [
   {
     title: "Introduction",
@@ -27,49 +35,54 @@ const items = [
     id: "using-code-editor",
     icon: FileText,
     subItems: [
-      {
-        title: "Using the Editor",
-        id: "using-code-editor",
-      },
-      {
-        title: "Saving the template",
-        id: "#",
-      },
-      {
-        title: "Adding variables",
-        id: "#",
-      },
-      {
-        title: "Creating styles",
-        id: "#",
-      },
+      // {
+      //   title: "Using the Editor",
+      //   id: "using-code-editor",
+      // },
+      // {
+      //   title: "Saving the template",
+      //   id: "#",
+      // },
+      // {
+      //   title: "Adding variables",
+      //   id: "#",
+      // },
+      // {
+      //   title: "Creating styles",
+      //   id: "#",
+      // },
     ],
   },
   {
-    title: "Using the API",
-    id: "#",
-    icon: CodeXml,
-    subItems: [
-      {
-        title: "Creating an API key",
-        id: "#",
-      },
-      {
-        title: "API request examples",
-        id: "#",
-      },
-      {
-        title: "API reference",
-        id: "#",
-      },
-    ],
-  },
-  {
-    title: "Coming soon",
-    id: "#",
+    title: "Using API",
+    id: "using-api",
     icon: Home,
   },
-];
+  // {
+  //   title: "Using the API",
+  //   id: "#",
+  //   icon: CodeXml,
+  //   subItems: [
+  //     {
+  //       title: "Creating an API key",
+  //       id: "#",
+  //     },
+  //     {
+  //       title: "API request examples",
+  //       id: "#",
+  //     },
+  //     {
+  //       title: "API reference",
+  //       id: "#",
+  //     },
+  //   ],
+  // },
+  {
+    title: "Coming soon",
+    id: "coming-soon",
+    icon: Home,
+  },
+]  as DocsSideBarItem[]
 
 const getContainer = () => document.getElementById("docs-container");
 const onClick = (e: React.MouseEvent<HTMLLIElement> | React.MouseEvent<HTMLButtonElement>) => {
@@ -94,7 +107,7 @@ export function DocsSideBar() {
         <SidebarMenu className="text-foreground">
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              {item?.subItems ? (
+              {item?.subItems?.length ? (
                 <>
                   <Collapsible defaultOpen className="group/collapsible">
                     <CollapsibleTrigger asChild>

@@ -16,6 +16,20 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Welcome to <CodaPDF/> | Convert, Edit, and Sign PDFs",
   description: " <CodaPDF/> offers seamless PDF conversion, editing, and and much more with just a few clicks.",
+  openGraph: {
+    title: "Welcome to <CodaPDF/> | Convert, Edit, and Sign PDFs",
+    description: " <CodaPDF/> offers seamless PDF conversion, editing, and and much more with just a few clicks.",
+    type: "website",
+    url: env.SITE_DOMAIN,
+    images: [
+      {
+        url: `${env.SITE_DOMAIN}/og-image.png`,
+        width: 1200,
+        height: 574,
+        alt: "CodaPDF",
+      },
+    ],
+  }
 };
 
 export default function RootLayout({
@@ -28,7 +42,6 @@ export default function RootLayout({
       {process.env.NODE_ENV === "production" && (
         <Script defer src="https://analytics.codafolks.com/script.js" data-website-id={env.ANALYTICS_ID} />
       )}
-
       {process.env.NODE_ENV === "production" && (
         <>
           <Script
