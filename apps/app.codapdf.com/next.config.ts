@@ -41,6 +41,10 @@ const nextConfig: Config = {
     return [
       // PRIVATE PAGES
       {
+        source:"/dashboard",
+        destination: `${process.env.APP_DOMAIN}/dashboard`,
+      },
+      {
         source: "/templates/sample/:id",
         destination: "/templates/sample",
       },
@@ -59,19 +63,19 @@ const nextConfig: Config = {
       // AUTHENTICATION PAGES
       {
         source: "/auth/login",
-        destination: "/login",
+        destination: `${process.env.APP_DOMAIN}/login`,
       },
       {
         source: "/auth/signup",
-        destination: "/signup",
+        destination: `${process.env.APP_DOMAIN}/signup`,
       },
       {
         source: "/auth/forgot-password",
-        destination: "/forgot-password",
+        destination: `${process.env.APP_DOMAIN}/forgot-password`,
       },
       {
         source: "/auth/reset-password",
-        destination: "/reset-password",
+        destination: `${process.env.APP_DOMAIN}/reset-password`,
       },
       { source: '/sitemap.xml', destination: '/api/sitemap' },
       { source: '/robots.txt', destination: '/api/robots' }
