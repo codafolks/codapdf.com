@@ -5,7 +5,7 @@ import { env } from "@/constants/env.client";
 const ROUTES = {
   PRIVATE: {
     DASHBOARD: {
-      pathname: () => "/admin/dashboard",
+      pathname: () => "/dashboard",
       href: () => {
         return `${env.APP_DOMAIN}/${ROUTES.PRIVATE.DASHBOARD.pathname()}`;
       },
@@ -16,7 +16,7 @@ const ROUTES = {
       header: "Welcome to <CodaPdf />",
     },
     SETTINGS: {
-      pathname: () => "/admin/settings",
+      pathname: () => "/settings",
       href: () => {
         return `${env.APP_DOMAIN}/${ROUTES.PRIVATE.SETTINGS.pathname()}`;
       },
@@ -27,7 +27,7 @@ const ROUTES = {
       header: "Settings",
     },
     ACCOUNT_SETTINGS: {
-      pathname: () => "/admin/settings/account",
+      pathname: () => "/settings/account",
       href: () => {
         return `${env.APP_DOMAIN}/${ROUTES.PRIVATE.ACCOUNT_SETTINGS.pathname()}`;
       },
@@ -38,7 +38,7 @@ const ROUTES = {
       header: "Account Settings",
     },
     ACCOUNT_BILLING: {
-      pathname: () => "/admin/settings/billing",
+      pathname: () => "/settings/billing",
       href: () => {
         return `${env.APP_DOMAIN}/${ROUTES.PRIVATE.ACCOUNT_BILLING.pathname()}`;
       },
@@ -49,7 +49,7 @@ const ROUTES = {
       header: "Billing",
     },
     TEMPLATES: {
-      pathname: () => "/admin/templates",
+      pathname: () => "/templates",
       href: () => {
         return `${env.APP_DOMAIN}/${ROUTES.PRIVATE.TEMPLATES.pathname()}`;
       },
@@ -60,7 +60,7 @@ const ROUTES = {
       header: "Templates",
     },
     TEMPLATES_SAMPLE: {
-      pathname: (id: string) => `/admin/templates/sample/${id}`,
+      pathname: (id: string) => `/templates/sample/${id}`,
       params: ["id"],
       href: (id: string) => {
         return `${env.APP_DOMAIN}/${ROUTES.PRIVATE.TEMPLATES_SAMPLE.pathname(id)}`;
@@ -75,7 +75,7 @@ const ROUTES = {
       parent: () => ROUTES.PRIVATE.TEMPLATES,
     },
     TEMPLATES_CREATE: {
-      pathname: () => "/admin/templates/create",
+      pathname: () => "/templates/create",
       href: () => {
         return `${env.APP_DOMAIN}/${ROUTES.PRIVATE.TEMPLATES_CREATE.pathname()}`;
       },
@@ -87,7 +87,7 @@ const ROUTES = {
       parent: () => ROUTES.PRIVATE.TEMPLATES,
     },
     TEMPLATES_EDIT: {
-      pathname: (id: number) => `/admin/templates/edit/${id}`,
+      pathname: (id: number) => `/templates/edit/${id}`,
       params: ["id"],
       href: (id: number) => {
         return `${env.APP_DOMAIN}/${ROUTES.PRIVATE.TEMPLATES_EDIT.pathname(id)}`;
@@ -103,7 +103,7 @@ const ROUTES = {
       parent: () => ROUTES.PRIVATE.TEMPLATES,
     },
     API_KEYS: {
-      pathname: () => "/admin/api-keys",
+      pathname: () => "/api-keys",
       href: () => {
         return `${env.APP_DOMAIN}/${ROUTES.PRIVATE.API_KEYS.pathname()}`;
       },
@@ -116,7 +116,7 @@ const ROUTES = {
   } as const,
   AUTH: {
     LOGIN: {
-      pathname: () => "/auth/login",
+      pathname: () => "/login",
       href: () => {
         return `${env.APP_DOMAIN}/${ROUTES.AUTH.LOGIN.pathname()}`;
       },
@@ -126,7 +126,7 @@ const ROUTES = {
       },
     },
     SIGNUP: {
-      pathname: () => "/auth/signup",
+      pathname: () => "/signup",
       href: () => {
         return `${env.APP_DOMAIN}/${ROUTES.AUTH.SIGNUP.pathname()}`;
       },
@@ -136,7 +136,7 @@ const ROUTES = {
       },
     },
     FORGOT_PASSWORD: {
-      pathname: () => "/auth/forgot-password",
+      pathname: () => "/forgot-password",
       href: () => {
         return `${env.APP_DOMAIN}/${ROUTES.AUTH.FORGOT_PASSWORD.pathname()}`;
       },
