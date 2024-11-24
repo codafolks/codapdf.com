@@ -54,6 +54,10 @@ const nextConfig: Config = {
   },
   rewrites() {
     return [
+      {
+        source: '/:path*',
+        destination: `${process.env.SITE_DOMAIN}/:path*`,
+      },
       // PRIVATE
       {
         source: '/dashboard',
