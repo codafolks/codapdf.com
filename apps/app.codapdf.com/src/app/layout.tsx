@@ -14,8 +14,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Welcome to <CodaPDF/>",
-  description: "A simple PDF generator for your Coda docs.",
+  title: "Welcome to <CodaPDF/> | Convert, Edit, and Sign PDFs",
+  description: " <CodaPDF/> offers seamless PDF conversion, editing, and and much more with just a few clicks.",
 };
 
 export default function RootLayout({
