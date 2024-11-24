@@ -1,0 +1,58 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "strict": true,
+    "downlevelIteration": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "target": "esnext",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./src",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"],
+      "@/database": ["./server/database"],
+      "@/database/*": ["./server/database/*"],
+      "@/components": ["./client/components"],
+      "@/components/*": ["./client/components/*"],
+      "@/components/ui": ["./client/components/ui"],
+      "@/components/ui/*": ["./client/components/ui/*"],
+      "@/components/app": ["./client/components/app"],
+      "@/components/app/*": ["./client/components/app/*"],
+      "@/assets": ["./client/assets"],
+      "@/assets/*": ["./client/assets/*"]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "./src/*",
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "next.config.js",
+    "next.config.mjs",
+    "cache-handler.mjs",
+    "src/client/layouts",
+    "src/client/hooks",
+    "src/client/queries",
+    "src/client/lib",
+    "src/client/providers",
+    "src/client/stores",
+    "src/client/utils",
+    "src/server/actions/auth/authByGoogle"
+  ],
+  "exclude": ["node_modules", ".next"]
+}
