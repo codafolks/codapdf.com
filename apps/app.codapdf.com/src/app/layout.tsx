@@ -14,11 +14,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Welcome to <CodaPDF/> | Convert, Edit, and Sign PDFs",
-  description: " <CodaPDF/> offers seamless PDF conversion, editing, and and much more with just a few clicks.",
+  title: "Design and Convert HTML to PDF using <CodaPDF/>",
+  description: " <CodaPDF/> offers seamless HTML to PDF conversion and much more with just a few clicks.",
   openGraph: {
-    title: "Welcome to <CodaPDF/> | Convert, Edit, and Sign PDFs",
-    description: " <CodaPDF/> offers seamless PDF conversion, editing, and and much more with just a few clicks.",
+    title: "Design and Convert HTML to PDF using <CodaPDF/>",
+    description: " <CodaPDF/> offers seamless HTML to PDF conversion and much more with just a few clicks.",
     type: "website",
     url: env.SITE_DOMAIN,
     images: [
