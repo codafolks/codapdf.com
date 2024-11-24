@@ -179,6 +179,16 @@ const ROUTES = {
         return isSamePath(pathname, ROUTES.PUBLIC.REDIRECTING.pathname());
       },
     },
+    INDEX: {
+      pathname: () => "/",
+      href: () => {
+        return `${env.SITE_DOMAIN}${ROUTES.PUBLIC.INDEX.pathname()}`;
+      },
+      title: "Home",
+      match: (pathname: string) => {
+        return isSamePath(pathname, ROUTES.PUBLIC.INDEX.pathname());
+      },
+    }
   },
 } as const;
 
