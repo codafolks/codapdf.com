@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 type MappedOmit<T, K extends keyof T> = { [P in keyof T as P extends K ? never : P]: T[P] };
 type Config = MappedOmit<NextConfig, "rewrites">;
 
+
 const nextConfig: Config = {
   output: "standalone",
   serverExternalPackages: ["pino", "pino-pretty"],
@@ -37,45 +38,83 @@ const nextConfig: Config = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/auth/:path*',
+        destination: `${process.env.APP_DOMAIN}/:path*`,
+        permanent: true,
+      },
+      {
+        source: '/admin/:path*',
+        destination: `${process.env.APP_DOMAIN}/:path*`,
+        permanent: true,
+      },
+    ]
+  },
   rewrites() {
     return [
-      // PRIVATE PAGES
+      // PRIVATE
+      {
+        source: '/dashboard',
+        destination: "/admin/dashboard",
+      },
+      {
+        source: '/templates',
+        destination: "/admin/templates",
+      },
+      {
+        source: '/templates/create',
+        destination: "/admin/templates/create",
+      },
+      {
+        source:"/dashboard",
+        destination: `${process.env.APP_DOMAIN}/dashboard`,
+      },
       {
         source:"/dashboard",
         destination: `${process.env.APP_DOMAIN}/dashboard`,
       },
       {
         source: "/templates/sample/:id",
-        destination: "/templates/sample",
+        destination: "/admin/templates/sample",
       },
       {
         source: "/templates/edit/:id",
-        destination: "/templates/edit",
+        destination: "/admin/templates/edit",
       },
       {
         source: "/projects/settings/:id",
-        destination: "/projects/settings",
+        destination: "/admin/projects/settings",
       },
       {
         source: "/settings/billing",
-        destination: "/settings",
-      },
-      // AUTHENTICATION PAGES
-      {
-        source: "/auth/login",
-        destination: `${process.env.APP_DOMAIN}/login`,
+        destination: "/admin/settings",
       },
       {
-        source: "/auth/signup",
-        destination: `${process.env.APP_DOMAIN}/signup`,
+        source: "/api-keys",
+        destination: "/admin/api-keys",
       },
       {
-        source: "/auth/forgot-password",
-        destination: `${process.env.APP_DOMAIN}/forgot-password`,
+        source: "/settings/account",
+        destination: "/admin/settings/account",
+      },
+      // AUTH
+      {
+        source: '/login',
+        destination: "/auth/login",
       },
       {
-        source: "/auth/reset-password",
-        destination: `${process.env.APP_DOMAIN}/reset-password`,
+        source: '/signup',
+        destination: "/auth/signup",
+      },
+      {
+        source: '/forgot-password',
+        destination: "/auth/forgot-password",
+      },
+      {
+        source: '/reset-password',
+        destination: "/auth/reset-password",
       },
       { source: '/sitemap.xml', destination: '/api/sitemap' },
       { source: '/robots.txt', destination: '/api/robots' }
