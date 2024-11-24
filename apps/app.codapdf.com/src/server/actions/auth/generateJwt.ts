@@ -34,7 +34,7 @@ export async function generateResetPasswordJwt(email: string): Promise<string> {
 }
 
 async function getSecretKey() {
-  const secretKeyBase64 = process.env.JWT_SECRET!;
+  const secretKeyBase64 = process.env.JWT_SECRET as string;
   const keyData = Uint8Array.from(atob(secretKeyBase64), (c) => c.charCodeAt(0));
   return await crypto.subtle.importKey("raw", keyData, { name: "HMAC", hash: "SHA-256" }, true, ["sign", "verify"]);
 }
