@@ -48,16 +48,21 @@ const getMiddlewareSession = async () => {
 export async function authMiddleware({ request }: { request: NextRequest }) {
   try {
     const method = request.method;
+    const currentDomain = new URL(request.url).origin;
     const pathname = request.nextUrl.pathname;
     const response = NextResponse.next({ request });
 
     if (checkIfPrivate(pathname) && method === "GET") {
       const { user } = await getMiddlewareSession();
-      if (!user) return Response.redirect(new URL(ROUTES.AUTH.LOGIN.pathname(), request.url));
+      if (!user) return Response.redirect(ROUTES.AUTH.LOGIN.href());
     }
     if (checkIfAuth(pathname) && method === "GET") {
       const { user } = await getMiddlewareSession();
-      if (user) return Response.redirect(new URL(ROUTES.PRIVATE.DASHBOARD.pathname(), request.url));
+      if (user) return Response.redirect(ROUTES.PRIVATE.DASHBOARD.href());
+    }
+    // make sure the marking site is redirecting to the correct domain
+    if (pathname === "/" && method === "GET" && currentDomain !== process.env.SITE_DOMAIN) {
+      return Response.redirect(ROUTES.PUBLIC.INDEX.href());
     }
     return response;
   } catch (error) {
