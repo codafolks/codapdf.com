@@ -166,6 +166,7 @@ const nextConfig: Config = {
       // PUBLIC
       { source: '/sitemap.xml', destination: '/api/sitemap' },
       { source: '/og-image.png', destination: '/api/og-image' },
+      { source: '/robots.txt', destination: '/api/robots' },
     ];
   },
 };
