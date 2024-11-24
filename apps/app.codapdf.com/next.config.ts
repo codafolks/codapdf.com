@@ -40,7 +40,6 @@ const nextConfig: Config = {
   },
   redirects() {
     return [
-     
       {
         source: '/auth/:path*',
         has: [
@@ -64,14 +63,29 @@ const nextConfig: Config = {
         permanent: true,
       },
       {
-        source: '/:path*', // Match all paths
+        source: '/', // Match all paths
         has: [
           {
             type: 'host',
             value: process.env.APP_DOMAIN?.replace('https://', '')?.replace('http://', ''),
           },
         ],
-        destination: `${process.env.SITE_DOMAIN}/:path*`, // Redirect to 'domain.com' with the same path
+        destination: `${process.env.SITE_DOMAIN}/`, // Redirect to 'domain.com' with the same path
+        permanent: true, // Use a 308 permanent redirect
+      },
+      {
+        source: '/docs', // Match all paths
+        has: [
+          {
+            type: 'host',
+            value: process.env.APP_DOMAIN?.replace('https://', '')?.replace('http://', ''),
+          },
+          {
+            type: 'host',
+            value: process.env.SITE_DOMAIN?.replace('https://', '')?.replace('http://', ''),
+          },
+        ],
+        destination: `${process.env.DOCS_DOMAIN}/docs`, // Redirect to 'domain.com' with the same path
         permanent: true, // Use a 308 permanent redirect
       },
     ]
