@@ -1,4 +1,4 @@
-import { templateExamples } from "@/app/(main)/templates/_data/templates";
+import { templateExamples } from "@/app/admin/templates/_data/templates";
 import { convertHtmlToPDF } from "@/server/actions/templates/convertHtmlToPDF";
 import { deleteTemplate } from "@/server/actions/templates/deleteTemplate";
 import { getTemplateById } from "@/server/actions/templates/getTemplateById";
