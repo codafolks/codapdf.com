@@ -162,7 +162,7 @@ const ROUTES = {
     DOCS: {
       pathname: () => "/docs",
       href: () => {
-        return `${env.DOCS_DOMAIN}${ROUTES.PUBLIC.DOCS.pathname()}`;
+        return `${env.APP_DOMAIN}${ROUTES.PUBLIC.DOCS.pathname()}`;
       },
       title: "Documentation",
       match: (pathname: string) => {
@@ -188,7 +188,7 @@ const ROUTES = {
       match: (pathname: string) => {
         return isSamePath(pathname, ROUTES.PUBLIC.INDEX.pathname());
       },
-    }
+    },
   },
 } as const;
 

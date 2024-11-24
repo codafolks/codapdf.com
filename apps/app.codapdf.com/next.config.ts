@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 type MappedOmit<T, K extends keyof T> = { [P in keyof T as P extends K ? never : P]: T[P] };
-type Config = MappedOmit<NextConfig, "rewrites" | "redirects">;
+type Config = MappedOmit<NextConfig, "rewrites">;
 
+
+const hostFormUrl = (url: string) => {
+  return url.replace("https://", "").replace("http://", "");
+}
 
 const nextConfig: Config = {
   output: "standalone",
@@ -38,14 +42,18 @@ const nextConfig: Config = {
       },
     ],
   },
-  redirects() {
+  async redirects() {
     return [
       {
         source: '/auth/:path*',
         has: [
           {
             type: 'host',
-            value: process.env.SITE_DOMAIN?.replace('https://', '')?.replace('http://', ''),
+            value: hostFormUrl(process.env.SITE_DOMAIN ?? ""),
+          },
+          {
+            type: 'host',
+            value: hostFormUrl(process.env.DOCS_DOMAIN ?? ""),
           },
         ],
         destination: `${process.env.APP_DOMAIN}/:path*`,
@@ -56,7 +64,11 @@ const nextConfig: Config = {
         has: [
           {
             type: 'host',
-            value: process.env.SITE_DOMAIN?.replace('https://', '')?.replace('http://', ''),
+            value: hostFormUrl(process.env.SITE_DOMAIN ?? ""),
+          },
+          {
+            type: 'host',
+            value: hostFormUrl(process.env.DOCS_DOMAIN ?? ""),
           },
         ],
         destination: `${process.env.APP_DOMAIN}/:path*`,
@@ -67,7 +79,11 @@ const nextConfig: Config = {
         has: [
           {
             type: 'host',
-            value: process.env.APP_DOMAIN?.replace('https://', '')?.replace('http://', ''),
+            value: hostFormUrl(process.env.APP_DOMAIN ?? ""),
+          },
+          {
+            type: 'host',
+            value: hostFormUrl(process.env.DOCS_DOMAIN ?? ""),
           },
         ],
         destination: `${process.env.SITE_DOMAIN}/`, // Redirect to 'domain.com' with the same path
@@ -76,16 +92,16 @@ const nextConfig: Config = {
       {
         source: '/docs', // Match all paths
         has: [
-          {
+        {
             type: 'host',
-            value: process.env.APP_DOMAIN?.replace('https://', '')?.replace('http://', ''),
+            value: hostFormUrl(process.env.APP_DOMAIN ?? ""),
           },
           {
             type: 'host',
-            value: process.env.SITE_DOMAIN?.replace('https://', '')?.replace('http://', ''),
+            value: hostFormUrl(process.env.APP_DOMAIN ?? ""),
           },
         ],
-        destination: `${process.env.DOCS_DOMAIN}/docs`, // Redirect to 'domain.com' with the same path
+        destination: `${process.env.SITE_DOMAIN}/docs`, // Redirect to 'domain.com' with the same path
         permanent: true, // Use a 308 permanent redirect
       },
     ]
