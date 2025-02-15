@@ -2,11 +2,11 @@
 FROM oven/bun:alpine AS base
 RUN apk add --no-cache libstdc++ ncurses-libs openssl
 
-ENV DOPPLER_TOKEN=DOPPLER_TOKEN
-ENV ENVIRONMENT=ENVIRONMENT
+ARG DOPPLER_TOKEN
+ARG ENVIRONMENT
 
-RUN echo ${DOPPLER_TOKEN}
-RUN echo ${ENVIRONMENT}
+RUN echo $DOPPLER_TOKEN
+RUN echo $ENVIRONMENT
 
 # Install Doppler CLI
 RUN wget -q -t3 'https://packages.doppler.com/public/cli/rsa.8004D9FF50437357.key' -O /etc/apk/keys/cli@doppler-8004D9FF50437357.rsa.pub && \
